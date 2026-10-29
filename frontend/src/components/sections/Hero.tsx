@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
 import { useAppStore } from '../../store/useAppStore'
-import { ParticleNetwork } from '../three/ParticleNetwork'
+import { HeroSdfCanvas } from '../three/HeroSdfCanvas'
 import { scrollToId } from '../../lib/lenis'
 
 export const Hero: React.FC = () => {
@@ -10,7 +10,10 @@ export const Hero: React.FC = () => {
 
   return (
     <section id="hero" className="relative min-h-screen pt-28 md:pt-36 pb-12 flex flex-col justify-between overflow-hidden bg-[#050505]">
-      {/* Background Crosshairs and Ambient Glow */}
+      {/* Live WebGL Raymarched SDF Sculpture in Right Panel */}
+      <HeroSdfCanvas />
+
+      {/* Background Crosshairs and Ambient Grid */}
       <div className="absolute inset-0 bg-tech-grid opacity-25 pointer-events-none" />
       
       {/* Decorative Technical Crosshair Markers (+) */}
@@ -81,12 +84,27 @@ export const Hero: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* Right Column: Mission Copy + Index [ 01 ] + Interactive 3D Canvas */}
-          <div className="lg:col-span-4 flex flex-col justify-between h-full space-y-6 pt-4 lg:pt-0">
+          {/* Right Column: Mission Copy + Live SDF Telemetry + Index [ 01 ] */}
+          <div className="lg:col-span-4 flex flex-col justify-between h-full space-y-6 pt-4 lg:pt-0 pointer-events-auto">
             
-            {/* Interactive Particle Node Canvas */}
-            <div className="hidden lg:block h-48 w-full">
-              <ParticleNetwork />
+            {/* Live Raymarched SDF HUD Indicator */}
+            <div className="hidden lg:flex flex-col space-y-2 p-4 rounded border border-[#222222]/80 bg-[#080808]/70 backdrop-blur-md max-w-sm ml-auto">
+              <div className="flex items-center justify-between text-[11px] font-mono text-[#888888]">
+                <span className="text-[#caff00] flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#caff00] animate-pulse" />
+                  SDF REALTIME SHADER
+                </span>
+                <span>80 STEPS / GLSL</span>
+              </div>
+              <div className="h-[1px] w-full bg-[#1c1c1c]" />
+              <div className="flex items-center justify-between text-[10px] font-mono text-[#666666]">
+                <span>MORPH STATE</span>
+                <span className="text-[#cccccc]">ICOSAHEDRON ⇄ TORUS KNOT</span>
+              </div>
+              <div className="flex items-center justify-between text-[10px] font-mono text-[#666666]">
+                <span>POSTPROCESSING</span>
+                <span className="text-[#caff00]">UNREALBLOOM 1.2</span>
+              </div>
             </div>
 
             {/* Descriptor text + [ 01 ] indicator */}

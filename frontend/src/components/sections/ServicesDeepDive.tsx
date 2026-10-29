@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowDownRight, ArrowUpRight, CheckCircle2 } from 'lucide-react'
+import { ArrowDownRight, ArrowUpRight, CheckCircle2, Cpu } from 'lucide-react'
 import { useAppStore } from '../../store/useAppStore'
+import { ServicesAnatomyCanvas } from '../three/ServicesAnatomyCanvas'
 
 interface ServiceItem {
   id: string
@@ -80,11 +81,13 @@ const servicesData: ServiceItem[] = [
 ]
 
 export const ServicesDeepDive: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const [openIndex, setOpenIndex] = useState<number>(0)
   const { setCursor, resetCursor, openContactModal } = useAppStore()
 
+  const activeService = servicesData[openIndex] || servicesData[0]
+
   const toggleAccordion = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index)
+    setOpenIndex(index)
   }
 
   return (
@@ -95,122 +98,139 @@ export const ServicesDeepDive: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-[#1f1f1f]">
           <div className="space-y-3">
             <span className="font-mono text-xs tracking-widest text-[#caff00] uppercase">
-              [ 02 / CAPABILITIES ]
+              [ 02 / CAPABILITIES & 3D ANATOMY ]
             </span>
             <h2 className="font-display font-extrabold text-3xl md:text-5xl tracking-tight text-white">
               ENGINEERING SERVICES
             </h2>
           </div>
           <p className="font-sans text-sm text-[#888888] max-w-md mt-4 md:mt-0">
-            From generative AI algorithms to bespoke frontend motion systems, we engineer every layer with absolute precision.
+            From silicon neural processors to distributed Kubernetes clusters, explore the exploded 3D anatomy of our systems.
           </p>
         </div>
 
-        {/* Accordion List */}
-        <div className="space-y-4">
-          {servicesData.map((service, idx) => {
-            const isOpen = openIndex === idx
+        {/* Split Screen Layout: Left Accordion + Right Persistent 3D Anatomy Canvas */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* Left Column: Accordion List (approx 5 cols) */}
+          <div className="lg:col-span-6 space-y-4">
+            {servicesData.map((service, idx) => {
+              const isOpen = openIndex === idx
 
-            return (
-              <div
-                key={service.id}
-                className={`border transition-all duration-300 rounded-xl overflow-hidden ${
-                  isOpen 
-                    ? 'border-[#caff00] bg-[#0c0c0c] shadow-[0_0_30px_rgba(202,255,0,0.06)]' 
-                    : 'border-[#1a1a1a] bg-[#080808] hover:border-[#333333]'
-                }`}
-              >
-                {/* Header Row */}
-                <button
-                  onClick={() => toggleAccordion(idx)}
-                  onMouseEnter={() => setCursor('hover', isOpen ? 'COLLAPSE' : 'EXPAND')}
-                  onMouseLeave={resetCursor}
-                  className="w-full p-6 md:p-8 flex items-center justify-between text-left group"
+              return (
+                <div
+                  key={service.id}
+                  className={`border transition-all duration-300 rounded-xl overflow-hidden ${
+                    isOpen 
+                      ? 'border-[#caff00] bg-[#0c0c0c] shadow-[0_0_30px_rgba(202,255,0,0.06)]' 
+                      : 'border-[#1a1a1a] bg-[#080808] hover:border-[#333333]'
+                  }`}
                 >
-                  <div className="flex items-center space-x-6 md:space-x-10">
-                    <span className="font-mono text-xs md:text-sm font-semibold tracking-wider text-[#caff00]">
-                      [ {service.number} ]
-                    </span>
-                    <span className="font-display font-bold text-lg md:text-2xl text-white group-hover:text-[#caff00] transition-colors">
-                      {service.title}
-                    </span>
-                  </div>
+                  {/* Header Row */}
+                  <button
+                    onClick={() => toggleAccordion(idx)}
+                    onMouseEnter={() => setCursor('hover', isOpen ? 'INSPECT' : 'EXPLODE')}
+                    onMouseLeave={resetCursor}
+                    className="w-full p-5 md:p-6 flex items-center justify-between text-left group"
+                  >
+                    <div className="flex items-center space-x-4 md:space-x-6">
+                      <span className="font-mono text-xs md:text-sm font-semibold tracking-wider text-[#caff00]">
+                        [ {service.number} ]
+                      </span>
+                      <span className="font-display font-bold text-base md:text-lg text-white group-hover:text-[#caff00] transition-colors">
+                        {service.title}
+                      </span>
+                    </div>
 
-                  <div className="p-2 rounded-full border border-[#222] group-hover:border-[#caff00] text-[#caff00] transition-all duration-300 shrink-0">
-                    {isOpen ? <ArrowDownRight size={18} /> : <ArrowUpRight size={18} />}
-                  </div>
-                </button>
+                    <div className="p-1.5 rounded-full border border-[#222] group-hover:border-[#caff00] text-[#caff00] transition-all duration-300 shrink-0">
+                      {isOpen ? <ArrowDownRight size={16} /> : <ArrowUpRight size={16} />}
+                    </div>
+                  </button>
 
-                {/* Expanded Details */}
-                <AnimatePresence>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                      className="px-6 pb-8 md:px-8 border-t border-[#1a1a1a] pt-6"
-                    >
-                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                        
-                        {/* Description & CTA */}
-                        <div className="lg:col-span-6 space-y-4">
-                          <p className="font-mono text-xs text-[#caff00] font-medium tracking-wide">
-                            {service.tagline}
-                          </p>
-                          <p className="font-sans text-sm md:text-base text-[#999999] leading-relaxed">
-                            {service.description}
-                          </p>
+                  {/* Expanded Details */}
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                        className="px-5 pb-6 md:px-6 border-t border-[#1a1a1a] pt-4"
+                      >
+                        <div className="space-y-4">
+                          
+                          {/* Description & CTA */}
+                          <div className="space-y-3">
+                            <p className="font-mono text-xs text-[#caff00] font-medium tracking-wide">
+                              {service.tagline}
+                            </p>
+                            <p className="font-sans text-xs md:text-sm text-[#999999] leading-relaxed">
+                              {service.description}
+                            </p>
+                          </div>
+
+                          {/* Deliverables */}
+                          <div className="space-y-2 pt-1">
+                            <span className="font-mono text-[10px] text-[#888888] tracking-widest uppercase block">
+                              KEY DELIVERABLES
+                            </span>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                              {service.deliverables.map((item, dIdx) => (
+                                <div key={dIdx} className="flex items-start space-x-2 text-xs text-[#cccccc]">
+                                  <CheckCircle2 size={12} className="text-[#caff00] mt-0.5 shrink-0" />
+                                  <span>{item}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Tech Stack Pills */}
+                          <div className="space-y-2 pt-1">
+                            <span className="font-mono text-[10px] text-[#888888] tracking-widest uppercase block">
+                              CORE TECHNOLOGIES
+                            </span>
+                            <div className="flex flex-wrap gap-1.5">
+                              {service.technologies.map((tech) => (
+                                <span
+                                  key={tech}
+                                  className="px-2 py-0.5 font-mono text-[10px] text-[#ededed] bg-[#141414] border border-[#262626] rounded"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Action Button */}
                           <div className="pt-2">
                             <button
                               onClick={openContactModal}
                               className="inline-flex items-center space-x-2 font-mono text-xs font-semibold text-black bg-[#caff00] px-4 py-2 rounded-[2px] hover:bg-white transition-colors"
                             >
                               <span>START THIS PROJECT</span>
-                              <ArrowUpRight size={14} />
+                              <ArrowUpRight size={13} />
                             </button>
                           </div>
-                        </div>
 
-                        {/* Deliverables */}
-                        <div className="lg:col-span-3 space-y-3">
-                          <span className="font-mono text-xs text-[#888888] tracking-widest uppercase block">
-                            DELIVERABLES
-                          </span>
-                          <ul className="space-y-2">
-                            {service.deliverables.map((item, dIdx) => (
-                              <li key={dIdx} className="flex items-start space-x-2 text-xs text-[#cccccc]">
-                                <CheckCircle2 size={13} className="text-[#caff00] mt-0.5 shrink-0" />
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
                         </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )
+            })}
+          </div>
 
-                        {/* Tech Stack Pills */}
-                        <div className="lg:col-span-3 space-y-3">
-                          <span className="font-mono text-xs text-[#888888] tracking-widest uppercase block">
-                            TECH STACK
-                          </span>
-                          <div className="flex flex-wrap gap-2">
-                            {service.technologies.map((tech) => (
-                              <span
-                                key={tech}
-                                className="px-2.5 py-1 font-mono text-[11px] text-[#ededed] bg-[#141414] border border-[#262626] rounded-md"
-                              >
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
+          {/* Right Column: Sticky Persistent 3D Anatomy Canvas (6 cols) */}
+          <div className="lg:col-span-6 lg:sticky lg:top-24">
+            <ServicesAnatomyCanvas
+              activeServiceId={activeService.id}
+              onSelectPart={(partName) => {
+                setCursor('hover', partName.toUpperCase())
+              }}
+            />
+          </div>
 
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            )
-          })}
         </div>
 
       </div>
