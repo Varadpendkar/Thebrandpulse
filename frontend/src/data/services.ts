@@ -62,7 +62,7 @@ export const SERVICES: ServiceData[] = [
     headline: 'Deploy Autonomous Intelligence That Works While You Sleep.',
     subhead: 'We design, integrate, and deploy custom artificial intelligence systems that automate heavy workflows, qualify high-value leads, and extract real profits from messy data.',
     shortOutcome: 'Automate manual workflows, qualify prospects instantly, and run intelligent operations 24/7.',
-    image: '/services/service-ai.png',
+    image: '/assets/services/service-ai.png',
     floatingParts: [
       { name: 'Semantic Routing Engine', spec: 'Sub-200ms intent classification', dir: 'left' },
       { name: 'Domain Vector Memory', spec: 'Private knowledge base retrieval', dir: 'right' },
@@ -133,7 +133,7 @@ export const SERVICES: ServiceData[] = [
     headline: 'Acquisition Architecture That Turns Attention Into Compounding Revenue.',
     subhead: 'No vanity metrics. We construct performance-engineered growth funnels, high-status creative narratives, and multi-channel acquisition machines designed to scale your bottom line.',
     shortOutcome: 'Generate qualified pipeline, lower customer acquisition costs, and scale market presence.',
-    image: '/services/service-marketing.png',
+    image: '/assets/services/service-marketing.png',
     floatingParts: [
       { name: 'Multi-Touch Attribution Lens', spec: 'Exact revenue tracking by channel', dir: 'left' },
       { name: 'Creative Testing Matrix', spec: 'Rapid asset experimentation loop', dir: 'right' },
@@ -204,7 +204,7 @@ export const SERVICES: ServiceData[] = [
     headline: 'High-Performance Web & Digital Products Engineered to Dominate.',
     subhead: 'We turn conceptual ideas into magnetic digital products. Blistering fast web platforms, interactive applications, and scalable software built with modern engineering discipline.',
     shortOutcome: 'Launch bespoke web platforms and software products engineered for zero downtime and magnetic user delight.',
-    image: '/services/service-product.png',
+    image: '/assets/services/service-product.png',
     floatingParts: [
       { name: 'Ultra-Fast React Client Layer', spec: 'Zero cumulative layout shift (CLS)', dir: 'left' },
       { name: 'Real-Time Synchronous State', spec: 'Sub-15ms client-server state sync', dir: 'right' },
@@ -275,7 +275,7 @@ export const SERVICES: ServiceData[] = [
     headline: 'Unified Operational Command Centers That Connect Every Moving Part.',
     subhead: 'Eliminate disconnected spreadsheets and siloed departments. We design and integrate modern Enterprise Resource Planning systems that synchronize inventory, finance, logistics, and staff in real time.',
     shortOutcome: 'Unify inventory, invoicing, supply chains, and workforce operations into a single real-time dashboard.',
-    image: '/services/service-erp.png',
+    image: '/assets/services/service-erp.png',
     floatingParts: [
       { name: 'Live Inventory Synapse', spec: 'Real-time multi-warehouse tracking', dir: 'left' },
       { name: 'Financial Ledger Reconciliation', spec: 'Automated double-entry bookkeeping', dir: 'right' },
@@ -346,7 +346,7 @@ export const SERVICES: ServiceData[] = [
     headline: 'High-Velocity Customer Engines That Close Deals and Protect Retainers.',
     subhead: 'Stop letting warm opportunities slip through the cracks. We architect custom Customer Relationship Management platforms with automated pipelines, smart task routing, and deep client intelligence.',
     shortOutcome: 'Shorten sales cycles, automate outreach sequences, and retain top clients with smart relationship management.',
-    image: '/services/service-crm.png',
+    image: '/assets/services/service-crm.png',
     floatingParts: [
       { name: 'Lead Velocity Pipeline', spec: 'Automated deal stage transitions', dir: 'left' },
       { name: 'Omnichannel Conversation Thread', spec: 'Unified WhatsApp, Email, & Call logs', dir: 'right' },
@@ -417,7 +417,7 @@ export const SERVICES: ServiceData[] = [
     headline: 'Executive Technical & Strategic Leadership Without the Full-Time Overhead.',
     subhead: 'Make high-conviction decisions with seasoned operators who have built, scaled, and exited digital businesses. We audit architectures, validate unit economics, and formulate clear growth roadmaps.',
     shortOutcome: 'Audit technical infrastructure, eliminate costly mistakes, and craft high-conviction product roadmaps.',
-    image: '/services/service-consulting.png',
+    image: '/assets/services/service-consulting.png',
     floatingParts: [
       { name: 'Strategic Technology Roadmap', spec: '12-month capital & hiring allocation', dir: 'left' },
       { name: 'Architecture & Security Audit', spec: 'Zero-trust enterprise vulnerability review', dir: 'right' },

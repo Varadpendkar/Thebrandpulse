@@ -20,3 +20,4 @@ export function matchIntent(input: string): ChatResponse {
 export function getChatGreeting(): string {
   return faq.greeting
 }
+
