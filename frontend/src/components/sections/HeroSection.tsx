@@ -94,16 +94,16 @@ export function HeroSection() {
       className="relative min-h-screen pt-28 md:pt-36 pb-12 flex flex-col justify-between overflow-hidden bg-[#050505]"
       style={{ minHeight: '100vh' }}
     >
-      {/* ── Right: Floating 3D image ─────────────────── */}
+      {/* ── Right: Floating 3D image (Behind text on mobile, 58% on desktop) ── */}
       <div
         ref={wrapperRef}
-        className="absolute right-0 top-0 w-full lg:w-[58%] h-full flex items-center justify-center pointer-events-none z-0 overflow-hidden"
+        className="absolute right-0 top-0 w-full lg:w-[58%] h-full flex items-center justify-center pointer-events-none z-0 max-w-[100vw] overflow-hidden opacity-40 sm:opacity-60 lg:opacity-100"
         aria-hidden="true"
       >
         {/* Lime glow behind image */}
         <div
           ref={glowRef}
-          className="absolute w-[340px] sm:w-[460px] md:w-[540px] h-[340px] sm:h-[460px] md:h-[540px] rounded-full opacity-40 pointer-events-none"
+          className="absolute w-[300px] sm:w-[460px] md:w-[540px] h-[300px] sm:h-[460px] md:h-[540px] rounded-full opacity-40 pointer-events-none"
           style={{
             background: 'radial-gradient(circle, rgba(202,255,0,0.25) 0%, transparent 65%)',
             transform: 'translateZ(0)',
@@ -177,7 +177,7 @@ export function HeroSection() {
               <h1
                 onMouseEnter={() => setCursor('hover', 'BRANDPULSE')}
                 onMouseLeave={resetCursor}
-                className="font-display font-extrabold tracking-tight text-white leading-none select-none text-[14vw] sm:text-[13vw] md:text-[10vw] lg:text-[7.5rem] xl:text-[9rem]"
+                className="font-display font-extrabold tracking-tight text-white leading-none select-none text-[clamp(2.5rem,10vw,8.5rem)]"
                 style={{ letterSpacing: '-0.04em' }}
               >
                 BrandPulse

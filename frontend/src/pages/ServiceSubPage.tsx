@@ -271,7 +271,7 @@ export const ServiceSubPage: React.FC = () => {
             {service.processSteps.map((step, idx) => (
               <div
                 key={idx}
-                className="p-6 bg-[#0c0c0c] border border-[#1f1f1f] rounded-xl flex flex-col justify-between hover:border-[#CAFF00]/40 transition-[border-color]"
+                className="p-6 bg-[#0c0c0c] border border-[#1f1f1f] border-l-2 border-l-[#CAFF00] rounded-xl flex flex-col justify-between hover:border-[#CAFF00]/40 transition-[border-color] shadow-sm"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">

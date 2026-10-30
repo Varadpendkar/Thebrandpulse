@@ -162,19 +162,36 @@ export function ServiceHero({
           }}
         />
 
-        {/* Floating component label cards */}
+        {/* Floating component label cards (Desktop / Tablet floating) */}
         {components.map((comp, i) => (
           <div
             key={i}
             data-floating-label
             aria-hidden="true"
-            className={`absolute ${positionClasses[comp.position]} bg-[#0D0D0D]/90 backdrop-blur-md border border-[#CAFF00]/30 px-3 py-2 min-w-[130px] sm:min-w-[160px] max-w-[210px] z-10 shadow-[0_4px_24px_rgba(0,0,0,0.85)]`}
+            className={`hidden sm:block absolute ${positionClasses[comp.position]} bg-[#0D0D0D]/90 backdrop-blur-md border border-[#CAFF00]/30 px-3 py-2 min-w-[140px] max-w-[210px] z-10 shadow-[0_4px_24px_rgba(0,0,0,0.85)]`}
             style={{ borderRadius: '2px' }}
           >
-            <p className="font-mono text-[11px] sm:text-xs text-[#CAFF00] font-bold leading-tight">
+            <p className="font-mono text-xs text-[#CAFF00] font-bold leading-tight">
               {comp.title}
             </p>
-            <p className="font-mono text-[9px] sm:text-[10px] text-[#777] mt-0.5 leading-tight">
+            <p className="font-mono text-[10px] text-[#777] mt-0.5 leading-tight">
+              {comp.subtitle}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile-only 2x2 cards grid below image to prevent any horizontal overflow */}
+      <div className="grid grid-cols-2 gap-2 sm:hidden w-full">
+        {components.map((comp, i) => (
+          <div
+            key={i}
+            className="bg-[#0D0D0D] border border-[#CAFF00]/25 p-2.5 rounded shadow-sm"
+          >
+            <p className="font-mono text-[11px] text-[#CAFF00] font-bold leading-tight">
+              {comp.title}
+            </p>
+            <p className="font-mono text-[9px] text-[#888] mt-0.5 leading-tight">
               {comp.subtitle}
             </p>
           </div>
