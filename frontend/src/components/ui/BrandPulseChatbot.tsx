@@ -1,13 +1,32 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageSquare, X, Send, Bot, Calendar } from 'lucide-react'
+import { X, Send, Bot, Calendar, ArrowUpRight } from 'lucide-react'
 import { useAppStore } from '../../store/useAppStore'
+import { matchIntent, getChatGreeting } from '../../hooks/useChatbot'
 
 interface ChatMessage {
   id: string
   sender: 'user' | 'bot'
   text: string
   timestamp: string
+  cta?: string
+}
+
+const panelVariants = {
+  closed: {
+    opacity: 0,
+    scaleY: 0,
+    transformOrigin: 'bottom right',
+    y: 20,
+    transition: { duration: 0.22, ease: [0.4, 0, 0.2, 1] },
+  },
+  open: {
+    opacity: 1,
+    scaleY: 1,
+    transformOrigin: 'bottom right',
+    y: 0,
+    transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+  },
 }
 
 export const BrandPulseChatbot: React.FC = () => {
@@ -18,8 +37,9 @@ export const BrandPulseChatbot: React.FC = () => {
     {
       id: 'welcome',
       sender: 'bot',
-      text: "Hello! I am the BrandPulse assistant. How can we help grow your business? Ask about our AI Solutions, Digital Marketing, Product Building, ERP, CRM, or Strategic Consulting.",
+      text: getChatGreeting(),
       timestamp: 'Just now',
+      cta: 'Book a Call',
     },
   ])
 
@@ -42,9 +62,30 @@ export const BrandPulseChatbot: React.FC = () => {
     'How do AI Solutions help my business?',
     'What is your 14-day prototype guarantee?',
     'How do we book a discovery call?',
+    'Tell me about your team',
   ]
 
-  const handleSendMessage = async (textToSend?: string) => {
+  const handleCtaClick = (ctaText?: string) => {
+    if (!ctaText) return
+    const lower = ctaText.toLowerCase()
+    if (lower.includes('call') || lower.includes('session') || lower.includes('free')) {
+      setIsOpen(false)
+      openContactModal()
+    } else if (lower.includes('team')) {
+      setIsOpen(false)
+      const el = document.getElementById('team')
+      el?.scrollIntoView({ behavior: 'smooth' })
+    } else if (lower.includes('service') || lower.includes('product') || lower.includes('marketing') || lower.includes('erp') || lower.includes('crm')) {
+      setIsOpen(false)
+      const el = document.getElementById('services')
+      el?.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      setIsOpen(false)
+      openContactModal()
+    }
+  }
+
+  const handleSendMessage = (textToSend?: string) => {
     const query = (textToSend || input).trim()
     if (!query || isLoading) return
 
@@ -59,81 +100,36 @@ export const BrandPulseChatbot: React.FC = () => {
     setInput('')
     setIsLoading(true)
 
-    try {
-      const apiEndpoint = import.meta.env.VITE_API_URL 
-        ? `${import.meta.env.VITE_API_URL}/api/chat` 
-        : '/api/chat'
-
-      const response = await fetch(apiEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: query }),
-      })
-
-      if (!response.ok) {
-        throw new Error('API server unreachable')
+    // Match intent from local JSON FAQ with realistic conversational delay
+    setTimeout(() => {
+      const match = matchIntent(query)
+      const botMsg: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        sender: 'bot',
+        text: match.response,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        cta: match.cta,
       }
-
-      const data = await response.json()
-      const botReply = data.response || data.reply || "We're here to help you scale. Would you like to book a call with our partners?"
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: (Date.now() + 1).toString(),
-          sender: 'bot',
-          text: botReply,
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        },
-      ])
-    } catch {
-      // Graceful offline fallback per Phase 7 specification
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: (Date.now() + 1).toString(),
-          sender: 'bot',
-          text: "We're offline right now. Email us at hello@brandpulse.in or book a call directly with our partners.",
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        },
-      ])
-    } finally {
+      setMessages((prev) => [...prev, botMsg])
       setIsLoading(false)
-    }
+    }, 380)
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
-      
-      {/* Floating Trigger Button (56px circle, lime background, "BP" text or chat icon) */}
-      <motion.button
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.94 }}
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Open chat with BrandPulse"
-        className="w-14 h-14 rounded-full bg-[#CAFF00] text-black flex items-center justify-center shadow-[0_0_25px_rgba(202,255,0,0.4)] border border-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#CAFF00]"
-      >
-        {isOpen ? (
-          <X size={22} className="stroke-[2.5]" />
-        ) : (
-          <div className="flex flex-col items-center justify-center">
-            <span className="font-mono font-black text-sm tracking-tighter leading-none">BP</span>
-            <span className="font-mono text-[8px] font-bold tracking-widest leading-none mt-0.5">CHAT</span>
-          </div>
-        )}
-      </motion.button>
-
-      {/* Slide-Up Chat Panel (350×500px, dark #0D0D0D, 1px lime border, rounded-top 8px) */}
+    <>
+      {/* ── Slide-Up Chat Panel (Above Button, Anchored Bottom-Right) ──── */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute bottom-18 right-0 w-[350px] h-[500px] max-w-[calc(100vw-2rem)] bg-[#0D0D0D] border border-[#CAFF00]/40 rounded-t-lg rounded-b-md shadow-[0_12px_45px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden z-50"
+            key="chat-panel"
+            variants={panelVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
+            className="fixed bottom-24 right-4 sm:right-6 w-[360px] h-[520px] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-7rem)] bg-[#0D0D0D] border border-[#CAFF00]/40 rounded-t-xl rounded-b-md shadow-[0_20px_60px_rgba(0,0,0,0.9)] flex flex-col overflow-hidden z-50"
+            style={{ transformOrigin: 'bottom right' }}
           >
-            {/* Panel Header */}
+            {/* Header */}
             <div className="px-4 py-3 bg-[#111111] border-b border-[#1f1f1f] flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <span className="h-2 w-2 rounded-full bg-[#CAFF00] animate-pulse" />
@@ -144,7 +140,7 @@ export const BrandPulseChatbot: React.FC = () => {
               <button
                 onClick={() => setIsOpen(false)}
                 aria-label="Close chat"
-                className="p-1 text-[#888888] hover:text-[#CAFF00] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#CAFF00]"
+                className="p-1 text-[#888888] hover:text-[#CAFF00] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#CAFF00] rounded"
               >
                 <X size={16} />
               </button>
@@ -160,19 +156,29 @@ export const BrandPulseChatbot: React.FC = () => {
                     className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}
                   >
                     <div
-                      className={`max-w-[85%] p-3 rounded-xl leading-relaxed ${
+                      className={`max-w-[88%] p-3 rounded-xl leading-relaxed ${
                         isUser
                           ? 'bg-[#CAFF00] text-black font-medium'
                           : 'bg-[#161616] border border-[#242424] text-[#ededed]'
                       }`}
                     >
                       {!isUser && (
-                        <div className="flex items-center space-x-1.5 mb-1 text-[10px] font-mono text-[#CAFF00]">
+                        <div className="flex items-center space-x-1.5 mb-1.5 text-[10px] font-mono text-[#CAFF00]">
                           <Bot size={12} />
                           <span>BrandPulse</span>
                         </div>
                       )}
                       <p className="whitespace-pre-wrap">{msg.text}</p>
+
+                      {!isUser && msg.cta && (
+                        <button
+                          onClick={() => handleCtaClick(msg.cta)}
+                          className="mt-2.5 inline-flex items-center space-x-1.5 px-2.5 py-1 bg-[#CAFF00] text-black font-mono font-bold text-[10px] rounded hover:bg-white transition-colors"
+                        >
+                          <span>[ {msg.cta.toUpperCase()} ]</span>
+                          <ArrowUpRight size={11} />
+                        </button>
+                      )}
                     </div>
                     <span className="text-[9px] font-mono text-[#555555] mt-1 px-1">
                       {msg.timestamp}
@@ -207,7 +213,7 @@ export const BrandPulseChatbot: React.FC = () => {
 
             {/* Bottom Quick Book a Call Bar */}
             <div className="px-3 py-1.5 bg-[#0e0e0e] border-t border-[#1a1a1a] flex items-center justify-between">
-              <span className="font-mono text-[10px] text-[#777777]">Want to speak directly?</span>
+              <span className="font-mono text-[10px] text-[#777777]">Speak with leadership</span>
               <button
                 onClick={() => {
                   setIsOpen(false)
@@ -253,6 +259,26 @@ export const BrandPulseChatbot: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+
+      {/* ── Floating Trigger Button (56px Circle, Bottom Right) ────────── */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <motion.button
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.94 }}
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? "Close chat" : "Open chat with BrandPulse"}
+          className="w-14 h-14 rounded-full bg-[#CAFF00] text-black flex items-center justify-center shadow-[0_0_25px_rgba(202,255,0,0.4)] border border-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#CAFF00]"
+        >
+          {isOpen ? (
+            <X size={22} className="stroke-[2.5]" />
+          ) : (
+            <div className="flex flex-col items-center justify-center pointer-events-none">
+              <span className="font-mono font-black text-sm tracking-tighter leading-none">BP</span>
+              <span className="font-mono text-[8px] font-bold tracking-widest leading-none mt-0.5">CHAT</span>
+            </div>
+          )}
+        </motion.button>
+      </div>
+    </>
   )
 }

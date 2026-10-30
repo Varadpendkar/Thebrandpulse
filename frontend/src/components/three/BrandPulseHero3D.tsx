@@ -1,21 +1,11 @@
-import React, { useRef, useMemo, useEffect, useState } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import React, { useRef, useState, useEffect } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+import { MeshTransmissionMaterial } from '@react-three/drei'
+import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
-interface OrbitSphereConfig {
-  a: number
-  b: number
-  c: number
-  speed: number
-  phase: number
-  radius: number
-}
-
-function HeroInterpenetratingCore({
+function HeroObject({
   isMobile,
   mousePos,
 }: {
@@ -23,188 +13,124 @@ function HeroInterpenetratingCore({
   mousePos: React.MutableRefObject<{ x: number; y: number }>
 }) {
   const groupRef = useRef<THREE.Group>(null)
-  const innerTorusRef = useRef<THREE.Mesh>(null)
-  const outerOctaRef = useRef<THREE.Mesh>(null)
-  const spheresRef = useRef<THREE.Group>(null)
+  const torusRef = useRef<THREE.Mesh>(null)
+  const octaRef = useRef<THREE.Mesh>(null)
 
-  // Spring smoothed cursor rotation
+  // Cursor rotation interpolation state (stored in ref to prevent re-renders)
   const curRot = useRef({ x: 0, y: 0 })
 
-  // 6 Orbiting sphere configs with varied elliptical axes, speeds, and phases
-  const sphereConfigs = useMemo<OrbitSphereConfig[]>(
-    () => [
-      { a: 2.2, b: 2.0, c: 0.8, speed: 0.7, phase: 0.0, radius: 0.09 },
-      { a: 2.4, b: 1.8, c: -0.6, speed: -0.55, phase: 1.1, radius: 0.07 },
-      { a: 2.6, b: 2.2, c: 0.5, speed: 0.8, phase: 2.2, radius: 0.1 },
-      { a: 2.1, b: 2.5, c: -0.7, speed: -0.65, phase: 3.3, radius: 0.08 },
-      { a: 2.5, b: 1.9, c: 0.9, speed: 0.6, phase: 4.4, radius: 0.09 },
-      { a: 2.3, b: 2.3, c: -0.5, speed: -0.75, phase: 5.5, radius: 0.07 },
-    ],
-    []
-  )
+  useFrame((_, delta) => {
+    // 1. Direct ref mutation with frame-delta for silky smooth 60/120fps rotation
+    if (torusRef.current) {
+      torusRef.current.rotation.y += delta * 0.25
+      torusRef.current.rotation.z += delta * 0.08
+    }
 
-  // MeshPhysicalMaterial — dark glass per masterplan
-  // transmission: 0.6, roughness: 0.1, metalness: 0.9
-  const darkGlassMaterial = useMemo(
-    () =>
-      new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color('#0d0d0d'),
-        emissive: new THREE.Color('#caff00'),
-        emissiveIntensity: 0.15,
-        transmission: 0.6,
-        roughness: 0.1,
-        metalness: 0.9,
-        transparent: true,
-        opacity: 0.92,
-        ior: 1.5,
-        clearcoat: 0.8,
-        clearcoatRoughness: 0.15,
-      }),
-    []
-  )
+    if (octaRef.current) {
+      octaRef.current.rotation.x += delta * 0.15
+      octaRef.current.rotation.y -= delta * 0.2
+    }
 
-  const octaWireMaterial = useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
-        color: new THREE.Color('#141414'),
-        emissive: new THREE.Color('#caff00'),
-        emissiveIntensity: 0.35,
-        roughness: 0.2,
-        metalness: 0.8,
-        wireframe: true,
-      }),
-    []
-  )
-
-  const sphereMaterial = useMemo(
-    () =>
-      new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color('#161616'),
-        emissive: new THREE.Color('#caff00'),
-        emissiveIntensity: 0.6,
-        roughness: 0.15,
-        metalness: 0.85,
-      }),
-    []
-  )
-
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime()
-
+    // 2. Cursor follow with gentle lerp
     if (groupRef.current) {
-      // Continuous slow rotation around yAxis: 0.003 per frame
-      groupRef.current.rotation.y += 0.003
+      const targetX = mousePos.current.y * 0.35
+      const targetY = mousePos.current.x * 0.45
+      curRot.current.x += (targetX - curRot.current.x) * 0.05
+      curRot.current.y += (targetY - curRot.current.y) * 0.05
 
-      // Cursor: rotation follows cursor with lerp 0.05
-      const targetRotX = mousePos.current.y * 0.35
-      const targetRotY = mousePos.current.x * 0.45
-      curRot.current.x += (targetRotX - curRot.current.x) * 0.05
-      curRot.current.y += (targetRotY - curRot.current.y) * 0.05
-
-      groupRef.current.rotation.x = curRot.current.x + Math.sin(time * 0.4) * 0.05
-      groupRef.current.rotation.z = Math.cos(time * 0.3) * 0.04
-    }
-
-    // Counter-rotate the interpenetrating octahedron slightly
-    if (outerOctaRef.current) {
-      outerOctaRef.current.rotation.x = time * 0.15
-      outerOctaRef.current.rotation.z = -time * 0.12
-    }
-
-    // Update orbiting spheres along elliptical paths
-    if (spheresRef.current && !isMobile) {
-      const children = spheresRef.current.children
-      for (let i = 0; i < children.length; i++) {
-        const conf = sphereConfigs[i]
-        if (!conf) continue
-        const child = children[i] as THREE.Mesh
-        const angle = time * conf.speed + conf.phase
-        child.position.x = Math.cos(angle) * conf.a
-        child.position.z = Math.sin(angle) * conf.b
-        child.position.y = Math.sin(angle * 1.3) * conf.c
-      }
+      groupRef.current.rotation.x = curRot.current.x
+      groupRef.current.rotation.y += delta * 0.08 + (curRot.current.y - groupRef.current.rotation.y) * 0.03
     }
   })
 
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
-      {/* 1. Core TorusKnotGeometry */}
-      <mesh
-        ref={innerTorusRef}
-        material={darkGlassMaterial}
-        castShadow
-        receiveShadow
-      >
+      {/* ── Torus knot — the energy ring ─────────────────────────── */}
+      <mesh ref={torusRef}>
         <torusKnotGeometry
           args={[
-            1.15, // radius
-            0.32, // tube
-            isMobile ? 64 : 128, // tubularSegments (halved on mobile)
-            isMobile ? 16 : 32,  // radialSegments
+            1.2,
+            0.35,
+            isMobile ? 80 : 180,
+            isMobile ? 16 : 32,
             2,
             3,
           ]}
         />
+        <MeshTransmissionMaterial
+          backside
+          samples={isMobile ? 2 : 4}
+          thickness={0.5}
+          roughness={0.05}
+          transmission={0.9}
+          ior={1.5}
+          chromaticAberration={0.06}
+          color="#000000"
+          emissive="#CAFF00"
+          emissiveIntensity={0.4}
+        />
       </mesh>
 
-      {/* 2. Interpenetrating OctahedronGeometry */}
-      <mesh
-        ref={outerOctaRef}
-        material={darkGlassMaterial}
-      >
-        <octahedronGeometry args={[1.9, isMobile ? 0 : 1]} />
+      {/* ── Octahedron star — crystal points ──────────────────────── */}
+      <mesh ref={octaRef} scale={1.8}>
+        <octahedronGeometry args={[1, 0]} />
+        <meshPhysicalMaterial
+          color="#050505"
+          emissive="#CAFF00"
+          emissiveIntensity={0.6}
+          metalness={0.95}
+          roughness={0.05}
+          wireframe={true}
+        />
       </mesh>
 
-      {/* Subtle outer wireframe octahedron contour */}
-      <mesh
-        rotation={[Math.PI / 4, 0, Math.PI / 4]}
-        material={octaWireMaterial}
-      >
-        <octahedronGeometry args={[2.05, 0]} />
-      </mesh>
+      {/* ── Center Point Light — intense lime core glow ──────────── */}
+      <pointLight color="#CAFF00" intensity={12} distance={8} />
 
-      {/* 3. Orbiting Spheres (removed on mobile) */}
-      {!isMobile && (
-        <group ref={spheresRef}>
-          {sphereConfigs.map((conf, idx) => (
-            <mesh key={idx} material={sphereMaterial}>
-              <sphereGeometry args={[conf.radius, 16, 16]} />
-            </mesh>
-          ))}
-        </group>
-      )}
+      {/* ── Orbiting Spheres — glass orbs around the core ────────── */}
+      {!isMobile && <OrbitingSpheres />}
     </group>
   )
 }
 
-function PostprocessingBloom() {
-  const { gl, scene, camera, size } = useThree()
+function OrbitingSpheres() {
+  const groupRef = useRef<THREE.Group>(null)
 
-  const composer = useMemo(() => {
-    const comp = new EffectComposer(gl)
-    const renderPass = new RenderPass(scene, camera)
-    comp.addPass(renderPass)
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime()
+    if (!groupRef.current) return
+    groupRef.current.rotation.y = t * 0.2
+    groupRef.current.rotation.x = Math.sin(t * 0.1) * 0.3
+  })
 
-    // UnrealBloomPass: threshold: 0.4, strength: 1.2, radius: 0.8 per masterplan
-    const bloomPass = new UnrealBloomPass(
-      new THREE.Vector2(size.width, size.height),
-      1.2, // strength
-      0.8, // radius
-      0.4  // threshold
-    )
-    comp.addPass(bloomPass)
-    return comp
-  }, [gl, scene, camera, size])
-
-  useEffect(() => {
-    composer.setSize(size.width, size.height)
-  }, [composer, size])
-
-  useFrame(() => {
-    composer.render()
-  }, 1)
-
-  return null
+  return (
+    <group ref={groupRef}>
+      {[...Array(6)].map((_, i) => {
+        const angle = (i / 6) * Math.PI * 2
+        const r = 2.5
+        return (
+          <mesh
+            key={i}
+            position={[
+              Math.cos(angle + i) * r,
+              Math.sin(i * 1.3) * 0.8,
+              Math.sin(angle + i) * r,
+            ]}
+          >
+            <sphereGeometry args={[0.08, 16, 16]} />
+            <MeshTransmissionMaterial
+              transmission={0.95}
+              roughness={0.0}
+              thickness={0.3}
+              color="#CAFF00"
+              emissive="#CAFF00"
+              emissiveIntensity={0.3}
+            />
+          </mesh>
+        )
+      })}
+    </group>
+  )
 }
 
 export const BrandPulseHero3D: React.FC = () => {
@@ -224,10 +150,9 @@ export const BrandPulseHero3D: React.FC = () => {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // Cursor tracker
+  // Normalized cursor tracker (-1 to 1)
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      // Normalized between -1 and 1
       const nx = (e.clientX / window.innerWidth) * 2 - 1
       const ny = -(e.clientY / window.innerHeight) * 2 + 1
       mousePos.current = { x: nx, y: ny }
@@ -237,8 +162,8 @@ export const BrandPulseHero3D: React.FC = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
-  // Mobile or Reduced Motion Fallback: static fallback image from Images / public
-  if (prefersReducedMotion || (isMobile && hasError)) {
+  // Static fallback for reduced motion or WebGL error
+  if (prefersReducedMotion || hasError) {
     return (
       <div className="absolute right-0 top-0 w-full lg:w-[55vw] h-full pointer-events-none flex items-center justify-center p-6">
         <img
@@ -258,8 +183,8 @@ export const BrandPulseHero3D: React.FC = () => {
       className="absolute right-0 top-0 w-full lg:w-[55vw] h-full pointer-events-none z-0 overflow-hidden"
     >
       <Canvas
-        camera={{ position: [0, 0, 5.6], fov: 42 }}
         dpr={[1, 1.5]}
+        camera={{ position: [0, 0, 5], fov: 45 }}
         gl={{
           alpha: true,
           antialias: true,
@@ -270,18 +195,21 @@ export const BrandPulseHero3D: React.FC = () => {
         }}
         onError={() => setHasError(true)}
       >
-        {/* Lighting per Phase 2 spec:
-            - One PointLight at position [2, 3, 2] color #CAFF00 intensity 8
-            - One ambient light at 0.2
-        */}
-        <ambientLight color="#ffffff" intensity={0.2} />
-        <pointLight position={[2, 3, 2]} color="#caff00" intensity={8} distance={15} />
+        <ambientLight intensity={0.15} />
+        <pointLight position={[2, 3, 2]} color="#CAFF00" intensity={8} distance={15} />
 
-        {/* Core Interpenetrating Sculpture */}
-        <HeroInterpenetratingCore isMobile={isMobile} mousePos={mousePos} />
+        {/* Hero Object with Torus Knot + Octahedron + Orbiting Spheres */}
+        <HeroObject isMobile={isMobile} mousePos={mousePos} />
 
-        {/* Postprocessing UnrealBloomPass */}
-        <PostprocessingBloom />
+        {/* Postprocessing Bloom */}
+        <EffectComposer>
+          <Bloom
+            luminanceThreshold={0.3}
+            intensity={1.4}
+            radius={0.9}
+            mipmapBlur
+          />
+        </EffectComposer>
       </Canvas>
     </div>
   )

@@ -149,3 +149,4 @@ export const WhyUs: React.FC = () => {
     </section>
   )
 }
+

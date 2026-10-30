@@ -2,11 +2,11 @@ import React, { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, PenTool, Terminal, TrendingUp } from 'lucide-react'
 import { useAppStore } from '../../store/useAppStore'
-import { ProcessShardScene } from '../three/ProcessShardScene'
-import { ScrollTrigger } from '../../lib/gsap'
+import { gsap, ScrollTrigger } from '../../lib/gsap'
 import { getLenis } from '../../lib/lenis'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
-interface ProcessStep {
+interface ProcessStepData {
   num: string
   code: string
   title: string
@@ -17,7 +17,7 @@ interface ProcessStep {
   bullets: string[]
 }
 
-const stepsData: ProcessStep[] = [
+const stepsData: ProcessStepData[] = [
   {
     num: '01',
     code: 'DISCOVER',
@@ -26,7 +26,11 @@ const stepsData: ProcessStep[] = [
     icon: Search,
     concept: 'SIGNAL DETECTOR',
     desc: 'We tear down assumptions and calculate exact financial ROI before writing a single line of code. We map operational frictions and prioritize what moves the P&L needle first.',
-    bullets: ['Friction mapping & workflow audit', 'Unit economics & ROI modeling', 'Milestone specifications & SLA']
+    bullets: [
+      'Friction mapping & workflow audit',
+      'Unit economics & ROI modeling',
+      'Milestone specifications & SLA',
+    ],
   },
   {
     num: '02',
@@ -36,7 +40,11 @@ const stepsData: ProcessStep[] = [
     icon: PenTool,
     concept: 'SYSTEM BLUEPRINT',
     desc: 'We construct an airtight technical and functional blueprint. We select the highest performance toolchains to eliminate vendor lock-in and prevent future technical debt.',
-    bullets: ['Data schema & security modeling', 'Component design system specs', 'Deliverable schedule with fixed pricing']
+    bullets: [
+      'Data schema & security modeling',
+      'Component design system specs',
+      'Deliverable schedule with fixed pricing',
+    ],
   },
   {
     num: '03',
@@ -46,7 +54,11 @@ const stepsData: ProcessStep[] = [
     icon: Terminal,
     concept: 'HARDENED ASSEMBLY',
     desc: 'We deliver an interactive working prototype running on test data within 14 days. Once validated, we harden it with production security, automated testing, and sub-second speed.',
-    bullets: ['Working prototype within 14 days', 'Type-safe, audited codebases', 'Comprehensive automated testing']
+    bullets: [
+      'Working prototype within 14 days',
+      'Type-safe, audited codebases',
+      'Comprehensive automated testing',
+    ],
   },
   {
     num: '04',
@@ -56,23 +68,31 @@ const stepsData: ProcessStep[] = [
     icon: TrendingUp,
     concept: 'EXPONENTIAL SCALE',
     desc: 'Zero-downtime deployment to production cloud infrastructure with live telemetry, automated monitoring, staff onboarding, and ongoing optimization to maximize bottom-line profit.',
-    bullets: ['Zero-downtime production deployment', 'Real-time telemetry & alerts', 'Continuous conversion & velocity tuning']
-  }
+    bullets: [
+      'Zero-downtime production deployment',
+      'Real-time telemetry & alerts',
+      'Continuous conversion & velocity tuning',
+    ],
+  },
 ]
 
 export const ProcessSection: React.FC = () => {
   const { setCursor, resetCursor } = useAppStore()
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const pinContainerRef = useRef<HTMLDivElement>(null)
+  const prefersReduced = useReducedMotion()
 
-  const [scrollProgress, setScrollProgress] = useState(0)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const streamRef = useRef<SVGLineElement>(null)
+  const parallaxRef = useRef<HTMLDivElement>(null)
+
   const [activeStep, setActiveStep] = useState(0)
+  const [scrollProgress, setScrollProgress] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
 
-  // Detect mobile screen width
+  // Detect mobile
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+      setIsMobile(window.innerWidth < 1024)
     }
     checkMobile()
     window.addEventListener('resize', checkMobile)
@@ -84,50 +104,85 @@ export const ProcessSection: React.FC = () => {
     if (!isMobile) return
     const timer = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % stepsData.length)
-    }, 3500)
+    }, 4000)
     return () => clearInterval(timer)
   }, [isMobile])
 
-  // ScrollTrigger desktop pinning & Lenis scrub
+  // Desktop horizontal pin and Living River scrub
   useEffect(() => {
-    if (isMobile) return
+    if (isMobile || prefersReduced) return
 
-    const triggerElement = sectionRef.current
-    const pinElement = pinContainerRef.current
-    if (!triggerElement || !pinElement) return
+    const section = sectionRef.current
+    const track = trackRef.current
+    if (!section || !track) return
 
-    const trigger = ScrollTrigger.create({
-      trigger: triggerElement,
-      start: 'top top',
-      end: '+=400%',
-      pin: pinElement,
-      scrub: 0.5,
-      anticipatePin: 1,
-      onUpdate: (self) => {
-        const prog = self.progress
-        setScrollProgress(prog)
-        const step = Math.min(Math.floor(prog * 4), 3)
-        setActiveStep(step)
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        pin: true,
+        scrub: 0.8, // smooth but responsive
+        start: 'top top',
+        end: '+=400%', // 4 steps × 100vh each
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const prog = self.progress
+          setScrollProgress(prog)
+
+          // 1. Drive the Living River SVG stream
+          if (streamRef.current) {
+            gsap.set(streamRef.current, {
+              strokeDashoffset: 1000 - prog * 1000,
+            })
+          }
+
+          // 2. Drive the Lenis counter-scrolling background parallax text
+          if (parallaxRef.current) {
+            gsap.set(parallaxRef.current, {
+              x: prog * -380,
+            })
+          }
+
+          // 3. Activate each step at 25% intervals
+          const step = Math.min(Math.floor(prog * 4), 3)
+          setActiveStep(step)
+        },
       },
     })
 
-    return () => {
-      trigger.kill()
-    }
-  }, [isMobile])
+    // Horizontal travel: slide the 400vw track by 75% so all 4 steps travel across viewport
+    tl.to(track, { xPercent: -75, ease: 'none' })
 
-  // Jump to specific step via smooth scroll
+    // Lenis scroll integration for subtle continuous parallax velocity
+    const lenis = getLenis()
+    const handleScroll = ({ scroll }: { scroll: number }) => {
+      if (parallaxRef.current) {
+        gsap.to(parallaxRef.current, {
+          x: `+=${scroll * -0.01}`,
+          duration: 0.2,
+          overwrite: 'auto',
+        })
+      }
+    }
+    lenis?.on('scroll', handleScroll)
+
+    return () => {
+      tl.kill()
+      lenis?.off('scroll', handleScroll)
+    }
+  }, [isMobile, prefersReduced])
+
+  // Step click navigation
   const handleStepJump = (idx: number) => {
     if (isMobile) {
       setActiveStep(idx)
       return
     }
 
-    const triggerElement = sectionRef.current
-    if (!triggerElement) return
+    const section = sectionRef.current
+    if (!section) return
 
     const lenis = getLenis()
-    const rect = triggerElement.getBoundingClientRect()
+    const rect = section.getBoundingClientRect()
     const scrollY = window.scrollY
     const triggerStart = scrollY + rect.top
     const stepTargetScroll = triggerStart + idx * window.innerHeight
@@ -147,158 +202,271 @@ export const ProcessSection: React.FC = () => {
       ref={sectionRef}
       aria-label="Delivery Process"
       className={`relative bg-[#050505] border-b border-[#141414] ${
-        isMobile ? 'py-20 px-6' : 'h-[500vh]'
+        isMobile ? 'py-20 px-6' : 'h-screen overflow-hidden'
       }`}
     >
-      {/* Pinned Viewport Container (Desktop 100vh) */}
+      {/* ── LENIS HAND EFFECT — Background parallax text moving counter to scroll ── */}
       <div
-        ref={pinContainerRef}
-        className={`${
-          isMobile
-            ? 'w-full'
-            : 'h-screen w-full flex flex-col justify-between overflow-hidden relative'
-        }`}
+        className="absolute inset-0 pointer-events-none overflow-hidden"
+        style={{ transform: 'translateZ(0)' }}
       >
-        {/* Top Header & HUD */}
-        <div className="max-w-[1400px] w-full mx-auto px-6 md:px-12 pt-6 md:pt-8 flex items-start justify-between z-20 pointer-events-none">
-          <div className="space-y-1">
-            <span className="font-mono text-xs tracking-widest text-[#caff00] uppercase block">
-              [ 05 / HOW WE DELIVER ]
-            </span>
-            <h2 className="font-display font-extrabold text-2xl md:text-4xl text-white tracking-tight">
-              THE 4-STAGE SPRINT
-            </h2>
-          </div>
+        <div
+          ref={parallaxRef}
+          data-lenis-parallax
+          className="absolute top-1/2 whitespace-nowrap font-mono text-[14vw] md:text-[200px] font-black opacity-[0.03] text-[#CAFF00] -translate-y-1/2 select-none"
+          style={{ left: '-5%' }}
+        >
+          DISCOVER — PLAN — BUILD — GROW — DISCOVER — PLAN — BUILD — GROW
+        </div>
+      </div>
 
-          {/* Step Counter Indicator */}
-          <div className="flex items-center space-x-3 font-mono text-xs">
-            <span className="text-[#caff00] font-bold">[ {activeData.num} / 04 ]</span>
-            <span className="hidden sm:inline text-[#888888]">{activeData.code}</span>
-          </div>
+      {/* ── CONNECTING LIVING RIVER SVG LINE ── */}
+      {!isMobile && (
+        <svg
+          className="absolute top-1/2 left-0 w-full -translate-y-1/2 pointer-events-none"
+          height="4"
+          viewBox="0 0 1400 4"
+          preserveAspectRatio="none"
+          style={{ zIndex: 10 }}
+        >
+          {/* Base inactive dim conduit */}
+          <line
+            x1="0"
+            y1="2"
+            x2="1400"
+            y2="2"
+            stroke="#1c1c1c"
+            strokeWidth="1.5"
+          />
+          {/* Active energized lime particle stream */}
+          <line
+            ref={streamRef}
+            x1="0"
+            y1="2"
+            x2="1400"
+            y2="2"
+            stroke="#CAFF00"
+            strokeWidth="2"
+            strokeDasharray="1000"
+            strokeDashoffset="1000"
+            opacity="0.75"
+          />
+        </svg>
+      )}
+
+      {/* ── TOP HUD HEADER (Pinned Top) ── */}
+      <div className="max-w-[1400px] w-full mx-auto px-6 md:px-12 pt-6 md:pt-10 flex items-start justify-between z-30 relative pointer-events-none">
+        <div className="space-y-1">
+          <span className="font-mono text-xs tracking-widest text-[#CAFF00] uppercase block">
+            [ 05 / HOW WE DELIVER ]
+          </span>
+          <h2 className="font-display font-black text-2xl md:text-4xl text-white tracking-tight uppercase">
+            THE 4-STAGE SPRINT
+          </h2>
         </div>
 
-        {/* Middle 65%: Instanced Shards Canvas (Desktop) or Mobile Visual */}
-        <div className={`relative w-full ${isMobile ? 'h-72 my-8' : 'flex-1 min-h-0'}`}>
-          {!isMobile ? (
-            <ProcessShardScene scrollProgress={scrollProgress} />
-          ) : (
-            <div className="w-full h-full bg-[#0a0a0a] border border-[#222222] rounded-xl flex flex-col items-center justify-center p-6 text-center relative overflow-hidden">
-              <div className="w-24 h-24 rounded-full border border-[#caff00]/50 border-dashed animate-spin-slow flex items-center justify-center mb-4">
-                <span className="font-mono text-xl font-bold text-[#caff00]">
-                  {activeData.num}
+        {/* Step Counter Indicator */}
+        <div className="flex items-center space-x-3 font-mono text-xs">
+          <span className="text-[#CAFF00] font-bold">
+            [ {activeData.num} / 04 ]
+          </span>
+          <span className="hidden sm:inline text-[#888888] uppercase tracking-wider">
+            {activeData.code}
+          </span>
+        </div>
+      </div>
+
+      {/* ── DESKTOP HORIZONTAL TRACK (400vw) ── */}
+      {!isMobile ? (
+        <div
+          ref={trackRef}
+          className="process-track flex h-full absolute inset-0 z-20 pointer-events-auto"
+          style={{ width: '400vw' }}
+        >
+          {stepsData.map((step, idx) => {
+            const isActive = activeStep === idx
+
+            return (
+              <div
+                key={step.num}
+                className={`relative flex flex-col justify-center px-12 md:px-24 w-screen h-full transition-all duration-700 select-none ${
+                  isActive ? 'opacity-100' : 'opacity-25 hover:opacity-50'
+                }`}
+              >
+                {/* Huge dim background number */}
+                <span
+                  aria-hidden="true"
+                  className="font-mono text-[22vw] font-black text-white/[0.04] absolute top-1/2 right-12 md:right-24 -translate-y-1/2 select-none pointer-events-none"
+                >
+                  {step.num}
                 </span>
-              </div>
-              <span className="font-mono text-[10px] text-[#caff00] tracking-widest uppercase">
-                {activeData.concept}
-              </span>
-              <span className="font-display font-bold text-base text-white mt-1">
-                {activeData.title}
-              </span>
-            </div>
-          )}
-        </div>
 
-        {/* Lower 35%: Synchronized Step Controls & Telemetry Panel */}
-        <div className="max-w-[1400px] w-full mx-auto px-6 md:px-12 pb-6 md:pb-8 z-20">
-          
-          {/* Active Step Details Card */}
-          <div className="p-6 md:p-8 bg-[#090909]/90 border border-[#1f1f1f] rounded-2xl backdrop-blur-md mb-6">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-              
-              {/* Step info (left 7 cols) */}
-              <div className="lg:col-span-7 space-y-3">
-                <div className="flex items-center space-x-3">
-                  <span className="font-mono text-xl font-bold text-[#caff00]">
-                    [ {activeData.num} ]
-                  </span>
-                  <span className="font-mono text-[11px] text-[#888888] bg-[#141414] px-2.5 py-0.5 rounded border border-[#222]">
-                    {activeData.duration}
-                  </span>
-                  <span className="font-mono text-[10px] text-[#caff00] tracking-wider uppercase border border-[#caff00]/30 px-2 py-0.5 rounded">
-                    {activeData.concept}
-                  </span>
+                <div className="max-w-3xl relative z-10">
+                  {/* Active Step Meta Tag */}
+                  <div className="flex items-center space-x-3 mb-4">
+                    <span
+                      className={`font-mono text-xs tracking-widest ${
+                        isActive ? 'text-[#CAFF00]' : 'text-white/40'
+                      }`}
+                    >
+                      [ {step.num} / {step.code} ]
+                    </span>
+                    <span className="font-mono text-[10px] text-[#888888] bg-[#111111] px-2.5 py-0.5 rounded border border-[#222]">
+                      {step.duration}
+                    </span>
+                    <span className="font-mono text-[9px] text-[#CAFF00]/80 tracking-wider uppercase border border-[#CAFF00]/25 px-2 py-0.5 rounded">
+                      {step.concept}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mb-4 tracking-tight leading-tight uppercase">
+                    {step.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="font-sans text-sm md:text-base text-[#999999] leading-relaxed mb-6">
+                    {step.desc}
+                  </p>
+
+                  {/* Details — Expand smoothly when active */}
+                  <div
+                    className={`overflow-hidden transition-all duration-500 ${
+                      isActive ? 'max-h-52 opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                  >
+                    <div className="p-4 bg-[#0a0a0a]/80 border border-[#1f1f1f] rounded-xl backdrop-blur-md space-y-2 max-w-xl">
+                      <span className="font-mono text-[9px] text-[#666] tracking-widest uppercase block mb-1">
+                        STAGE DELIVERABLES
+                      </span>
+                      {step.bullets.map((b, bIdx) => (
+                        <p
+                          key={bIdx}
+                          className="text-[#cccccc] font-mono text-xs flex items-center space-x-2"
+                        >
+                          <span className="text-[#CAFF00]">→</span>
+                          <span>{b}</span>
+                        </p>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeData.num}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.25 }}
-                  >
-                    <h3 className="font-display font-bold text-lg md:text-2xl text-white mb-2">
-                      {activeData.title}
-                    </h3>
-                    <p className="font-sans text-xs md:text-sm text-[#999999] leading-relaxed">
-                      {activeData.desc}
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
+                {/* Connecting glowing lime node on the river line */}
+                {isActive && (
+                  <div
+                    aria-hidden="true"
+                    className="absolute top-1/2 left-12 md:left-24 -translate-y-1/2 w-4 h-4 rounded-full bg-[#CAFF00] shadow-[0_0_24px_6px_rgba(202,255,0,0.7)] animate-pulse pointer-events-none"
+                  />
+                )}
               </div>
-
-              {/* Bullets (right 5 cols) */}
-              <div className="lg:col-span-5 space-y-2 border-t lg:border-t-0 lg:border-l border-[#1c1c1c] pt-4 lg:pt-0 lg:pl-6">
-                <span className="font-mono text-[10px] text-[#666666] tracking-widest uppercase block">
-                  STAGE MILESTONES
-                </span>
-                {activeData.bullets.map((bullet, bIdx) => (
-                  <div key={bIdx} className="flex items-center space-x-2 text-xs font-mono text-[#cccccc]">
-                    <span className="text-[#caff00]">›</span>
-                    <span>{bullet}</span>
-                  </div>
-                ))}
-              </div>
-
+            )
+          })}
+        </div>
+      ) : (
+        /* ── MOBILE ACCORDION / TAB FLOW ── */
+        <div className="mt-8 space-y-6">
+          <div className="p-6 bg-[#0a0a0a] border border-[#1f1f1f] rounded-2xl">
+            <div className="flex items-center space-x-2 mb-3">
+              <span className="font-mono text-sm font-bold text-[#CAFF00]">
+                [ {activeData.num} / {activeData.code} ]
+              </span>
+              <span className="font-mono text-[10px] text-[#888] bg-[#141414] px-2 py-0.5 rounded">
+                {activeData.duration}
+              </span>
             </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeData.num}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+              >
+                <h3 className="font-display font-bold text-xl text-white mb-2 uppercase">
+                  {activeData.title}
+                </h3>
+                <p className="font-sans text-xs text-[#999] leading-relaxed mb-4">
+                  {activeData.desc}
+                </p>
+                <div className="space-y-1.5 border-t border-[#1a1a1a] pt-3">
+                  {activeData.bullets.map((b, i) => (
+                    <div
+                      key={i}
+                      className="font-mono text-[11px] text-[#bbb] flex items-center space-x-2"
+                    >
+                      <span className="text-[#CAFF00]">›</span>
+                      <span>{b}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* 4 Interactive Phase Tabs */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-            {stepsData.map((step, idx) => {
-              const isActive = activeStep === idx
-
-              return (
-                <button
-                  key={step.num}
-                  onClick={() => handleStepJump(idx)}
-                  onMouseEnter={() => setCursor('hover', step.code)}
-                  onMouseLeave={resetCursor}
-                  aria-label={`Jump to stage ${step.num}: ${step.code}`}
-                  className={`p-3 md:p-4 rounded-xl border text-left transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00] ${
-                    isActive
-                      ? 'border-[#caff00] bg-[#12140a] shadow-[0_0_20px_rgba(202,255,0,0.15)]'
-                      : 'border-[#1c1c1c] bg-[#080808] hover:border-[#333333]'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className={`font-mono text-xs font-bold ${isActive ? 'text-[#caff00]' : 'text-[#666666]'}`}>
-                      [ {step.num} ]
-                    </span>
-                    <span className={`font-mono text-[9px] ${isActive ? 'text-white' : 'text-[#666666]'}`}>
-                      {step.code}
-                    </span>
-                  </div>
-                  <span className={`font-display font-semibold text-xs truncate block ${isActive ? 'text-white' : 'text-[#888888]'}`}>
-                    {step.title.split('&')[0]}
-                  </span>
-                </button>
-              )
-            })}
+          {/* Mobile Step Selectors */}
+          <div className="grid grid-cols-4 gap-2">
+            {stepsData.map((step, idx) => (
+              <button
+                key={step.num}
+                onClick={() => setActiveStep(idx)}
+                className={`py-2 px-1 text-center font-mono text-xs rounded border transition-colors ${
+                  activeStep === idx
+                    ? 'border-[#CAFF00] bg-[#12140a] text-[#CAFF00]'
+                    : 'border-[#1f1f1f] bg-[#080808] text-[#666]'
+                }`}
+              >
+                {step.num}
+              </button>
+            ))}
           </div>
+        </div>
+      )}
 
-          {/* Dynamic Horizontal Progress Bar Tracking Scroll Within Step */}
-          <div className="w-full h-1 bg-[#1a1a1a] rounded-full overflow-hidden relative">
-            <div
-              className="h-full bg-[#caff00] shadow-[0_0_10px_#caff00] transition-[width] duration-100 ease-out"
-              style={{
-                width: isMobile
-                  ? `${((activeStep + 1) / stepsData.length) * 100}%`
-                  : `${scrollProgress * 100}%`,
-              }}
-            />
+      {/* ── BOTTOM HUD CONTROLS & STREAM PROGRESS BAR ── */}
+      <div className="absolute bottom-6 left-0 right-0 max-w-[1400px] mx-auto px-6 md:px-12 z-30 pointer-events-auto">
+        {!isMobile && (
+          <div className="flex items-center justify-between gap-4 mb-3">
+            {/* Interactive Step Jump Buttons */}
+            <div className="flex items-center space-x-2">
+              {stepsData.map((step, idx) => {
+                const isActive = activeStep === idx
+                return (
+                  <button
+                    key={step.num}
+                    onClick={() => handleStepJump(idx)}
+                    onMouseEnter={() => setCursor('hover', step.code)}
+                    onMouseLeave={resetCursor}
+                    aria-label={`Jump to Stage ${step.num}: ${step.code}`}
+                    className={`px-3 py-1.5 rounded-md border font-mono text-[11px] transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#CAFF00] ${
+                      isActive
+                        ? 'border-[#CAFF00] bg-[#12140a] text-[#CAFF00] shadow-[0_0_15px_rgba(202,255,0,0.2)]'
+                        : 'border-[#1f1f1f] bg-[#090909]/80 text-[#777] hover:border-[#333]'
+                    }`}
+                  >
+                    [ {step.num} {step.code} ]
+                  </button>
+                )
+              })}
+            </div>
+
+            <span className="font-mono text-[10px] text-[#666] tracking-widest uppercase hidden md:inline">
+              SCROLL TO PROGRESS • LIVING RIVER
+            </span>
           </div>
+        )}
 
+        {/* Dynamic Glowing River Progress Bar */}
+        <div className="w-full h-1 bg-[#1a1a1a] rounded-full overflow-hidden relative">
+          <div
+            className="h-full bg-[#CAFF00] shadow-[0_0_12px_#CAFF00] transition-[width] duration-150 ease-out"
+            style={{
+              width: isMobile
+                ? `${((activeStep + 1) / stepsData.length) * 100}%`
+                : `${scrollProgress * 100}%`,
+            }}
+          />
         </div>
       </div>
     </section>

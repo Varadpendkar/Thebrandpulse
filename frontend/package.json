@@ -13,6 +13,7 @@
     "@react-spring/three": "^10.1.2",
     "@react-three/drei": "^9.115.0",
     "@react-three/fiber": "^8.17.10",
+    "@react-three/postprocessing": "^2.19.1",
     "@vercel/analytics": "^2.0.1",
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",

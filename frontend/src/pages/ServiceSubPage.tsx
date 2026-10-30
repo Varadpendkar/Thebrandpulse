@@ -6,6 +6,7 @@ import { getServiceBySlug, ServiceData, SERVICES } from '../data/services'
 import { useAppStore } from '../store/useAppStore'
 import { gsap, ScrollTrigger } from '../lib/gsap'
 import { useReducedMotion } from '../hooks/useReducedMotion'
+import { ServiceInteractiveScene } from '../components/three/ServiceScenes'
 
 export const ServiceSubPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -183,15 +184,24 @@ export const ServiceSubPage: React.FC = () => {
                   ))}
               </div>
 
-              {/* Core Anatomy Image */}
-              <div className="relative z-10 w-full max-w-[420px] h-full flex items-center justify-center">
-                <img
-                  src={service.image}
-                  alt={`${service.name} 3D Anatomy`}
-                  width={800}
-                  height={600}
-                  className="w-full h-auto object-contain filter drop-shadow-[0_0_35px_rgba(202,255,0,0.18)]"
-                />
+              {/* Core Interactive 3D Anatomy Scene (with static PNG fallback) */}
+              <div className="relative z-10 w-full h-[380px] sm:h-[440px] md:h-[480px] flex items-center justify-center">
+                {prefersReduced ? (
+                  <img
+                    src={service.image}
+                    alt={`${service.name} 3D Anatomy`}
+                    width={800}
+                    height={600}
+                    className="w-full h-auto max-w-[420px] object-contain filter drop-shadow-[0_0_35px_rgba(202,255,0,0.18)]"
+                  />
+                ) : (
+                  <>
+                    <ServiceInteractiveScene slug={service.slug} />
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 font-mono text-[9px] text-[#CAFF00]/70 tracking-widest uppercase pointer-events-none bg-black/60 px-2 py-0.5 rounded border border-[#CAFF00]/20">
+                      [ DRAG TO ROTATE • HOVER NODES ]
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* Right Floating Component Callouts */}
@@ -533,3 +543,4 @@ export const ServiceSubPage: React.FC = () => {
     </div>
   )
 }
+

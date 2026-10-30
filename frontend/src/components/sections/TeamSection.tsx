@@ -28,7 +28,7 @@ const headingVariants = {
 export function TeamSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const cardsWrapRef = useRef<HTMLDivElement>(null)
-  const [activeId, setActiveId] = useState<string>("atharva")
+  const [activeId, setActiveId] = useState<string | null>(null)
   const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
   // ── ScrollTrigger: stagger cards in on scroll ─────────────────
@@ -64,7 +64,7 @@ export function TeamSection() {
 
   // ── Border glow pulse on active card change ───────────────────
   useEffect(() => {
-    if (prefersReduced) return
+    if (prefersReduced || !activeId) return
     const activeCard = sectionRef.current?.querySelector(
       `[data-card-id="${activeId}"]`
     ) as HTMLElement | null
@@ -194,6 +194,7 @@ export function TeamSection() {
                   index={index}
                   isActive={activeId === member.id}
                   onActivate={setActiveId}
+                  onDeactivate={() => setActiveId(null)}
                 />
               </div>
             ))}

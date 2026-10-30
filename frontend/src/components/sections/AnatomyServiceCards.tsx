@@ -213,3 +213,4 @@ export const AnatomyServiceCards: React.FC = () => {
     </section>
   )
 }
+

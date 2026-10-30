@@ -1,0 +1,51 @@
+{
+  "intents": [
+    {
+      "keywords": ["ai", "artificial", "intelligence", "automation", "bot", "llm", "agent", "machine learning"],
+      "response": "Our AI Solutions help your business automate repetitive tasks, qualify leads, and extract insights from data — all running 24/7 without a human. Want to see how it could work for your business? Book a free call.",
+      "cta": "Book a Call"
+    },
+    {
+      "keywords": ["marketing", "digital", "social", "instagram", "ads", "seo", "growth", "campaign"],
+      "response": "We build marketing systems that get your business found online and turn visitors into paying customers. No vanity metrics — just real revenue results.",
+      "cta": "See Marketing Services"
+    },
+    {
+      "keywords": ["website", "web", "build", "product", "app", "platform", "software", "development"],
+      "response": "We build websites and web products from scratch — fast, modern, and designed to convert visitors. We handle everything from design to launch.",
+      "cta": "See Product Building"
+    },
+    {
+      "keywords": ["erp", "operations", "manage", "system", "run", "inventory", "supply"],
+      "response": "Our ERP systems let you manage your entire business from one dashboard — inventory, finance, HR, and reporting all connected.",
+      "cta": "See ERP Services"
+    },
+    {
+      "keywords": ["crm", "customer", "client", "relationship", "sales", "pipeline", "leads"],
+      "response": "Our CRM systems make sure you never lose track of a client conversation, follow-up, or deal opportunity.",
+      "cta": "See CRM Services"
+    },
+    {
+      "keywords": ["consult", "strategy", "plan", "advice", "help decide", "consulting", "roadmap"],
+      "response": "Not sure what your business needs? Our strategy consulting sessions map out exactly what to build before you spend a rupee.",
+      "cta": "Book Strategy Session"
+    },
+    {
+      "keywords": ["price", "cost", "how much", "budget", "rupee", "pricing", "quote", "rate"],
+      "response": "Every project is scoped specifically for your business with fixed milestones and zero surprises. We'll give you a clear proposal on your first call — no hidden costs.",
+      "cta": "Book a Free Call"
+    },
+    {
+      "keywords": ["team", "who", "people", "founders", "engineers", "atharva", "varad", "tanmay", "om"],
+      "response": "We're a 4-person team of specialists — a developer, a FinTech consultant, a data scientist, and a business development lead. Small team, serious output.",
+      "cta": "Meet the Team"
+    },
+    {
+      "keywords": ["call", "book", "meeting", "contact", "schedule", "talk", "demo"],
+      "response": "You can schedule a direct discovery call with our partners anytime. We'll review your objectives, identify bottlenecks, and recommend concrete solutions.",
+      "cta": "Book a Free Call"
+    }
+  ],
+  "fallback": "Great question! The best way to get a specific answer is to book a quick 20-minute call with us — completely free. We'll understand your business and tell you exactly what would help.",
+  "greeting": "Hi! I'm the BrandPulse assistant. Ask me anything about our services, or type 'book a call' to get started."
+}

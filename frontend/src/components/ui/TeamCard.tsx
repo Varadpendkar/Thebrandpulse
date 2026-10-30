@@ -18,9 +18,10 @@ interface TeamCardProps {
   index: number
   isActive: boolean
   onActivate: (id: string) => void
+  onDeactivate: () => void
 }
 
-export function TeamCard({ member, index, isActive, onActivate }: TeamCardProps) {
+export function TeamCard({ member, index, isActive, onActivate, onDeactivate }: TeamCardProps) {
   const cardRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
   const glowRef = useRef<HTMLDivElement>(null)
@@ -115,6 +116,8 @@ export function TeamCard({ member, index, isActive, onActivate }: TeamCardProps)
       tabIndex={0}
       aria-pressed={isActive}
       aria-label={`${member.name} — ${member.role}`}
+      onMouseEnter={() => onActivate(member.id)}
+      onMouseLeave={onDeactivate}
       onClick={() => onActivate(member.id)}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {

@@ -485,3 +485,4 @@ export const SERVICES: ServiceData[] = [
 export const getServiceBySlug = (slug: string): ServiceData | undefined => {
   return SERVICES.find((s) => s.slug === slug)
 }
+
