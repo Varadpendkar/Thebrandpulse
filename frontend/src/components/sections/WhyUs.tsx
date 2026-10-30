@@ -8,19 +8,19 @@ export const WhyUs: React.FC = () => {
 
   const stats = [
     {
-      value: '3.8x',
-      label: 'OPERATIONAL VELOCITY GAIN',
-      sublabel: 'Faster turnaround on customer requests, proposals, and pipeline closing.',
+      value: '$1.4M',
+      label: 'CLOUD & API SAVINGS ELIMINATED',
+      sublabel: 'Wasteful compute, redundant toolchains, and inefficient token spend eliminated.',
     },
     {
-      value: '62%',
-      label: 'BACK-OFFICE COST REDUCTION',
-      sublabel: 'Eliminated manual copy-pasting, invoice errors, and administrative friction.',
+      value: '45+',
+      label: 'HIGH-CONVICTION AUDITS DELIVERED',
+      sublabel: 'Deep architectural feasibility evaluations executed for venture-backed founders.',
     },
     {
       value: '100%',
-      label: 'PRODUCTION SUCCESS RATE',
-      sublabel: 'Every single system we engineer deploys to live revenue generation.',
+      label: 'INVESTOR DILIGENCE CLEARANCE',
+      sublabel: 'Every single BrandPulse client passed technical diligence from institutional VCs & PEs.',
     },
   ]
 

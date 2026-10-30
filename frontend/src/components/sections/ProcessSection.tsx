@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Search, PenTool, Terminal, TrendingUp } from 'lucide-react'
+import { Search, PenTool, Terminal, TrendingUp, ArrowDown } from 'lucide-react'
 import { useAppStore } from '../../store/useAppStore'
 import { gsap, ScrollTrigger } from '../../lib/gsap'
 import { getLenis } from '../../lib/lenis'
@@ -21,57 +20,57 @@ const stepsData: ProcessStepData[] = [
   {
     num: '01',
     code: 'DISCOVER',
-    title: 'BOTTLENECK & ROI DISCOVERY',
+    title: 'DEEP TECHNICAL DISCOVERY',
     duration: 'WEEK 01',
     icon: Search,
     concept: 'SIGNAL DETECTOR',
-    desc: 'We tear down assumptions and calculate exact financial ROI before writing a single line of code. We map operational frictions and prioritize what moves the P&L needle first.',
+    desc: 'Deep-dive interviews with leadership, inspection of all repositories, databases, architecture schemas, and third-party vendor contracts.',
     bullets: [
-      'Friction mapping & workflow audit',
-      'Unit economics & ROI modeling',
-      'Milestone specifications & SLA',
+      'Leadership & stakeholder deep-dive interviews',
+      'Codebase & database architecture inspection',
+      'Third-party toolchain & vendor contract review',
     ],
   },
   {
     num: '02',
     code: 'PLAN',
-    title: 'STRATEGIC ARCHITECTURE BLUEPRINT',
+    title: 'DIAGNOSTIC SCORECARD',
     duration: 'WEEK 02',
     icon: PenTool,
     concept: 'SYSTEM BLUEPRINT',
-    desc: 'We construct an airtight technical and functional blueprint. We select the highest performance toolchains to eliminate vendor lock-in and prevent future technical debt.',
+    desc: 'Honest executive report on architecture health, engineering velocity, cybersecurity vulnerabilities, and hidden cloud expenses.',
     bullets: [
-      'Data schema & security modeling',
-      'Component design system specs',
-      'Deliverable schedule with fixed pricing',
+      'Architecture health & scalability report',
+      'Security gaps & vulnerability assessment',
+      'Cloud bill & token cost latency profiling',
     ],
   },
   {
     num: '03',
     code: 'BUILD',
-    title: '14-DAY PROTOTYPE TO PRODUCTION',
-    duration: 'WEEKS 03 - 05',
+    title: 'REMEDIATION ROADMAP',
+    duration: 'WEEK 03',
     icon: Terminal,
     concept: 'HARDENED ASSEMBLY',
-    desc: 'We deliver an interactive working prototype running on test data within 14 days. Once validated, we harden it with production security, automated testing, and sub-second speed.',
+    desc: 'Prioritized actionable sprints to fix critical bottlenecks, eliminate technical debt, and establish high-velocity production cadence.',
     bullets: [
-      'Working prototype within 14 days',
-      'Type-safe, audited codebases',
-      'Comprehensive automated testing',
+      'Prioritized remediation sprint schedule',
+      '14-day working prototype delivery',
+      'Automated testing & type-safe deployment',
     ],
   },
   {
     num: '04',
     code: 'GROW',
-    title: 'LAUNCH, TELEMETRY & COMPOUNDING SCALE',
-    duration: 'CONTINUOUS',
+    title: 'ONGOING STRATEGIC PARTNERSHIP',
+    duration: 'MONTHLY',
     icon: TrendingUp,
     concept: 'EXPONENTIAL SCALE',
-    desc: 'Zero-downtime deployment to production cloud infrastructure with live telemetry, automated monitoring, staff onboarding, and ongoing optimization to maximize bottom-line profit.',
+    desc: 'Bi-weekly executive advisory calls and on-demand architecture guidance during high-stakes growth inflection points and investor diligence.',
     bullets: [
-      'Zero-downtime production deployment',
-      'Real-time telemetry & alerts',
-      'Continuous conversion & velocity tuning',
+      'Bi-weekly partner advisory reviews',
+      'On-demand architecture & hiring guidance',
+      'Continuous conversion & cloud cost tuning',
     ],
   },
 ]
@@ -89,7 +88,7 @@ export const ProcessSection: React.FC = () => {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
 
-  // Detect mobile
+  // Detect mobile screen (< 1024px)
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024)
@@ -98,15 +97,6 @@ export const ProcessSection: React.FC = () => {
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
-
-  // Auto-advance on mobile
-  useEffect(() => {
-    if (!isMobile) return
-    const timer = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % stepsData.length)
-    }, 4000)
-    return () => clearInterval(timer)
-  }, [isMobile])
 
   // Desktop horizontal pin and Living River scrub
   useEffect(() => {
@@ -120,39 +110,37 @@ export const ProcessSection: React.FC = () => {
       scrollTrigger: {
         trigger: section,
         pin: true,
-        scrub: 0.8, // smooth but responsive
+        scrub: 0.8,
         start: 'top top',
-        end: '+=400%', // 4 steps × 100vh each
+        end: '+=400%',
         anticipatePin: 1,
         onUpdate: (self) => {
           const prog = self.progress
           setScrollProgress(prog)
 
-          // 1. Drive the Living River SVG stream
+          // 1. Living River SVG line stream progress
           if (streamRef.current) {
             gsap.set(streamRef.current, {
               strokeDashoffset: 1000 - prog * 1000,
             })
           }
 
-          // 2. Drive the Lenis counter-scrolling background parallax text
+          // 2. Lenis counter-scrolling background parallax text
           if (parallaxRef.current) {
             gsap.set(parallaxRef.current, {
               x: prog * -380,
             })
           }
 
-          // 3. Activate each step at 25% intervals
+          // 3. Activate step
           const step = Math.min(Math.floor(prog * 4), 3)
           setActiveStep(step)
         },
       },
     })
 
-    // Horizontal travel: slide the 400vw track by 75% so all 4 steps travel across viewport
     tl.to(track, { xPercent: -75, ease: 'none' })
 
-    // Lenis scroll integration for subtle continuous parallax velocity
     const lenis = getLenis()
     const handleScroll = ({ scroll }: { scroll: number }) => {
       if (parallaxRef.current) {
@@ -171,7 +159,7 @@ export const ProcessSection: React.FC = () => {
     }
   }, [isMobile, prefersReduced])
 
-  // Step click navigation
+  // Step click navigation on desktop
   const handleStepJump = (idx: number) => {
     if (isMobile) {
       setActiveStep(idx)
@@ -201,11 +189,11 @@ export const ProcessSection: React.FC = () => {
       id="process"
       ref={sectionRef}
       aria-label="Delivery Process"
-      className={`relative bg-[#050505] border-b border-[#141414] ${
-        isMobile ? 'py-20 px-6' : 'h-screen overflow-hidden'
+      className={`relative bg-[#050505] border-b border-[#141414] overflow-hidden ${
+        isMobile ? 'py-20 px-6 sm:px-8' : 'h-screen'
       }`}
     >
-      {/* ── LENIS HAND EFFECT — Background parallax text moving counter to scroll ── */}
+      {/* ── Background parallax text moving counter to scroll ── */}
       <div
         className="absolute inset-0 pointer-events-none overflow-hidden"
         style={{ transform: 'translateZ(0)' }}
@@ -220,7 +208,7 @@ export const ProcessSection: React.FC = () => {
         </div>
       </div>
 
-      {/* ── CONNECTING LIVING RIVER SVG LINE ── */}
+      {/* ── CONNECTING LIVING RIVER SVG LINE (Desktop only) ── */}
       {!isMobile && (
         <svg
           className="absolute top-1/2 left-0 w-full -translate-y-1/2 pointer-events-none"
@@ -229,7 +217,6 @@ export const ProcessSection: React.FC = () => {
           preserveAspectRatio="none"
           style={{ zIndex: 10 }}
         >
-          {/* Base inactive dim conduit */}
           <line
             x1="0"
             y1="2"
@@ -238,7 +225,6 @@ export const ProcessSection: React.FC = () => {
             stroke="#1c1c1c"
             strokeWidth="1.5"
           />
-          {/* Active energized lime particle stream */}
           <line
             ref={streamRef}
             x1="0"
@@ -254,23 +240,23 @@ export const ProcessSection: React.FC = () => {
         </svg>
       )}
 
-      {/* ── TOP HUD HEADER (Pinned Top) ── */}
-      <div className="max-w-[1400px] w-full mx-auto px-6 md:px-12 pt-6 md:pt-10 flex items-start justify-between z-30 relative pointer-events-none">
+      {/* ── TOP HUD HEADER ── */}
+      <div className="max-w-[1400px] w-full mx-auto md:px-12 pt-4 md:pt-10 flex items-start justify-between z-30 relative pointer-events-none mb-8 lg:mb-0">
         <div className="space-y-1">
           <span className="font-mono text-xs tracking-widest text-[#CAFF00] uppercase block">
-            [ 05 / HOW WE DELIVER ]
+            [ 05 / METHODOLOGY ]
           </span>
-          <h2 className="font-display font-black text-2xl md:text-4xl text-white tracking-tight uppercase">
-            THE 4-STAGE SPRINT
+          <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white tracking-tight uppercase">
+            HOW WE BUILD THIS FOR YOU
           </h2>
         </div>
 
         {/* Step Counter Indicator */}
-        <div className="flex items-center space-x-3 font-mono text-xs">
+        <div className="hidden sm:flex items-center space-x-3 font-mono text-xs">
           <span className="text-[#CAFF00] font-bold">
             [ {activeData.num} / 04 ]
           </span>
-          <span className="hidden sm:inline text-[#888888] uppercase tracking-wider">
+          <span className="text-[#888888] uppercase tracking-wider">
             {activeData.code}
           </span>
         </div>
@@ -302,7 +288,6 @@ export const ProcessSection: React.FC = () => {
                 </span>
 
                 <div className="max-w-3xl relative z-10">
-                  {/* Active Step Meta Tag */}
                   <div className="flex items-center space-x-3 mb-4">
                     <span
                       className={`font-mono text-xs tracking-widest ${
@@ -319,17 +304,14 @@ export const ProcessSection: React.FC = () => {
                     </span>
                   </div>
 
-                  {/* Title */}
                   <h3 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mb-4 tracking-tight leading-tight uppercase">
                     {step.title}
                   </h3>
 
-                  {/* Description */}
                   <p className="font-sans text-sm md:text-base text-[#999999] leading-relaxed mb-6">
                     {step.desc}
                   </p>
 
-                  {/* Details — Expand smoothly when active */}
                   <div
                     className={`overflow-hidden transition-all duration-500 ${
                       isActive ? 'max-h-52 opacity-100' : 'max-h-0 opacity-0'
@@ -352,7 +334,6 @@ export const ProcessSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Connecting glowing lime node on the river line */}
                 {isActive && (
                   <div
                     aria-hidden="true"
@@ -364,71 +345,65 @@ export const ProcessSection: React.FC = () => {
           })}
         </div>
       ) : (
-        /* ── MOBILE ACCORDION / TAB FLOW ── */
-        <div className="mt-8 space-y-6">
-          <div className="p-6 bg-[#0a0a0a] border border-[#1f1f1f] rounded-2xl">
-            <div className="flex items-center space-x-2 mb-3">
-              <span className="font-mono text-sm font-bold text-[#CAFF00]">
-                [ {activeData.num} / {activeData.code} ]
-              </span>
-              <span className="font-mono text-[10px] text-[#888] bg-[#141414] px-2 py-0.5 rounded">
-                {activeData.duration}
-              </span>
-            </div>
+        /* ── MOBILE VERTICAL STACK (Full Width, Vertical Continuity, Zero Overflow) ── */
+        <div className="max-w-[700px] mx-auto w-full flex flex-col space-y-6 relative z-20">
+          {stepsData.map((step, idx) => (
+            <div key={step.num} className="relative">
+              <div className="w-full bg-[#0a0a0a] border border-[#1f1f1f] border-l-2 border-l-[#CAFF00] rounded-xl p-6 pl-5 space-y-4 shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
+                {/* Step Top Row: Number label at top-left + Duration badge */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2.5">
+                    <span className="font-mono text-xs font-bold text-[#CAFF00] tracking-wider">
+                      [ {step.num} ]
+                    </span>
+                    <span className="font-mono text-[10px] text-[#888888] tracking-widest uppercase">
+                      {step.code}
+                    </span>
+                  </div>
+                  <span className="font-mono text-[10px] text-[#CAFF00] bg-[#14180a] border border-[#CAFF00]/30 px-2.5 py-0.5 rounded font-semibold">
+                    {step.duration}
+                  </span>
+                </div>
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeData.num}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.25 }}
-              >
-                <h3 className="font-display font-bold text-xl text-white mb-2 uppercase">
-                  {activeData.title}
+                {/* Title */}
+                <h3 className="font-display font-bold text-lg sm:text-xl text-white uppercase leading-snug">
+                  {step.title}
                 </h3>
-                <p className="font-sans text-xs text-[#999] leading-relaxed mb-4">
-                  {activeData.desc}
+
+                {/* Description */}
+                <p className="font-sans text-xs sm:text-sm text-[#999999] leading-relaxed">
+                  {step.desc}
                 </p>
-                <div className="space-y-1.5 border-t border-[#1a1a1a] pt-3">
-                  {activeData.bullets.map((b, i) => (
-                    <div
-                      key={i}
-                      className="font-mono text-[11px] text-[#bbb] flex items-center space-x-2"
-                    >
-                      <span className="text-[#CAFF00]">›</span>
-                      <span>{b}</span>
+
+                {/* Bullets */}
+                <div className="pt-3 border-t border-[#1a1a1a] space-y-1.5">
+                  <span className="font-mono text-[9px] text-[#666666] tracking-widest uppercase block mb-1">
+                    KEY MILESTONES
+                  </span>
+                  {step.bullets.map((bullet, bIdx) => (
+                    <div key={bIdx} className="flex items-start space-x-2 text-xs font-mono text-[#cccccc]">
+                      <span className="text-[#CAFF00] leading-tight">›</span>
+                      <span className="leading-tight">{bullet}</span>
                     </div>
                   ))}
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+              </div>
 
-          {/* Mobile Step Selectors */}
-          <div className="grid grid-cols-4 gap-2">
-            {stepsData.map((step, idx) => (
-              <button
-                key={step.num}
-                onClick={() => setActiveStep(idx)}
-                className={`py-2 px-1 text-center font-mono text-xs rounded border transition-colors ${
-                  activeStep === idx
-                    ? 'border-[#CAFF00] bg-[#12140a] text-[#CAFF00]'
-                    : 'border-[#1f1f1f] bg-[#080808] text-[#666]'
-                }`}
-              >
-                {step.num}
-              </button>
-            ))}
-          </div>
+              {/* Vertical connector arrow between cards */}
+              {idx < stepsData.length - 1 && (
+                <div className="flex items-center justify-center py-2 text-[#CAFF00]/50" aria-hidden="true">
+                  <ArrowDown size={16} />
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       )}
 
-      {/* ── BOTTOM HUD CONTROLS & STREAM PROGRESS BAR ── */}
-      <div className="absolute bottom-6 left-0 right-0 max-w-[1400px] mx-auto px-6 md:px-12 z-30 pointer-events-auto">
-        {!isMobile && (
+      {/* ── BOTTOM HUD CONTROLS & STREAM PROGRESS BAR (Desktop) ── */}
+      {!isMobile && (
+        <div className="absolute bottom-6 left-0 right-0 max-w-[1400px] mx-auto px-6 md:px-12 z-30 pointer-events-auto">
           <div className="flex items-center justify-between gap-4 mb-3">
-            {/* Interactive Step Jump Buttons */}
             <div className="flex items-center space-x-2">
               {stepsData.map((step, idx) => {
                 const isActive = activeStep === idx
@@ -455,20 +430,17 @@ export const ProcessSection: React.FC = () => {
               SCROLL TO PROGRESS • LIVING RIVER
             </span>
           </div>
-        )}
 
-        {/* Dynamic Glowing River Progress Bar */}
-        <div className="w-full h-1 bg-[#1a1a1a] rounded-full overflow-hidden relative">
-          <div
-            className="h-full bg-[#CAFF00] shadow-[0_0_12px_#CAFF00] transition-[width] duration-150 ease-out"
-            style={{
-              width: isMobile
-                ? `${((activeStep + 1) / stepsData.length) * 100}%`
-                : `${scrollProgress * 100}%`,
-            }}
-          />
+          <div className="w-full h-1 bg-[#1a1a1a] rounded-full overflow-hidden relative">
+            <div
+              className="h-full bg-[#CAFF00] shadow-[0_0_12px_#CAFF00] transition-[width] duration-150 ease-out"
+              style={{
+                width: `${scrollProgress * 100}%`,
+              }}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </section>
   )
 }

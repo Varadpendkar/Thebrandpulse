@@ -153,7 +153,7 @@ export function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-4 md:pt-10">
           
           {/* Left Column: Typography & Headings */}
-          <div className="lg:col-span-8 space-y-6">
+          <div className="lg:col-span-7 xl:col-span-8 space-y-6">
             
             {/* Tagline Badge */}
             <motion.div
@@ -236,48 +236,6 @@ export function HeroSection() {
               </button>
             </motion.div>
           </div>
-
-          {/* Right Column: Telemetry Specs HUD */}
-          <div className="lg:col-span-4 flex flex-col justify-between h-full space-y-6 pt-4 lg:pt-0 pointer-events-auto">
-            <div className="hidden lg:flex flex-col space-y-2.5 p-4 rounded-xl border border-[#222222]/80 bg-[#090909]/80 backdrop-blur-md max-w-sm ml-auto">
-              <div className="flex items-center justify-between text-[11px] font-mono text-[#888888]">
-                <span className="text-[#CAFF00] flex items-center gap-1.5 font-bold">
-                  <span className="h-2 w-2 rounded-full bg-[#CAFF00] animate-pulse" />
-                  HIGH PERFORMANCE CORE
-                </span>
-                <span>NEON NOIR</span>
-              </div>
-              <div className="h-[1px] w-full bg-[#1c1c1c]" />
-              <div className="flex items-center justify-between text-[10px] font-mono text-[#666666]">
-                <span>SCULPTURE</span>
-                <span className="text-[#ededed]">GEOMETRIC ENERGY TORUS</span>
-              </div>
-              <div className="flex items-center justify-between text-[10px] font-mono text-[#666666]">
-                <span>COLOR ACCENT</span>
-                <span className="text-[#CAFF00]">#CAFF00 LIME</span>
-              </div>
-              <div className="flex items-center justify-between text-[10px] font-mono text-[#666666]">
-                <span>MOTION ENGINE</span>
-                <span className="text-[#CAFF00]">GSAP + LENIS 120FPS</span>
-              </div>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="space-y-2 max-w-sm ml-auto hidden lg:block"
-            >
-              <div className="flex items-start justify-between">
-                <p className="font-sans text-xs text-[#999999] leading-relaxed pr-6">
-                  Transforming high-growth businesses into category-defining digital brands.
-                </p>
-                <span className="font-mono text-xs text-[#888888] shrink-0 tracking-wider">
-                  [ 01 / HERO ]
-                </span>
-              </div>
-            </motion.div>
-          </div>
         </div>
 
         {/* Bottom Hero Bar: [ SCROLL TO EXPLORE ] & OUTCOMES */}
@@ -323,3 +281,4 @@ export function HeroSection() {
 }
 
 export const Hero = HeroSection
+
