@@ -409,3 +409,4 @@ export const HeroSdfCanvas: React.FC = () => {
     </div>
   )
 }
+

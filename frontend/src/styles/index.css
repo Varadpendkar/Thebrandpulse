@@ -9,16 +9,22 @@
     box-sizing: border-box;
     cursor: default;
   }
+
+  html, body {
+    overflow-x: clip;
+    background-color: var(--c-bg);
+    color: #ededed;
+    font-family: var(--font-sans);
+  }
   
   a, button, input, textarea, select, [role="button"] {
     cursor: pointer;
   }
 
-  body {
-    background-color: var(--c-bg);
-    color: #ededed;
-    font-family: var(--font-sans);
-    overflow-x: hidden;
+  /* Global focus-visible indicator */
+  :focus-visible {
+    outline: 2px solid #caff00;
+    outline-offset: 2px;
   }
 }
 
@@ -40,7 +46,7 @@
   background: #0d0d0d;
   border-radius: 14px;
   border: 1px solid #1f2710;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .tech-card:hover {
@@ -48,7 +54,7 @@
   box-shadow: 0 0 25px rgba(202, 255, 0, 0.12), inset 0 0 15px rgba(202, 255, 0, 0.03);
 }
 
-/* Chamfered Cut Corner Style for True Cyber Aesthetic */
+/* Chamfered Cut Corner Style */
 .tech-chamfer {
   clip-path: polygon(
     0 16px,
@@ -83,24 +89,13 @@
   color: #000000;
 }
 
-/* Scanline Overlay (ultra subtle) */
-.scanlines {
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.25) 50%
-  );
-  background-size: 100% 4px;
-}
-
 /* ── Team Section Responsive Styles ────────────────────────── */
-/* Tablet: 2-col cards */
 @media (max-width: 900px) {
   .team-grid { grid-template-columns: 1fr !important; }
   .team-cards { grid-template-columns: repeat(2, 1fr) !important; }
   .team-label-col { border-right: none !important; border-bottom: 1px solid #1A1A1A; padding-bottom: 2rem; margin-bottom: 2rem; }
 }
 
-/* Mobile: 1-col / 2-col cards */
 @media (max-width: 540px) {
   .team-cards { grid-template-columns: repeat(2, 1fr) !important; }
   .team-card-image { min-height: 160px !important; }
@@ -109,4 +104,3 @@
 @media (max-width: 380px) {
   .team-cards { grid-template-columns: 1fr !important; }
 }
-

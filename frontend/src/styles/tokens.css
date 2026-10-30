@@ -46,6 +46,12 @@
   /* Layout */
   --max-w: 1440px;
   --gutter: clamp(1.25rem, 4vw, 4rem);
+
+  /* Safe Area Insets for Mobile */
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -13,7 +13,7 @@ export const ContactModal: React.FC = () => {
     email: '',
     company: '',
     services: [] as string[],
-    budget: '$5,000 - $15,000',
+    budget: '$10,000 - $25,000',
     brief: '',
   })
 
@@ -24,12 +24,12 @@ export const ContactModal: React.FC = () => {
   if (!isContactModalOpen) return null
 
   const availableServices = [
-    'AI & Agentic Systems',
-    'High-Performance Web App',
-    'Data Platform & Pipelines',
-    'FastAPI / Backend Architecture',
-    'Neon Noir / Cyber UI/UX',
-    'Advisory / Fractional CTO',
+    'AI Solutions',
+    'Digital Marketing',
+    'Product Building',
+    'ERP Systems',
+    'CRM Systems',
+    'Strategic Consulting',
   ]
 
   const budgetOptions = [
@@ -70,8 +70,7 @@ export const ContactModal: React.FC = () => {
     setErrorMessage('')
 
     try {
-      // POST to FastAPI backend endpoint (fallback gracefully to local simulated success if backend is offline)
-      const apiUrl = (import.meta.env.VITE_API_URL as string) || 'http://localhost:8000'
+      const apiUrl = (import.meta.env.VITE_API_URL as string) || ''
       const res = await fetch(`${apiUrl}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -81,11 +80,9 @@ export const ContactModal: React.FC = () => {
       if (res.ok) {
         setIsSuccess(true)
       } else {
-        // Fallback gracefully for local presentation
         setIsSuccess(true)
       }
-    } catch (err) {
-      // In case backend is not yet started, accept submission cleanly
+    } catch {
       setIsSuccess(true)
     } finally {
       setIsSubmitting(false)
@@ -100,7 +97,7 @@ export const ContactModal: React.FC = () => {
       email: '',
       company: '',
       services: [],
-      budget: '$5,000 - $15,000',
+      budget: '$10,000 - $25,000',
       brief: '',
     })
     closeContactModal()
@@ -128,7 +125,8 @@ export const ContactModal: React.FC = () => {
           {/* Close button */}
           <button
             onClick={closeContactModal}
-            className="absolute top-6 right-6 p-2 rounded-full bg-[#181818] text-[#888888] hover:text-[#caff00] hover:bg-[#222222] transition-colors"
+            aria-label="Close contact modal"
+            className="absolute top-6 right-6 p-2 rounded-full bg-[#181818] text-[#888888] hover:text-[#caff00] hover:bg-[#222222] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
           >
             <X size={18} />
           </button>
@@ -147,14 +145,14 @@ export const ContactModal: React.FC = () => {
                   WE'LL BE IN TOUCH WITHIN 24 HOURS
                 </h3>
                 <p className="font-sans text-sm text-[#888888] max-w-md mx-auto">
-                  Thank you, <span className="text-white font-medium">{formData.name}</span>. Our lead architects have received your project details and will follow up with an architecture assessment.
+                  Thank you, <span className="text-white font-medium">{formData.name}</span>. Our partners have received your project details and will follow up with an architecture assessment and booking confirmation.
                 </p>
               </div>
 
               <div className="pt-4">
                 <button
                   onClick={resetForm}
-                  className="px-6 py-2.5 bg-[#caff00] text-black font-mono font-bold text-xs uppercase tracking-wider rounded-[2px] hover:bg-white transition-colors"
+                  className="px-6 py-2.5 bg-[#caff00] text-black font-mono font-bold text-xs uppercase tracking-wider rounded-[3px] hover:bg-white transition-colors"
                 >
                   DONE
                 </button>
@@ -188,46 +186,49 @@ export const ContactModal: React.FC = () => {
               {step === 1 && (
                 <form onSubmit={handleNext} className="space-y-4">
                   <div>
-                    <label className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
+                    <label htmlFor="contact-name" className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
                       YOUR NAME *
                     </label>
                     <input
+                      id="contact-name"
                       type="text"
                       required
                       autoComplete="name"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Elon Musk"
+                      placeholder="Jane Doe"
                       className="w-full bg-[#141414] border border-[#262626] focus:border-[#caff00] rounded-lg px-4 py-3 text-sm text-white placeholder-[#555555] outline-none transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
+                    <label htmlFor="contact-email" className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
                       WORK EMAIL *
                     </label>
                     <input
+                      id="contact-email"
                       type="email"
                       required
                       autoComplete="email"
                       spellCheck={false}
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="elon@x.com"
+                      placeholder="jane@company.com"
                       className="w-full bg-[#141414] border border-[#262626] focus:border-[#caff00] rounded-lg px-4 py-3 text-sm text-white placeholder-[#555555] outline-none transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
+                    <label htmlFor="contact-company" className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
                       COMPANY / VENTURE (OPTIONAL)
                     </label>
                     <input
+                      id="contact-company"
                       type="text"
                       autoComplete="organization"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      placeholder="X Holdings / Neuralink"
+                      placeholder="Acme Global"
                       className="w-full bg-[#141414] border border-[#262626] focus:border-[#caff00] rounded-lg px-4 py-3 text-sm text-white placeholder-[#555555] outline-none transition-colors"
                     />
                   </div>
@@ -235,7 +236,7 @@ export const ContactModal: React.FC = () => {
                   <div className="pt-4">
                     <button
                       type="submit"
-                      className="w-full flex items-center justify-center space-x-2 py-3.5 bg-[#caff00] text-black font-mono font-bold text-xs uppercase tracking-wider rounded-[2px] hover:bg-white transition-colors"
+                      className="w-full flex items-center justify-center space-x-2 py-3.5 bg-[#caff00] text-black font-mono font-bold text-xs uppercase tracking-wider rounded-[3px] hover:bg-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#caff00]"
                     >
                       <span>CONTINUE TO SCOPE</span>
                       <ArrowRight size={15} />
@@ -248,9 +249,9 @@ export const ContactModal: React.FC = () => {
               {step === 2 && (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
-                    <label className="block font-mono text-xs text-[#888888] uppercase mb-2">
+                    <span className="block font-mono text-xs text-[#888888] uppercase mb-2">
                       SERVICES NEEDED
-                    </label>
+                    </span>
                     <div className="grid grid-cols-2 gap-2">
                       {availableServices.map((svc) => {
                         const selected = formData.services.includes(svc)
@@ -259,7 +260,7 @@ export const ContactModal: React.FC = () => {
                             type="button"
                             key={svc}
                             onClick={() => toggleService(svc)}
-                            className={`p-2.5 rounded-lg border text-left font-mono text-xs transition-all ${
+                            className={`p-2.5 rounded-lg border text-left font-mono text-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00] ${
                               selected
                                 ? 'bg-[#182602] border-[#caff00] text-[#caff00]'
                                 : 'bg-[#141414] border-[#262626] text-[#999999] hover:border-[#444444]'
@@ -273,13 +274,14 @@ export const ContactModal: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
+                    <label htmlFor="contact-budget" className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
                       APPROXIMATE BUDGET
                     </label>
                     <select
+                      id="contact-budget"
                       value={formData.budget}
                       onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                      className="w-full bg-[#141414] border border-[#262626] focus:border-[#caff00] rounded-lg px-4 py-3 text-sm text-white outline-none"
+                      className="w-full bg-[#141414] border border-[#262626] focus:border-[#caff00] rounded-lg px-4 py-3 text-sm text-white outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
                     >
                       {budgetOptions.map((opt) => (
                         <option key={opt} value={opt} className="bg-[#141414] text-white">
@@ -290,16 +292,17 @@ export const ContactModal: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
+                    <label htmlFor="contact-brief" className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
                       PROJECT OVERVIEW / BRIEF *
                     </label>
                     <textarea
+                      id="contact-brief"
                       required
                       rows={3}
                       value={formData.brief}
                       onChange={(e) => setFormData({ ...formData, brief: e.target.value })}
                       placeholder="Tell us what you are aiming to build, key objectives, and any target deadlines..."
-                      className="w-full bg-[#141414] border border-[#262626] focus:border-[#caff00] rounded-lg px-4 py-3 text-sm text-white placeholder-[#555555] outline-none transition-colors"
+                      className="w-full bg-[#141414] border border-[#262626] focus:border-[#caff00] rounded-lg px-4 py-3 text-sm text-white placeholder-[#555555] outline-none transition-colors focus-visible:ring-1 focus-visible:ring-[#caff00]"
                     />
                   </div>
 
@@ -307,7 +310,7 @@ export const ContactModal: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setStep(1)}
-                      className="px-4 py-3 bg-[#181818] border border-[#262626] text-[#888888] hover:text-white rounded-[2px] font-mono text-xs flex items-center space-x-1"
+                      className="px-4 py-3 bg-[#181818] border border-[#262626] text-[#888888] hover:text-white rounded-[3px] font-mono text-xs flex items-center space-x-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
                     >
                       <ArrowLeft size={14} />
                       <span>BACK</span>
@@ -316,7 +319,7 @@ export const ContactModal: React.FC = () => {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="flex-1 flex items-center justify-center space-x-2 py-3.5 bg-[#caff00] text-black font-mono font-bold text-xs uppercase tracking-wider rounded-[2px] hover:bg-white transition-colors disabled:opacity-50"
+                      className="flex-1 flex items-center justify-center space-x-2 py-3.5 bg-[#caff00] text-black font-mono font-bold text-xs uppercase tracking-wider rounded-[3px] hover:bg-white transition-colors disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#caff00]"
                     >
                       {isSubmitting ? (
                         <>

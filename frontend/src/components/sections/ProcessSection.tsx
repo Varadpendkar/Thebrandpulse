@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, PenTool, Terminal, Rocket, ChevronRight } from 'lucide-react'
+import { Search, PenTool, Terminal, TrendingUp } from 'lucide-react'
 import { useAppStore } from '../../store/useAppStore'
 import { ProcessShardScene } from '../three/ProcessShardScene'
-import { gsap, ScrollTrigger } from '../../lib/gsap'
+import { ScrollTrigger } from '../../lib/gsap'
 import { getLenis } from '../../lib/lenis'
 
 interface ProcessStep {
@@ -21,42 +21,42 @@ const stepsData: ProcessStep[] = [
   {
     num: '01',
     code: 'DISCOVER',
-    title: 'RADAR PULSE SCAN & ARCHITECTURE',
-    duration: 'SPRINT WEEK 01',
+    title: 'BOTTLENECK & ROI DISCOVERY',
+    duration: 'WEEK 01',
     icon: Search,
-    concept: 'PARABOLOID SIGNAL DETECTOR',
-    desc: '300 shards assemble into an outward-pointing radar dish. We tear down assumptions, evaluate AI model tradeoffs, define exact latency budgets, and lock system architecture specs.',
-    bullets: ['Feasibility audit & token-cost modeling', 'Tech stack & schema finalization', 'Clear sprint milestones & latency SLA']
+    concept: 'SIGNAL DETECTOR',
+    desc: 'We tear down assumptions and calculate exact financial ROI before writing a single line of code. We map operational frictions and prioritize what moves the P&L needle first.',
+    bullets: ['Friction mapping & workflow audit', 'Unit economics & ROI modeling', 'Milestone specifications & SLA']
   },
   {
     num: '02',
     code: 'PLAN',
-    title: 'ISOMETRIC BLUEPRINT MATRIX',
-    duration: 'SPRINT WEEKS 02 - 03',
+    title: 'STRATEGIC ARCHITECTURE BLUEPRINT',
+    duration: 'WEEK 02',
     icon: PenTool,
-    concept: '3D COORDINATE BLUEPRINT',
-    desc: 'Shards rearrange into a 3D isometric structural grid. We deliver an interactive working prototype running on test data within 14 days so you can validate real user flow immediately.',
-    bullets: ['Interactive prototype with live test data', 'Benchmark AI model latency & tokens', 'Bi-weekly feedback iteration loop']
+    concept: 'SYSTEM BLUEPRINT',
+    desc: 'We construct an airtight technical and functional blueprint. We select the highest performance toolchains to eliminate vendor lock-in and prevent future technical debt.',
+    bullets: ['Data schema & security modeling', 'Component design system specs', 'Deliverable schedule with fixed pricing']
   },
   {
     num: '03',
     code: 'BUILD',
-    title: 'ASCENDING PRODUCTION ASSEMBLY',
-    duration: 'SPRINT WEEKS 04 - 06',
+    title: '14-DAY PROTOTYPE TO PRODUCTION',
+    duration: 'WEEKS 03 - 05',
     icon: Terminal,
-    concept: 'FLOOR-BY-FLOOR HARDENING',
-    desc: 'Shards stack vertically floor-by-floor with a lime laser sweep. We write resilient, typed production code, integrate asynchronous task queues, implement security guardrails, and audit performance.',
-    bullets: ['Type-safe FastAPI & React codebases', '100% test coverage for critical paths', 'Security guardrails & error boundary review']
+    concept: 'HARDENED ASSEMBLY',
+    desc: 'We deliver an interactive working prototype running on test data within 14 days. Once validated, we harden it with production security, automated testing, and sub-second speed.',
+    bullets: ['Working prototype within 14 days', 'Type-safe, audited codebases', 'Comprehensive automated testing']
   },
   {
     num: '04',
-    code: 'SCALE',
-    title: 'FRACTAL MULTIPLICATION & DEPLOY',
-    duration: 'CONTINUOUS TELEMETRY',
-    icon: Rocket,
-    concept: '9X MULTI-REGION CLUSTER',
-    desc: 'The completed shard tower fractally duplicates across space. Zero-downtime deployment to production cloud infrastructure with live telemetry, automated monitoring, and scale documentation.',
-    bullets: ['Automated CI/CD multi-region deployment', 'Real-time telemetry & Sentry alerting', 'Complete architectural handoff & documentation']
+    code: 'GROW',
+    title: 'LAUNCH, TELEMETRY & COMPOUNDING SCALE',
+    duration: 'CONTINUOUS',
+    icon: TrendingUp,
+    concept: 'EXPONENTIAL SCALE',
+    desc: 'Zero-downtime deployment to production cloud infrastructure with live telemetry, automated monitoring, staff onboarding, and ongoing optimization to maximize bottom-line profit.',
+    bullets: ['Zero-downtime production deployment', 'Real-time telemetry & alerts', 'Continuous conversion & velocity tuning']
   }
 ]
 
@@ -130,7 +130,7 @@ export const ProcessSection: React.FC = () => {
     const rect = triggerElement.getBoundingClientRect()
     const scrollY = window.scrollY
     const triggerStart = scrollY + rect.top
-    const stepTargetScroll = triggerStart + idx * (window.innerHeight)
+    const stepTargetScroll = triggerStart + idx * window.innerHeight
 
     if (lenis) {
       lenis.scrollTo(stepTargetScroll, { duration: 1.2 })
@@ -139,15 +139,14 @@ export const ProcessSection: React.FC = () => {
     }
   }
 
-  // Current step within-step progress (0.0 to 1.0)
-  const stepFraction = (scrollProgress * 4) % 1
   const activeData = stepsData[activeStep] || stepsData[0]
 
   return (
     <section
       id="process"
       ref={sectionRef}
-      className={`relative bg-[#050505] border-b border-[#1a1a1a] ${
+      aria-label="Delivery Process"
+      className={`relative bg-[#050505] border-b border-[#141414] ${
         isMobile ? 'py-20 px-6' : 'h-[500vh]'
       }`}
     >
@@ -164,10 +163,10 @@ export const ProcessSection: React.FC = () => {
         <div className="max-w-[1400px] w-full mx-auto px-6 md:px-12 pt-6 md:pt-8 flex items-start justify-between z-20 pointer-events-none">
           <div className="space-y-1">
             <span className="font-mono text-xs tracking-widest text-[#caff00] uppercase block">
-              [ 03 / PROCESS · SHARD METAPHOR ]
+              [ 05 / HOW WE DELIVER ]
             </span>
             <h2 className="font-display font-extrabold text-2xl md:text-4xl text-white tracking-tight">
-              CONSTRUCTION METAPHOR
+              THE 4-STAGE SPRINT
             </h2>
           </div>
 
@@ -178,14 +177,12 @@ export const ProcessSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Middle 65%: Instanced Shards Canvas (Desktop) or Animated SVG (Mobile) */}
+        {/* Middle 65%: Instanced Shards Canvas (Desktop) or Mobile Visual */}
         <div className={`relative w-full ${isMobile ? 'h-72 my-8' : 'flex-1 min-h-0'}`}>
           {!isMobile ? (
             <ProcessShardScene scrollProgress={scrollProgress} />
           ) : (
-            // Mobile Clean Visual Representation
             <div className="w-full h-full bg-[#0a0a0a] border border-[#222222] rounded-xl flex flex-col items-center justify-center p-6 text-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-tech-grid opacity-15 pointer-events-none" />
               <div className="w-24 h-24 rounded-full border border-[#caff00]/50 border-dashed animate-spin-slow flex items-center justify-center mb-4">
                 <span className="font-mono text-xl font-bold text-[#caff00]">
                   {activeData.num}
@@ -243,7 +240,7 @@ export const ProcessSection: React.FC = () => {
               {/* Bullets (right 5 cols) */}
               <div className="lg:col-span-5 space-y-2 border-t lg:border-t-0 lg:border-l border-[#1c1c1c] pt-4 lg:pt-0 lg:pl-6">
                 <span className="font-mono text-[10px] text-[#666666] tracking-widest uppercase block">
-                  DELIVERY HIGHLIGHTS
+                  STAGE MILESTONES
                 </span>
                 {activeData.bullets.map((bullet, bIdx) => (
                   <div key={bIdx} className="flex items-center space-x-2 text-xs font-mono text-[#cccccc]">
@@ -267,7 +264,8 @@ export const ProcessSection: React.FC = () => {
                   onClick={() => handleStepJump(idx)}
                   onMouseEnter={() => setCursor('hover', step.code)}
                   onMouseLeave={resetCursor}
-                  className={`p-3 md:p-4 rounded-xl border text-left transition-all duration-300 ${
+                  aria-label={`Jump to stage ${step.num}: ${step.code}`}
+                  className={`p-3 md:p-4 rounded-xl border text-left transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00] ${
                     isActive
                       ? 'border-[#caff00] bg-[#12140a] shadow-[0_0_20px_rgba(202,255,0,0.15)]'
                       : 'border-[#1c1c1c] bg-[#080808] hover:border-[#333333]'
@@ -292,7 +290,7 @@ export const ProcessSection: React.FC = () => {
           {/* Dynamic Horizontal Progress Bar Tracking Scroll Within Step */}
           <div className="w-full h-1 bg-[#1a1a1a] rounded-full overflow-hidden relative">
             <div
-              className="h-full bg-[#caff00] shadow-[0_0_10px_#caff00] transition-all duration-100 ease-out"
+              className="h-full bg-[#caff00] shadow-[0_0_10px_#caff00] transition-[width] duration-100 ease-out"
               style={{
                 width: isMobile
                   ? `${((activeStep + 1) / stepsData.length) * 100}%`

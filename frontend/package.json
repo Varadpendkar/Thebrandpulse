@@ -1,5 +1,5 @@
 {
-  "name": "nexus-frontend",
+  "name": "brandpulse-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -10,16 +10,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-spring/three": "^10.1.2",
     "@react-three/drei": "^9.115.0",
     "@react-three/fiber": "^8.17.10",
+    "@vercel/analytics": "^2.0.1",
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.11",
     "gsap": "^3.12.5",
     "lenis": "^1.1.18",
     "lucide-react": "^0.454.0",
+    "posthog-js": "^1.442.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.5",
     "tailwind-merge": "^2.5.4",
     "three": "^0.169.0",
     "zustand": "^5.0.1"

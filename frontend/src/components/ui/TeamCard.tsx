@@ -6,6 +6,7 @@ export interface TeamMember {
   number: string
   domain: string
   name: string
+  tag?: string
   role: string
   image: string
   bio: string
@@ -209,14 +210,20 @@ export function TeamCard({ member, index, isActive, onActivate }: TeamCardProps)
         ))}
       </div>
 
-      {/* ── Name + role ────────────────────────────────────── */}
+      {/* ── Name + tag + role ────────────────────────────────────── */}
       <div ref={infoRef} className="px-4 pb-4 pt-1">
-        <p className="font-display font-bold text-white text-lg leading-tight">
-          {member.name}
-        </p>
+        <div className="flex items-baseline justify-between">
+          <p className="font-display font-bold text-white text-lg leading-tight">
+            {member.name}
+          </p>
+          {member.tag && (
+            <span className="font-mono text-[10px] text-[#CAFF00] font-semibold tracking-wide">
+              {member.tag}
+            </span>
+          )}
+        </div>
         <p
-          className="font-mono text-[11px] tracking-widest uppercase mt-0.5"
-          style={{ color: "#CAFF00" }}
+          className="font-mono text-[11px] tracking-widest text-[#888888] uppercase mt-0.5"
         >
           {member.role}
         </p>

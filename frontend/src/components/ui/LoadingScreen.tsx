@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 interface LoadingScreenProps {
   onComplete?: () => void
@@ -9,11 +10,18 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
   const [progress, setProgress] = useState(0)
   const [typedText, setTypedText] = useState('')
   const [isDone, setIsDone] = useState(false)
+  const prefersReduced = useReducedMotion()
 
-  const fullText = '[ NEXUS ]'
+  const fullText = '[ BrandPulse ]'
 
   useEffect(() => {
-    // Monospace typing effect
+    if (prefersReduced) {
+      setIsDone(true)
+      if (onComplete) onComplete()
+      return
+    }
+
+    // Monospace typing effect for BrandPulse
     let charIndex = 0
     const textInterval = setInterval(() => {
       if (charIndex <= fullText.length) {
@@ -22,11 +30,11 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       } else {
         clearInterval(textInterval)
       }
-    }, 70)
+    }, 60)
 
     // Progress bar fill
     const start = performance.now()
-    const duration = 1600 // 1.6s
+    const duration = 1400
 
     const updateProgress = (now: number) => {
       const elapsed = now - start
@@ -39,7 +47,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         setTimeout(() => {
           setIsDone(true)
           if (onComplete) onComplete()
-        }, 300)
+        }, 250)
       }
     }
 
@@ -48,22 +56,22 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
     return () => {
       clearInterval(textInterval)
     }
-  }, [onComplete])
+  }, [onComplete, prefersReduced])
 
   return (
     <AnimatePresence>
       {!isDone && (
         <motion.div
-          key="loader"
+          key="brandpulse-loader"
           initial={{ y: 0 }}
           exit={{ 
             y: '-100%', 
-            transition: { duration: 0.8, ease: [0.77, 0, 0.175, 1] } 
+            transition: { duration: 0.7, ease: [0.77, 0, 0.175, 1] } 
           }}
           className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#050505] text-[#ededed]"
         >
           {/* Subtle Grid in Loader */}
-          <div className="absolute inset-0 bg-tech-grid opacity-30 pointer-events-none" />
+          <div className="absolute inset-0 bg-tech-grid opacity-25 pointer-events-none" aria-hidden="true" />
 
           <div className="relative z-10 flex flex-col items-center space-y-6">
             <div className="flex items-center space-x-2">
@@ -75,13 +83,13 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
 
             {/* Subtext */}
             <p className="font-mono text-xs tracking-widest text-[#888888] uppercase">
-              Initializing Core Architecture
+              WE BUILD BRANDS PEOPLE CAN'T IGNORE
             </p>
 
             {/* Slim Lime Progress Bar */}
             <div className="w-56 h-[2px] bg-[#1a1a1a] overflow-hidden rounded-full relative">
               <motion.div
-                className="h-full bg-[#caff00] shadow-[0_0_8px_#caff00]"
+                className="h-full bg-[#caff00] shadow-[0_0_10px_#caff00]"
                 style={{ width: `${progress}%` }}
                 transition={{ ease: 'linear' }}
               />

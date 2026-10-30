@@ -130,7 +130,7 @@ export function TeamSection() {
                 className="font-mono text-xs text-[#CAFF00] mb-4 tracking-widest"
                 aria-label="Team section label"
               >
-                [ 05 / ARCHITECTS ]
+                [ 06 / LEADERSHIP ]
               </motion.p>
 
               <motion.h2

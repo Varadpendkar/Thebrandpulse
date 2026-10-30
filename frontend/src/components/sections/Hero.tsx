@@ -1,34 +1,38 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { ArrowDown } from 'lucide-react'
+import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import { useAppStore } from '../../store/useAppStore'
-import { HeroSdfCanvas } from '../three/HeroSdfCanvas'
+import { BrandPulseHero3D } from '../three/BrandPulseHero3D'
 import { scrollToId } from '../../lib/lenis'
 
 export const Hero: React.FC = () => {
-  const { setCursor, resetCursor } = useAppStore()
+  const { setCursor, resetCursor, openContactModal } = useAppStore()
 
   return (
-    <section id="hero" className="relative min-h-screen pt-28 md:pt-36 pb-12 flex flex-col justify-between overflow-hidden bg-[#050505]">
-      {/* Live WebGL Raymarched SDF Sculpture in Right Panel */}
-      <HeroSdfCanvas />
+    <section
+      id="hero"
+      aria-label="Hero Section"
+      className="relative min-h-screen pt-28 md:pt-36 pb-12 flex flex-col justify-between overflow-hidden bg-[#050505]"
+      style={{ minHeight: '100vh' }}
+    >
+      {/* 3D Interpenetrating Torus Knot & Octahedron Scene on Right */}
+      <BrandPulseHero3D />
 
-      {/* Background Crosshairs and Ambient Grid */}
-      <div className="absolute inset-0 bg-tech-grid opacity-25 pointer-events-none" />
+      {/* Background Subtle Tech Grid */}
+      <div className="absolute inset-0 bg-tech-grid opacity-20 pointer-events-none" aria-hidden="true" />
       
       {/* Decorative Technical Crosshair Markers (+) */}
-      <div className="absolute top-28 left-8 md:left-20 text-[#333333] font-mono text-sm select-none pointer-events-none">+</div>
-      <div className="absolute top-44 right-16 md:right-32 text-[#333333] font-mono text-sm select-none pointer-events-none">+</div>
-      <div className="absolute bottom-24 left-1/3 text-[#333333] font-mono text-sm select-none pointer-events-none">+</div>
-      <div className="absolute bottom-40 right-12 text-[#333333] font-mono text-sm select-none pointer-events-none">+</div>
+      <div className="absolute top-28 left-8 md:left-20 text-[#2a2a2a] font-mono text-sm select-none pointer-events-none" aria-hidden="true">+</div>
+      <div className="absolute top-44 right-16 md:right-32 text-[#2a2a2a] font-mono text-sm select-none pointer-events-none" aria-hidden="true">+</div>
+      <div className="absolute bottom-28 left-1/3 text-[#2a2a2a] font-mono text-sm select-none pointer-events-none" aria-hidden="true">+</div>
 
       <div className="max-w-[1400px] w-full mx-auto px-6 md:px-12 relative z-10 flex-1 flex flex-col justify-between">
         
         {/* Top/Middle Main Hero Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-4 md:pt-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-4 md:pt-10">
           
           {/* Left Column: Typography & Headings (approx 7-8 cols) */}
-          <div className="lg:col-span-8 space-y-4">
+          <div className="lg:col-span-8 space-y-6">
             
             {/* Tagline Badge */}
             <motion.div
@@ -38,11 +42,11 @@ export const Hero: React.FC = () => {
               className="inline-flex items-center space-x-3"
             >
               <span className="font-mono text-xs md:text-sm tracking-[0.25em] text-[#888888] uppercase">
-                TECHNOLOGY &nbsp;×&nbsp; CREATIVITY &nbsp;×&nbsp; IMPACT
+                BRANDPULSE &nbsp;×&nbsp; VENTURE LABS &nbsp;×&nbsp; PRODUCTION
               </span>
             </motion.div>
 
-            {/* Giant Display: NEXUS */}
+            {/* Giant Display: BrandPulse */}
             <motion.div
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
@@ -50,92 +54,117 @@ export const Hero: React.FC = () => {
               className="overflow-visible"
             >
               <h1
-                onMouseEnter={() => setCursor('hover', 'NEXUS')}
+                onMouseEnter={() => setCursor('hover', 'BRANDPULSE')}
                 onMouseLeave={resetCursor}
-                className="font-display font-extrabold tracking-tight text-white leading-none select-none text-[18vw] sm:text-[16vw] md:text-[13vw] lg:text-[10rem] xl:text-[11.5rem]"
+                className="font-display font-extrabold tracking-tight text-white leading-none select-none text-[14vw] sm:text-[13vw] md:text-[10vw] lg:text-[7.5rem] xl:text-[9rem]"
                 style={{ letterSpacing: '-0.04em' }}
               >
-                NEXUS
+                BrandPulse
               </h1>
             </motion.div>
 
-            {/* Glowing Lime Tagline with Interactive Indicator */}
+            {/* Glowing Tagline & Subhead */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center flex-wrap gap-4 pt-1"
+              className="space-y-3 pt-1 max-w-2xl"
             >
-              <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight text-[#caff00] drop-shadow-[0_0_15px_rgba(202,255,0,0.3)]">
-                AI. Data. Web. Built to scale.
+              <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight text-[#caff00] drop-shadow-[0_0_20px_rgba(202,255,0,0.35)]">
+                We Build Brands People Can't Ignore.
               </h2>
+              <p className="font-sans text-sm sm:text-base md:text-lg text-[#a0a0a0] leading-relaxed">
+                We turn your business vision into products, brands, and systems that work.
+              </p>
+            </motion.div>
 
-              {/* Glowing Green Interactive Dot */}
-              <div 
-                className="relative inline-flex items-center cursor-pointer group"
-                onMouseEnter={() => setCursor('hover', 'SCALE')}
+            {/* Dual CTAs: [ BOOK A CALL ] + [ SEE OUR WORK ] */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+              className="flex flex-wrap items-center gap-4 pt-4"
+            >
+              {/* Primary CTA */}
+              <button
+                onClick={openContactModal}
+                onMouseEnter={() => setCursor('hover', 'CALL')}
                 onMouseLeave={resetCursor}
+                aria-label="Book a Call with BrandPulse"
+                className="group relative inline-flex items-center space-x-2 font-mono text-xs md:text-sm font-bold tracking-wider text-black bg-[#caff00] hover:bg-white px-6 py-3.5 rounded-[3px] transition-colors duration-200 shadow-[0_0_25px_rgba(202,255,0,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#caff00]"
               >
-                <span className="relative flex h-4 w-4">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#caff00] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-4 w-4 bg-[#caff00] shadow-[0_0_18px_#caff00]"></span>
-                </span>
-              </div>
+                <span>[ BOOK A CALL ]</span>
+                <ArrowUpRight size={16} className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </button>
+
+              {/* Secondary CTA */}
+              <button
+                onClick={() => scrollToId('services')}
+                onMouseEnter={() => setCursor('hover', 'SERVICES')}
+                onMouseLeave={resetCursor}
+                aria-label="See Our Work and Services"
+                className="group inline-flex items-center space-x-2 font-mono text-xs md:text-sm font-semibold tracking-wider text-white border border-[#333333] hover:border-[#caff00] bg-[#0c0c0c] hover:bg-[#151515] px-6 py-3.5 rounded-[3px] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#caff00]"
+              >
+                <span>[ SEE OUR WORK ]</span>
+                <ArrowDown size={15} className="text-[#caff00] transition-transform duration-200 group-hover:translate-y-0.5" />
+              </button>
             </motion.div>
           </div>
 
-          {/* Right Column: Mission Copy + Live SDF Telemetry + Index [ 01 ] */}
+          {/* Right Column: Telemetry Specs HUD */}
           <div className="lg:col-span-4 flex flex-col justify-between h-full space-y-6 pt-4 lg:pt-0 pointer-events-auto">
-            
-            {/* Live Raymarched SDF HUD Indicator */}
-            <div className="hidden lg:flex flex-col space-y-2 p-4 rounded border border-[#222222]/80 bg-[#080808]/70 backdrop-blur-md max-w-sm ml-auto">
+            <div className="hidden lg:flex flex-col space-y-2.5 p-4 rounded-xl border border-[#222222]/80 bg-[#090909]/80 backdrop-blur-md max-w-sm ml-auto">
               <div className="flex items-center justify-between text-[11px] font-mono text-[#888888]">
-                <span className="text-[#caff00] flex items-center gap-1.5">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#caff00] animate-pulse" />
-                  SDF REALTIME SHADER
+                <span className="text-[#caff00] flex items-center gap-1.5 font-bold">
+                  <span className="h-2 w-2 rounded-full bg-[#caff00] animate-pulse" />
+                  R3F HARDWARE ACCELERATED
                 </span>
-                <span>80 STEPS / GLSL</span>
+                <span>MESHPHYSICAL</span>
               </div>
               <div className="h-[1px] w-full bg-[#1c1c1c]" />
               <div className="flex items-center justify-between text-[10px] font-mono text-[#666666]">
-                <span>MORPH STATE</span>
-                <span className="text-[#cccccc]">ICOSAHEDRON ⇄ TORUS KNOT</span>
+                <span>CORE GEOMETRY</span>
+                <span className="text-[#ededed]">TORUS KNOT × OCTAHEDRON</span>
+              </div>
+              <div className="flex items-center justify-between text-[10px] font-mono text-[#666666]">
+                <span>TRANSMISSION GLASS</span>
+                <span className="text-[#ededed]">ROUGH 0.1 / METAL 0.9</span>
               </div>
               <div className="flex items-center justify-between text-[10px] font-mono text-[#666666]">
                 <span>POSTPROCESSING</span>
-                <span className="text-[#caff00]">UNREALBLOOM 1.2</span>
+                <span className="text-[#caff00]">BLOOM 1.2 / RAD 0.8</span>
               </div>
             </div>
 
-            {/* Descriptor text + [ 01 ] indicator */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.4 }}
-              className="space-y-4 max-w-sm ml-auto"
+              className="space-y-2 max-w-sm ml-auto hidden lg:block"
             >
               <div className="flex items-start justify-between">
-                <p className="font-sans text-xs sm:text-sm text-[#999999] leading-relaxed pr-6">
-                  We build digital products powered by AI and data to help businesses scale faster.
+                <p className="font-sans text-xs text-[#999999] leading-relaxed pr-6">
+                  Transforming high-growth businesses into category-defining digital brands.
                 </p>
                 <span className="font-mono text-xs text-[#888888] shrink-0 tracking-wider">
-                  [ 01 ]
+                  [ 01 / HERO ]
                 </span>
               </div>
             </motion.div>
           </div>
         </div>
 
-        {/* Bottom Hero Bar: [ SCROLL TO EXPLORE ] & IDEAS -> PRODUCTS -> GROWTH */}
+        {/* Bottom Hero Bar: [ SCROLL TO EXPLORE ] & OUTCOMES */}
         <div className="pt-16 md:pt-20">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 gap-4">
             
             {/* Bottom Left: [ SCROLL TO EXPLORE ] */}
             <button
-              onClick={() => scrollToId('service-cards')}
+              onClick={() => scrollToId('problem-statement')}
               onMouseEnter={() => setCursor('hover', 'EXPLORE')}
               onMouseLeave={resetCursor}
-              className="group flex flex-col items-start space-y-2 text-left"
+              aria-label="Scroll to explore problem statement"
+              className="group flex flex-col items-start space-y-2 text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
             >
               <span className="font-mono text-xs font-semibold tracking-widest text-[#888888] group-hover:text-[#caff00] transition-colors">
                 [ SCROLL TO EXPLORE ]
@@ -149,9 +178,9 @@ export const Hero: React.FC = () => {
               </motion.div>
             </button>
 
-            {/* Bottom Right: IDEAS -> PRODUCTS -> GROWTH */}
+            {/* Bottom Right: VISION -> PRODUCTS -> GROWTH */}
             <div className="flex items-center space-x-3 font-mono text-xs md:text-sm tracking-widest text-[#ededed]">
-              <span className="text-[#888888]">IDEAS</span>
+              <span className="text-[#888888]">VISION</span>
               <span className="text-[#caff00]">→</span>
               <span className="text-white font-semibold">PRODUCTS</span>
               <span className="text-[#caff00]">→</span>

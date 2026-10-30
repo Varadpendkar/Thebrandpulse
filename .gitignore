@@ -9,6 +9,7 @@ build/
 .vercel
 creative-claude-given-web-skills/
 Images/
+Claude_Skills_for_website_building/
 
 # Environment variables & local secrets
 .env
