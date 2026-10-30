@@ -108,11 +108,11 @@ export const ServiceSubPage: React.FC = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="commercial-cards-grid grid grid-cols-1 md:grid-cols-3 gap-8">
             {service.businessOutcomes.map((outcome, idx) => (
               <div
                 key={idx}
-                className="p-8 bg-[#0c0c0c] border border-[#1f1f1f] rounded-2xl flex flex-col justify-between hover:border-[#CAFF00]/40 transition-[border-color] duration-300"
+                className="commercial-card p-8 bg-[#0c0c0c] border border-[#1f1f1f] rounded-2xl flex flex-col justify-between hover:border-[#CAFF00]/40 transition-[border-color] duration-300"
               >
                 <div>
                   <span className="font-mono text-[10px] text-[#CAFF00] bg-[#141d03] px-3 py-1 rounded-full border border-[#3b5305] inline-block mb-6">
@@ -125,7 +125,7 @@ export const ServiceSubPage: React.FC = () => {
                     {outcome.description}
                   </p>
                 </div>
-                <div className="mt-8 pt-4 border-t border-[#181818] flex items-center justify-between font-mono text-[10px] text-[#555]">
+                <div className="return-guarantee-badge mt-8 pt-4 border-t border-[#181818] flex items-center justify-between font-mono text-[10px] text-[#555]">
                   <span>RETURN GUARANTEE</span>
                   <span className="text-[#CAFF00]">✓</span>
                 </div>
@@ -152,14 +152,14 @@ export const ServiceSubPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="space-y-4 max-w-4xl">
+          <div className="deliverables-grid space-y-4 max-w-4xl">
             {service.deliverables.map((item, idx) => {
               const isOpen = openDeliverable === idx
 
               return (
                 <div
                   key={idx}
-                  className={`border rounded-xl transition-[border-color] duration-300 overflow-hidden ${
+                  className={`deliverable-card border rounded-xl transition-[border-color] duration-300 overflow-hidden ${
                     isOpen ? 'border-[#CAFF00] bg-[#0c0c0c]' : 'border-[#1f1f1f] bg-[#080808] hover:border-[#333]'
                   }`}
                 >
@@ -169,10 +169,10 @@ export const ServiceSubPage: React.FC = () => {
                     className="w-full p-6 text-left flex items-center justify-between group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#CAFF00]"
                   >
                     <div className="flex items-center space-x-4">
-                      <span className="font-mono text-xs font-bold text-[#CAFF00]">
+                      <span className="deliverable-card-number font-mono text-xs font-bold text-[#CAFF00]">
                         [ 0{idx + 1} ]
                       </span>
-                      <span className="font-display font-bold text-lg text-white group-hover:text-[#CAFF00] transition-colors">
+                      <span className="deliverable-card-title font-display font-bold text-lg text-white group-hover:text-[#CAFF00] transition-colors">
                         {item.title}
                       </span>
                     </div>
@@ -197,7 +197,7 @@ export const ServiceSubPage: React.FC = () => {
                           <span className="font-mono text-[10px] text-[#666666] tracking-widest uppercase block">
                             SPECIFICATIONS INCLUDED:
                           </span>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          <div className="specifications-list grid grid-cols-1 sm:grid-cols-2 gap-2">
                             {item.details.map((detail, dIdx) => (
                               <div key={dIdx} className="flex items-center space-x-2 text-xs text-[#cccccc]">
                                 <CheckCircle2 size={13} className="text-[#CAFF00] shrink-0" />
@@ -230,20 +230,20 @@ export const ServiceSubPage: React.FC = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="impact-stats-grid">
             {service.impactMetrics.map((metric, idx) => (
               <div
                 key={idx}
-                className="p-8 bg-[#0c0c0c] border border-[#1f1f1f] rounded-2xl flex flex-col justify-between"
+                className="impact-stat-item p-8 bg-[#0c0c0c] border border-[#1f1f1f] rounded-2xl flex flex-col justify-between"
               >
-                <div className="font-display font-extrabold text-5xl sm:text-6xl text-[#CAFF00] tracking-tight drop-shadow-[0_0_20px_rgba(202,255,0,0.3)] mb-4">
+                <div className="impact-stat-number font-display font-extrabold text-5xl sm:text-6xl text-[#CAFF00] tracking-tight drop-shadow-[0_0_20px_rgba(202,255,0,0.3)] mb-4">
                   {metric.value}
                 </div>
                 <div>
-                  <span className="font-mono text-xs font-bold text-white tracking-wider block mb-1">
+                  <span className="impact-stat-label font-mono text-xs font-bold text-white tracking-wider block mb-1">
                     {metric.label}
                   </span>
-                  <p className="font-sans text-xs text-[#777777]">
+                  <p className="impact-stat-description font-sans text-xs text-[#777777]">
                     {metric.subtext}
                   </p>
                 </div>
@@ -267,29 +267,33 @@ export const ServiceSubPage: React.FC = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="methodology-steps">
             {service.processSteps.map((step, idx) => (
-              <div
-                key={idx}
-                className="p-6 bg-[#0c0c0c] border border-[#1f1f1f] border-l-2 border-l-[#CAFF00] rounded-xl flex flex-col justify-between hover:border-[#CAFF00]/40 transition-[border-color] shadow-sm"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-mono text-lg font-bold text-[#CAFF00]">
-                      [ {step.number} ]
-                    </span>
-                    <span className="font-mono text-[10px] text-[#888] bg-[#141414] px-2 py-0.5 rounded border border-[#222]">
-                      {step.duration}
-                    </span>
+              <React.Fragment key={idx}>
+                <div
+                  className="methodology-step p-6 bg-[#0c0c0c] border border-[#1f1f1f] md:border-l-2 md:border-l-[#CAFF00] rounded-xl flex flex-col justify-between hover:border-[#CAFF00]/40 transition-[border-color] shadow-sm"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="methodology-step-number font-mono text-lg font-bold text-[#CAFF00]">
+                        [ {step.number} ]
+                      </span>
+                      <span className="font-mono text-[10px] text-[#888] bg-[#141414] px-2 py-0.5 rounded border border-[#222]">
+                        {step.duration}
+                      </span>
+                    </div>
+                    <h3 className="methodology-step-title font-display font-bold text-base text-white mb-2">
+                      {step.title}
+                    </h3>
+                    <p className="methodology-step-description font-sans text-xs text-[#888] leading-relaxed">
+                      {step.description}
+                    </p>
                   </div>
-                  <h3 className="font-display font-bold text-base text-white mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="font-sans text-xs text-[#888] leading-relaxed">
-                    {step.description}
-                  </p>
                 </div>
-              </div>
+                {idx < service.processSteps.length - 1 && (
+                  <div className="methodology-connector" />
+                )}
+              </React.Fragment>
             ))}
           </div>
 
@@ -301,7 +305,7 @@ export const ServiceSubPage: React.FC = () => {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           
           <div className="max-w-xl mb-12 space-y-2">
-            <span className="font-mono text-xs text-[#CAFF00] uppercase tracking-widest block">
+            <span className="case-study-label font-mono text-xs text-[#CAFF00] uppercase tracking-widest block">
               [ 06 / PROOF OF EXECUTION ]
             </span>
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-white tracking-tight">
@@ -310,11 +314,11 @@ export const ServiceSubPage: React.FC = () => {
           </div>
 
           <div className="p-8 md:p-12 bg-[#0c0c0c] border border-[#1f1f1f] rounded-2xl">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="case-study-grid grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               
               <div className="lg:col-span-7 space-y-6">
                 <div>
-                  <span className="font-mono text-[10px] text-[#CAFF00] tracking-wider uppercase block mb-1">
+                  <span className="case-study-label font-mono text-[10px] text-[#CAFF00] tracking-wider uppercase block mb-1">
                     CLIENT PROFILE
                   </span>
                   <h3 className="font-display font-bold text-2xl text-white">
@@ -349,7 +353,7 @@ export const ServiceSubPage: React.FC = () => {
               <div className="lg:col-span-5 p-6 bg-[#111111] border border-[#222] rounded-xl flex flex-col justify-between">
                 <div>
                   <Quote size={28} className="text-[#CAFF00] mb-4 opacity-75" />
-                  <p className="font-sans text-sm sm:text-base italic text-[#ededed] leading-relaxed mb-6">
+                  <p className="case-study-quote font-sans text-sm sm:text-base italic text-[#ededed] leading-relaxed mb-6">
                     {service.caseStudy.testimonial}
                   </p>
                 </div>

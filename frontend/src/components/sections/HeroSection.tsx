@@ -91,13 +91,13 @@ export function HeroSection() {
     <section
       id="hero"
       aria-label="Hero Section"
-      className="relative min-h-screen pt-28 md:pt-36 pb-12 flex flex-col justify-between overflow-hidden bg-[#050505]"
-      style={{ minHeight: '100vh' }}
+      className="relative hero-wrapper min-h-screen pt-20 md:pt-36 pb-12 flex flex-col justify-between overflow-hidden bg-[#050505]"
+      style={{ minHeight: '100svh' }}
     >
       {/* ── Right: Floating 3D image (Behind text on mobile, 58% on desktop) ── */}
       <div
         ref={wrapperRef}
-        className="absolute right-0 top-0 w-full lg:w-[58%] h-full flex items-center justify-center pointer-events-none z-0 max-w-[100vw] overflow-hidden opacity-40 sm:opacity-60 lg:opacity-100"
+        className="hero-canvas-col absolute right-0 top-0 w-full lg:w-[58%] h-full flex items-center justify-center pointer-events-none z-0 max-w-[100vw] overflow-hidden opacity-30 sm:opacity-50 lg:opacity-100"
         aria-hidden="true"
       >
         {/* Lime glow behind image */}
@@ -153,7 +153,7 @@ export function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-4 md:pt-10">
           
           {/* Left Column: Typography & Headings */}
-          <div className="lg:col-span-7 xl:col-span-8 space-y-6">
+          <div className="hero-text-col lg:col-span-7 xl:col-span-8 space-y-6">
             
             {/* Tagline Badge */}
             <motion.div

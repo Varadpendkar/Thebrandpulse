@@ -12,6 +12,43 @@ interface ChatMessage {
   cta?: string
 }
 
+function ChatbotIcon() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+      {/* Outer dashed pulsing ring */}
+      <circle
+        cx="14"
+        cy="14"
+        r="13"
+        stroke="#CAFF00"
+        strokeWidth="1"
+        strokeDasharray="3 2"
+        opacity="0.6"
+      />
+      {/* Inner solid circle */}
+      <circle cx="14" cy="14" r="9" fill="#0D0D0D" stroke="#CAFF00" strokeWidth="1.5" />
+      {/* Center dot — AI core */}
+      <circle cx="14" cy="14" r="3" fill="#CAFF00" />
+      {/* Signal arcs */}
+      <path
+        d="M19 11.5 Q21 14 19 16.5"
+        stroke="#CAFF00"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <path
+        d="M21 10 Q24 14 21 18"
+        stroke="#CAFF00"
+        strokeWidth="1"
+        strokeLinecap="round"
+        fill="none"
+        opacity="0.6"
+      />
+    </svg>
+  )
+}
+
 const panelVariants = {
   closed: {
     opacity: 0,
@@ -134,25 +171,24 @@ export const BrandPulseChatbot: React.FC = () => {
               transformOrigin: 'bottom right',
             }}
           >
-            {/* Header: Stylized BP Monogram Avatar + "BrandPulse Intelligence" */}
+            {/* Header: Stylized BrandPulse Orb Avatar + "BrandPulse" + "● ONLINE" */}
             <div className="px-4 py-3.5 bg-[#090909]/90 border-b border-[#222222] flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                {/* Circular Avatar: #000 bg, 2px solid #CAFF00 border, bold lime "BP" */}
-                <div className="w-8 h-8 rounded-full bg-black border-2 border-[#CAFF00] flex items-center justify-center shadow-[0_0_12px_rgba(202,255,0,0.4)]">
-                  <span className="font-mono font-black text-xs text-[#CAFF00] tracking-tighter">
-                    BP
-                  </span>
+              <div className="flex items-center gap-3">
+                {/* Logo orb avatar */}
+                <div className="w-9 h-9 rounded-full bg-[#0D0D0D] border border-[#CAFF00] flex items-center justify-center relative flex-shrink-0 shadow-[0_0_12px_rgba(202,255,0,0.35)]">
+                  <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
+                    <circle cx="14" cy="14" r="8" fill="#CAFF00" fillOpacity="0.15" stroke="#CAFF00" strokeWidth="1.5" />
+                    <circle cx="14" cy="14" r="3" fill="#CAFF00" />
+                    <path d="M19 11.5 Q21 14 19 16.5" stroke="#CAFF00" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                  </svg>
+                  <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-[#CAFF00] rounded-full border border-black" />
                 </div>
                 <div>
-                  <div className="flex items-center space-x-2">
-                    <span className="font-display font-bold text-xs text-white tracking-wide">
-                      BrandPulse Intelligence
-                    </span>
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#CAFF00] animate-pulse" />
+                  <div className="font-mono text-xs font-bold text-white tracking-wider">BrandPulse</div>
+                  <div className="text-[10px] text-[#CAFF00] font-mono tracking-widest flex items-center gap-1">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#CAFF00] animate-pulse" />
+                    ONLINE
                   </div>
-                  <span className="font-mono text-[9px] text-[#777777] tracking-widest uppercase block">
-                    AUTONOMOUS ADVISORY
-                  </span>
                 </div>
               </div>
 
@@ -281,32 +317,14 @@ export const BrandPulseChatbot: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* ── Floating Trigger Button (Circular Avatar, Pulsing Lime Glow) ── */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <motion.button
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.94 }}
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label={isOpen ? "Close chat" : "Open BrandPulse Intelligence"}
-          className="relative w-14 h-14 rounded-full bg-black border-2 border-[#CAFF00] text-[#CAFF00] flex items-center justify-center shadow-[0_0_20px_rgba(202,255,0,0.5)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#CAFF00] group"
-        >
-          {/* Subtle pulse ring animation */}
-          <span className="absolute inset-0 rounded-full border border-[#CAFF00] animate-ping opacity-25 pointer-events-none" />
-
-          {isOpen ? (
-            <X size={20} className="stroke-[2.5] text-white" />
-          ) : (
-            <div className="flex flex-col items-center justify-center pointer-events-none">
-              <span className="font-mono font-black text-sm tracking-tighter leading-none text-[#CAFF00] group-hover:text-white transition-colors">
-                BP
-              </span>
-              <span className="font-mono text-[7px] font-bold tracking-widest leading-none mt-0.5 text-white/70">
-                AI
-              </span>
-            </div>
-          )}
-        </motion.button>
-      </div>
+      {/* ── Floating Trigger Button (ChatbotIcon, Pulsing Lime Glow) ── */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label={isOpen ? "Close BrandPulse AI Assistant" : "Open BrandPulse AI Assistant"}
+        className="chatbot-toggle-btn fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#0D0D0D] border-2 border-[#CAFF00] text-[#CAFF00] flex items-center justify-center shadow-[0_0_20px_rgba(202,255,0,0.5)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#CAFF00] transition-transform active:scale-95 hover:scale-105"
+      >
+        {isOpen ? <X size={20} className="stroke-[2.5] text-white" /> : <ChatbotIcon />}
+      </button>
     </>
   )
 }
