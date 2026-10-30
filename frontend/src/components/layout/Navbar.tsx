@@ -114,11 +114,11 @@ export const Navbar: React.FC = () => {
         <div className="md:hidden flex items-center">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="w-11 h-11 flex items-center justify-center text-[#ededed] hover:text-[#caff00] transition-colors font-mono focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00] rounded"
+            className="p-2 text-[#ededed] hover:text-[#caff00] transition-colors font-mono focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00] rounded"
             aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
             aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
@@ -130,26 +130,26 @@ export const Navbar: React.FC = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#050505]/95 border-b border-[#222] backdrop-blur-xl px-6 py-6"
+            className="md:hidden bg-[#080808]/95 border-b border-[#222] backdrop-blur-xl px-6 py-6"
           >
-            <div className="flex flex-col space-y-2 font-mono text-base">
+            <div className="flex flex-col space-y-4 font-mono text-sm">
               {navLinks.map((link) => (
                 <button
                   key={link.id}
                   onClick={() => handleNavClick(link.id)}
-                  className="min-h-[44px] text-left py-2.5 text-[#888888] hover:text-[#caff00] border-b border-[#181818] transition-colors flex items-center justify-between focus-visible:outline-none focus-visible:text-[#caff00]"
+                  className="text-left py-2.5 text-[#888888] hover:text-[#caff00] border-b border-[#181818] transition-colors flex items-center justify-between"
                 >
-                  <span className="font-sans font-medium text-[1rem] tracking-normal text-[#ededed] hover:text-[#caff00]">{link.label}</span>
-                  <ArrowUpRight size={16} className="text-[#caff00]" />
+                  <span>{link.label}</span>
+                  <ArrowUpRight size={14} className="text-[#caff00]" />
                 </button>
               ))}
-              <div className="pt-4">
+              <div className="pt-2">
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false)
                     openContactModal()
                   }}
-                  className="w-full h-12 flex items-center justify-center bg-[#caff00] text-black font-mono font-bold text-xs tracking-wider uppercase rounded-[3px] hover:bg-white transition-colors shadow-[0_0_20px_rgba(202,255,0,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#caff00]"
+                  className="w-full text-center py-3.5 bg-[#caff00] text-black font-mono font-bold text-xs tracking-wider uppercase rounded-[3px]"
                 >
                   [ BOOK A CALL ]
                 </button>
