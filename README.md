@@ -40,6 +40,8 @@ High-performance digital products, brand engineering, and autonomous systems web
 
 ## 🚀 Development & Commands
 
+Please Check The System Configs.
+
 ```bash
 # Frontend
 cd frontend
