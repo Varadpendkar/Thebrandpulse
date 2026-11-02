@@ -92,7 +92,7 @@
       "question": "How much do your services cost?",
       "answer": "It depends on what you need. We scope every project to your goal and budget, from small websites and student projects to larger systems for businesses. The first call is free, and we agree the price in writing before any work starts.",
       "triggerKeywords": ["cost", "how much", "pricing", "price", "rate", "fee", "budget", "quote", "charges"],
-      "cta": "Book a Free Call"
+      "cta": "Book a free call"
     },
     {
       "id": "faq_013",
@@ -111,7 +111,7 @@
       "question": "How do I get started?",
       "answer": "Click any Book a Call button and tell us briefly what you want to build or improve. We will reply to set up a free call.",
       "triggerKeywords": ["get started", "how to start", "next step", "kickoff", "start"],
-      "cta": "Book a Free Call"
+      "cta": "Book a free call"
     },
     {
       "id": "faq_016",
@@ -136,14 +136,14 @@
       "question": "How do I contact BrandPulse?",
       "answer": "Email us at varadpendkar@gmail.com or use any Book a Call button on this site to send us your project details.",
       "triggerKeywords": ["contact", "email", "reach out", "phone", "whatsapp"],
-      "cta": "Book a Free Call"
+      "cta": "Book a free call"
     },
     {
       "id": "faq_020",
       "question": "How do I book a call?",
-      "answer": "Click any [ BOOK A CALL ] button on the website, fill in a few details about your project, and we will get back to you to schedule a free call.",
+      "answer": "Click any Book a free call button on the website, fill in a few details about your project, and we will get back to you to schedule a free call.",
       "triggerKeywords": ["book a call", "schedule a call", "book call", "meeting", "calendar", "call"],
-      "cta": "Book a Free Call"
+      "cta": "Book a free call"
     },
     {
       "id": "faq_021",

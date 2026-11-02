@@ -1,18 +1,17 @@
 # BrandPulse — We Build Brands People Can't Ignore.
  
-Live site: [https://nexus-one-rust-71.vercel.app](https://nexus-one-rust-71.vercel.app)
+Live site: [https://thebrandpulse.vercel.app](https://thebrandpulse.vercel.app)
 
-High-performance digital products, brand engineering, and autonomous systems website built with modern engineering discipline.
+Websites, software, AI, marketing, ERP and CRM for startups, business owners, students and individuals. Built by a four-founder team in Pune.
 
 ---
 
 ## ⚡ Stack & Architecture
 
 - **Frontend**: React 18 + Vite + TypeScript + Tailwind CSS
-- **3D & WebGL**: React Three Fiber + Three.js + Postprocessing (`UnrealBloomPass`)
-- **Motion & Smooth Scroll**: GSAP + ScrollTrigger + Lenis (`lerp: 0.06`) + Framer Motion
-- **Routing**: React Router v6 (Full `/services/[slug]` sub-pages with 3D exploded anatomy)
-- **Design Language**: Neon Noir — `#050505` bg, `#CAFF00` electric lime accent, Space Grotesk + JetBrains Mono + Inter
+- **Smooth Scroll**: Lenis driven by the GSAP ticker
+- **Routing**: React Router v6 (`/services/[slug]` sub-pages)
+- **Design Language**: Modern editorial — warm off-white `#F7F5F0`, ink `#15181D`, deep green accent `#1F5C4A`, Fraunces headings + Inter body. Colors and fonts live in `frontend/tailwind.config.js`; shared button, card and label styles in `frontend/src/styles/index.css`.
 - **Backend**: FastAPI (Python 3) with Chatbot endpoint (`POST /api/chat`) and inquiry lead pipeline (`POST /api/contact`)
 - **Telemetry**: Vercel Analytics + PostHog integration
 
@@ -20,21 +19,20 @@ High-performance digital products, brand engineering, and autonomous systems web
 
 ## 🏛️ Section Flow & Structure
 
-0. **Loading Screen**: BrandPulse types out, lime progress bar, wipes up.
-1. **Hero**: 3D interpenetrating Torus Knot & Octahedron in dark glass with 6 orbiting spheres, text on left, dual CTAs: `[ BOOK A CALL ]` + `[ SEE OUR WORK ]`.
-2. **Problem Statement**: 3 lines reveal on scroll: *"Most businesses have great ideas. / Few have tools to act on them. / We build those tools."*
-3. **Anatomy Service Cards**: 6 core capabilities with 3D technical anatomy renders:
+1. **Hero**: headline, two CTAs (`Book a free call`, `Explore services`) and a list of the six services.
+2. **Approach**: *"Most businesses have good ideas. Few have the tools to act on them. We build those tools."* plus who we work with.
+3. **Services**: 6 service cards, each linking to its page:
    - `AI Solutions` (`/services/ai-solutions`)
    - `Digital Marketing` (`/services/digital-marketing`)
    - `Product Building` (`/services/product-building`)
    - `ERP Systems` (`/services/erp-systems`)
    - `CRM Systems` (`/services/crm-systems`)
    - `Strategic Consulting` (`/services/strategic-consulting`)
-4. **Why Us**: 3 commercial outcome stats + 3 differentiators in business language.
-5. **Process**: 4-step horizontal pinned scroll (`Discover` / `Plan` / `Build` / `Grow`) with instanced 3D shard scene.
-6. **Team**: 4 shattered glass cards (Varad, Abhijeet, Atharva, Yash with updated business roles).
-7. **CTA Section**: "Ready to grow your business?" + Book a Call.
-8. **Footer + Floating Chatbot**: Integrated AI assistant answering inquiries in simple business language.
+4. **Why Us**: team facts and three differentiators.
+5. **Process**: four steps (`Understand` / `Plan and quote` / `Build` / `Launch and support`).
+6. **Team**: the four founders with bios, skills and portfolio links.
+7. **CTA Section**: book a free call or email us.
+8. **Footer + Floating Chatbot**: assistant answering questions from `frontend/src/data/chatbot-faq.json`.
 
 ---
 

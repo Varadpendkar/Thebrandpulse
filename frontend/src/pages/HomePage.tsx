@@ -10,27 +10,26 @@ import { CtaSection } from '../components/sections/CtaSection'
 export const HomePage: React.FC = () => {
   return (
     <main>
-      {/* 1. Hero: 3D Torus Knot x Octahedron on right, business text left, 2 CTAs */}
+      {/* 1. Hero: headline, CTAs and the service list */}
       <Hero />
 
-      {/* 2. Problem Statement: 3 lines reveal on scroll */}
+      {/* 2. Approach: one-line philosophy and who we work with */}
       <ProblemStatement />
 
-      {/* 3. Services: 6 Anatomy Cards (AI, Marketing, Product, ERP, CRM, Consulting) */}
+      {/* 3. Services: six service cards linking to their pages */}
       <AnatomyServiceCards />
 
-      {/* 4. Why Us: 3 stats + 3 differentiators in business outcome language */}
+      {/* 4. Why us: team facts and three differentiators */}
       <WhyUs />
 
-      {/* 5. Process: 4 steps horizontal pinned scroll (Discover, Plan, Build, Grow) */}
+      {/* 5. Process: four steps from first call to launch */}
       <ProcessSection />
 
-      {/* 6. Team: 4 shattered glass cards (Varad, Abhijeet, Atharva, Yash) */}
+      {/* 6. Team: the four founders with bios and links */}
       <TeamSection />
 
-      {/* 7. CTA Section: "Ready to grow your business?" */}
+      {/* 7. Call to action */}
       <CtaSection />
     </main>
   )
 }
-

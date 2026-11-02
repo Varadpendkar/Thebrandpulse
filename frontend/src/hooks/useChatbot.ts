@@ -65,7 +65,7 @@ export function matchIntent(input: string): ChatResponse {
 
   return {
     response: faq.fallback,
-    cta: 'Book a Free Call',
+    cta: 'Book a free call',
   }
 }
 

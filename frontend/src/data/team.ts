@@ -6,7 +6,6 @@ export const TEAM = [
     name: "Varad",
     tag: "The Builder",
     role: "AI / ML Engineer",
-    image: "/assets/team/Varad.png",
     bio: "B.Tech in AI & ML from GHRCEM Pune, with 15+ projects across NLP, computer vision, web apps and MLOps.",
     skills: ["Machine Learning", "NLP & LLMs", "Computer Vision", "FastAPI & Docker"],
     links: [
@@ -22,7 +21,6 @@ export const TEAM = [
     name: "Abhijeet",
     tag: "The Strategist",
     role: "Business + Technology",
-    image: "/assets/team/Abhijeet.png",
     bio: "Experience at EY (technology consulting for Government of Maharashtra) and Bajaj Finance. Turns business problems into clear requirements, workflows and working software.",
     skills: ["Business Analysis", "Process Mapping", "Figma Prototyping", "React & Flask"],
     links: [
@@ -37,7 +35,6 @@ export const TEAM = [
     name: "Atharva",
     tag: "The Analyst",
     role: "Data Science + Automation",
-    image: "/assets/team/Atharva.png",
     bio: "Former Data Science intern at NullClass and co-founder of Quagster. Led a 40+ member college coding club as Secretary & PR Lead.",
     skills: ["Python & ML", "LangChain & Hugging Face", "n8n Automation", "Power BI & Tableau"],
     links: [
@@ -53,7 +50,6 @@ export const TEAM = [
     name: "Yash",
     tag: "The Connector",
     role: "Business Development",
-    image: "/assets/team/Yash.png",
     bio: "Looks after new clients and partnerships, and is often your first point of contact at BrandPulse.",
     skills: ["Client Relationships", "Partnerships", "Sales", "Market Research"],
     links: [

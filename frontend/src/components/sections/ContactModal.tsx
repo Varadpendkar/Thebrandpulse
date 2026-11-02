@@ -1,10 +1,23 @@
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { X, CheckCircle2, ArrowRight, ArrowLeft, Loader2, Send, Mail } from 'lucide-react'
 import { useAppStore } from '../../store/useAppStore'
 import { SITE, gmailComposeUrl, mailtoUrl } from '../../data/site'
+import { SERVICES } from '../../data/services'
 
 const DEFAULT_BUDGET = 'Not sure yet, help me scope it'
+
+const BUDGET_OPTIONS = [
+  DEFAULT_BUDGET,
+  'Under ₹25,000',
+  '₹25,000 – ₹1,00,000',
+  '₹1,00,000 – ₹5,00,000',
+  '₹5,00,000+',
+]
+
+const inputClass =
+  'w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/70 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/15'
+
+const labelClass = 'mb-1.5 block text-sm font-medium text-ink'
 
 export const ContactModal: React.FC = () => {
   const { isContactModalOpen, closeContactModal } = useAppStore()
@@ -27,23 +40,6 @@ export const ContactModal: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('')
 
   if (!isContactModalOpen) return null
-
-  const availableServices = [
-    'AI Solutions',
-    'Digital Marketing',
-    'Product Building',
-    'ERP Systems',
-    'CRM Systems',
-    'Strategic Consulting',
-  ]
-
-  const budgetOptions = [
-    DEFAULT_BUDGET,
-    'Under ₹25,000',
-    '₹25,000 – ₹1,00,000',
-    '₹1,00,000 – ₹5,00,000',
-    '₹5,00,000+',
-  ]
 
   const emailSubject = `Project enquiry from ${formData.name}`
   const emailBody = [
@@ -70,7 +66,7 @@ export const ContactModal: React.FC = () => {
   const handleNext = (e: React.FormEvent) => {
     e.preventDefault()
     if (!formData.name.trim() || !formData.email.trim()) {
-      setErrorMessage('Please provide both your name and email.')
+      setErrorMessage('Add your name and email to continue.')
       return
     }
     setErrorMessage('')
@@ -80,7 +76,7 @@ export const ContactModal: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!formData.brief.trim()) {
-      setErrorMessage('Please include a brief overview of your project.')
+      setErrorMessage('Add a short description of your project.')
       return
     }
 
@@ -128,290 +124,196 @@ export const ContactModal: React.FC = () => {
   }
 
   return (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6">
-        {/* Backdrop */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+      <div onClick={closeContactModal} className="absolute inset-0 bg-ink/50" />
+
+      <div className="relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-line bg-card p-6 shadow-xl md:p-8">
+        <button
           onClick={closeContactModal}
-          className="absolute inset-0 bg-black/85 backdrop-blur-md"
-        />
-
-        {/* Modal Card */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 15 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 15 }}
-          className="relative w-full max-w-xl bg-[#0d0d0d] border border-[#caff00] rounded-2xl p-6 md:p-10 shadow-[0_0_50px_rgba(202,255,0,0.18)] z-10 max-h-[90vh] overflow-y-auto"
+          aria-label="Close"
+          className="absolute right-4 top-4 rounded-md p-2 text-muted hover:bg-paper hover:text-ink transition-colors"
         >
-          {/* Close button */}
-          <button
-            onClick={closeContactModal}
-            aria-label="Close contact modal"
-            className="absolute top-6 right-6 p-2 rounded-full bg-[#181818] text-[#888888] hover:text-[#caff00] hover:bg-[#222222] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
-          >
-            <X size={18} />
-          </button>
+          <X size={18} />
+        </button>
 
-          {isSuccess ? (
-            <div className="py-8 text-center space-y-6">
-              <div className="w-16 h-16 mx-auto rounded-full bg-[#172502] border border-[#caff00] flex items-center justify-center text-[#caff00]">
-                <CheckCircle2 size={32} />
-              </div>
+        {isSuccess ? (
+          <div className="py-6 text-center">
+            <CheckCircle2 size={40} aria-hidden="true" className="mx-auto text-accent" />
+            <h3 id="contact-title" className="mt-5 text-2xl">Thanks, {formData.name}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-body">
+              We have your project details and will reply to <span className="font-medium text-ink">{formData.email}</span> to set up a call.
+            </p>
+            <button onClick={resetForm} className="btn-primary mt-7">Done</button>
+          </div>
+        ) : needsEmail ? (
+          <div className="py-4 text-center">
+            <Mail size={36} aria-hidden="true" className="mx-auto text-accent" />
+            <h3 id="contact-title" className="mt-5 text-2xl">Send us your brief</h3>
+            <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-body">
+              Your details are ready in an email. Choose how to send it and we will reply to <span className="font-medium text-ink">{formData.email}</span>.
+            </p>
 
-              <div className="space-y-2">
-                <span className="font-mono text-xs text-[#caff00] tracking-widest uppercase">
-                  [ ENQUIRY RECEIVED ]
-                </span>
-                <h3 className="font-display font-bold text-2xl md:text-3xl text-white">
-                  WE'LL GET BACK TO YOU SOON
-                </h3>
-                <p className="font-sans text-sm text-[#888888] max-w-md mx-auto">
-                  Thank you, <span className="text-white font-medium">{formData.name}</span>. We have your project details and will reply to <span className="text-white">{formData.email}</span> to set up a call.
-                </p>
-              </div>
-
-              <div className="pt-4">
-                <button
-                  onClick={resetForm}
-                  className="px-6 py-2.5 bg-[#caff00] text-black font-mono font-bold text-xs uppercase tracking-wider rounded-[3px] hover:bg-white transition-colors"
-                >
-                  DONE
-                </button>
-              </div>
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href={gmailComposeUrl(SITE.email, emailSubject, emailBody)} target="_blank" rel="noreferrer" className="btn-primary">
+                Send with Gmail
+                <Send size={15} aria-hidden="true" />
+              </a>
+              <a href={mailtoUrl(SITE.email, emailSubject, emailBody)} className="btn-secondary">
+                Open email app
+              </a>
             </div>
-          ) : needsEmail ? (
-            <div className="py-6 text-center space-y-6">
-              <div className="w-16 h-16 mx-auto rounded-full bg-[#172502] border border-[#caff00] flex items-center justify-center text-[#caff00]">
-                <Mail size={30} />
-              </div>
 
-              <div className="space-y-2">
-                <span className="font-mono text-xs text-[#caff00] tracking-widest uppercase">
-                  [ ONE LAST STEP ]
-                </span>
-                <h3 className="font-display font-bold text-2xl md:text-3xl text-white">
-                  SEND US YOUR BRIEF
-                </h3>
-                <p className="font-sans text-sm text-[#888888] max-w-md mx-auto">
-                  Your details are ready in an email. Choose how to send it and we will reply to <span className="text-white">{formData.email}</span>.
-                </p>
-              </div>
+            <p className="mt-6 text-sm text-muted">
+              Or write to us at <span className="select-all font-medium text-ink">{SITE.email}</span>
+            </p>
+            <button onClick={resetForm} className="mt-4 text-sm text-muted underline hover:text-ink">
+              Close
+            </button>
+          </div>
+        ) : (
+          <div>
+            <p className="text-xs font-medium text-muted">
+              Step {step} of 2 · {step === 1 ? 'Your details' : 'Your project'}
+            </p>
+            <h3 id="contact-title" className="mt-2 text-2xl">Book a free call</h3>
+            <p className="mt-2 text-sm text-body">Tell us a little about you and what you want to build.</p>
 
-              <div className="flex flex-col sm:flex-row items-stretch justify-center gap-3">
-                <a
-                  href={gmailComposeUrl(SITE.email, emailSubject, emailBody)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-[#caff00] text-black font-mono font-bold text-xs uppercase tracking-wider rounded-[3px] hover:bg-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#caff00]"
-                >
-                  <span>SEND WITH GMAIL</span>
-                  <Send size={14} />
-                </a>
-                <a
-                  href={mailtoUrl(SITE.email, emailSubject, emailBody)}
-                  className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-[#181818] border border-[#262626] text-white font-mono font-bold text-xs uppercase tracking-wider rounded-[3px] hover:border-[#caff00] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
-                >
-                  <span>OPEN EMAIL APP</span>
-                  <Mail size={14} />
-                </a>
-              </div>
-
-              <p className="font-mono text-xs text-[#666666]">
-                Or write to us directly at <span className="text-[#caff00] select-all">{SITE.email}</span>
+            {errorMessage && (
+              <p role="alert" className="mt-5 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
+                {errorMessage}
               </p>
+            )}
 
-              <button
-                onClick={resetForm}
-                className="font-mono text-xs text-[#888888] hover:text-white underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
-              >
-                Close
-              </button>
-            </div>
-          ) : (
-            <div>
-              {/* Header */}
-              <div className="mb-6 space-y-2">
-                <div className="flex items-center space-x-2">
-                  <span className="font-mono text-xs text-[#caff00] font-semibold tracking-wider">
-                    [ STEP {step} OF 2 ]
-                  </span>
-                  <span className="text-[#333333]">/</span>
-                  <span className="font-mono text-xs text-[#888888]">
-                    {step === 1 ? 'CONTACT DETAILS' : 'PROJECT SCOPE'}
-                  </span>
+            {step === 1 && (
+              <form onSubmit={handleNext} className="mt-6 space-y-4">
+                <div>
+                  <label htmlFor="contact-name" className={labelClass}>Your name</label>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    required
+                    autoComplete="name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="Your name"
+                    className={inputClass}
+                  />
                 </div>
-                <h3 className="font-display font-bold text-2xl md:text-3xl text-white">
-                  START YOUR PROJECT
-                </h3>
-              </div>
 
-              {errorMessage && (
-                <div className="mb-4 p-3 rounded bg-red-950/50 border border-red-500/40 text-red-300 text-xs font-mono">
-                  {errorMessage}
+                <div>
+                  <label htmlFor="contact-email" className={labelClass}>Email</label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    required
+                    autoComplete="email"
+                    spellCheck={false}
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="you@example.com"
+                    className={inputClass}
+                  />
                 </div>
-              )}
 
-              {/* Step 1: Contact Details */}
-              {step === 1 && (
-                <form onSubmit={handleNext} className="space-y-4">
-                  <div>
-                    <label htmlFor="contact-name" className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
-                      YOUR NAME *
-                    </label>
-                    <input
-                      id="contact-name"
-                      type="text"
-                      required
-                      autoComplete="name"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Your name"
-                      className="w-full bg-[#141414] border border-[#262626] focus:border-[#caff00] rounded-lg px-4 py-3 text-sm text-white placeholder-[#555555] outline-none transition-colors"
-                    />
+                <div>
+                  <label htmlFor="contact-company" className={labelClass}>
+                    Business, college or project <span className="font-normal text-muted">(optional)</span>
+                  </label>
+                  <input
+                    id="contact-company"
+                    type="text"
+                    autoComplete="organization"
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    placeholder="Your startup, shop, college or idea"
+                    className={inputClass}
+                  />
+                </div>
+
+                <button type="submit" className="btn-primary w-full">
+                  Continue
+                  <ArrowRight size={16} aria-hidden="true" />
+                </button>
+              </form>
+            )}
+
+            {step === 2 && (
+              <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+                <fieldset>
+                  <legend className={labelClass}>Services you need</legend>
+                  <div className="grid grid-cols-2 gap-2">
+                    {SERVICES.map(({ name }) => {
+                      const selected = formData.services.includes(name)
+                      return (
+                        <button
+                          type="button"
+                          key={name}
+                          onClick={() => toggleService(name)}
+                          aria-pressed={selected}
+                          className={`rounded-md border px-3 py-2 text-left text-sm transition-colors ${
+                            selected
+                              ? 'border-accent bg-accent-soft text-accent-ink'
+                              : 'border-line-strong bg-card text-body hover:border-ink'
+                          }`}
+                        >
+                          {name}
+                        </button>
+                      )
+                    })}
                   </div>
+                </fieldset>
 
-                  <div>
-                    <label htmlFor="contact-email" className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
-                      EMAIL *
-                    </label>
-                    <input
-                      id="contact-email"
-                      type="email"
-                      required
-                      autoComplete="email"
-                      spellCheck={false}
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="you@example.com"
-                      className="w-full bg-[#141414] border border-[#262626] focus:border-[#caff00] rounded-lg px-4 py-3 text-sm text-white placeholder-[#555555] outline-none transition-colors"
-                    />
-                  </div>
+                <div>
+                  <label htmlFor="contact-budget" className={labelClass}>Approximate budget</label>
+                  <select
+                    id="contact-budget"
+                    value={formData.budget}
+                    onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                    className={inputClass}
+                  >
+                    {BUDGET_OPTIONS.map((opt) => (
+                      <option key={opt} value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                </div>
 
-                  <div>
-                    <label htmlFor="contact-company" className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
-                      BUSINESS / COLLEGE / PROJECT (OPTIONAL)
-                    </label>
-                    <input
-                      id="contact-company"
-                      type="text"
-                      autoComplete="organization"
-                      value={formData.company}
-                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      placeholder="Your startup, shop, college or idea"
-                      className="w-full bg-[#141414] border border-[#262626] focus:border-[#caff00] rounded-lg px-4 py-3 text-sm text-white placeholder-[#555555] outline-none transition-colors"
-                    />
-                  </div>
+                <div>
+                  <label htmlFor="contact-brief" className={labelClass}>About your project</label>
+                  <textarea
+                    id="contact-brief"
+                    required
+                    rows={4}
+                    value={formData.brief}
+                    onChange={(e) => setFormData({ ...formData, brief: e.target.value })}
+                    placeholder="What you want to build or improve, who it is for, and any deadline"
+                    className={inputClass}
+                  />
+                </div>
 
-                  <div className="pt-4">
-                    <button
-                      type="submit"
-                      className="w-full flex items-center justify-center space-x-2 py-3.5 bg-[#caff00] text-black font-mono font-bold text-xs uppercase tracking-wider rounded-[3px] hover:bg-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#caff00]"
-                    >
-                      <span>CONTINUE TO SCOPE</span>
-                      <ArrowRight size={15} />
-                    </button>
-                  </div>
-                </form>
-              )}
-
-              {/* Step 2: Project Scope */}
-              {step === 2 && (
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div>
-                    <span className="block font-mono text-xs text-[#888888] uppercase mb-2">
-                      SERVICES NEEDED
-                    </span>
-                    <div className="grid grid-cols-2 gap-2">
-                      {availableServices.map((svc) => {
-                        const selected = formData.services.includes(svc)
-                        return (
-                          <button
-                            type="button"
-                            key={svc}
-                            onClick={() => toggleService(svc)}
-                            className={`p-2.5 rounded-lg border text-left font-mono text-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00] ${
-                              selected
-                                ? 'bg-[#182602] border-[#caff00] text-[#caff00]'
-                                : 'bg-[#141414] border-[#262626] text-[#999999] hover:border-[#444444]'
-                            }`}
-                          >
-                            {svc}
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="contact-budget" className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
-                      APPROXIMATE BUDGET
-                    </label>
-                    <select
-                      id="contact-budget"
-                      value={formData.budget}
-                      onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                      className="w-full bg-[#141414] border border-[#262626] focus:border-[#caff00] rounded-lg px-4 py-3 text-sm text-white outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
-                    >
-                      {budgetOptions.map((opt) => (
-                        <option key={opt} value={opt} className="bg-[#141414] text-white">
-                          {opt}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="contact-brief" className="block font-mono text-xs text-[#888888] uppercase mb-1.5">
-                      PROJECT OVERVIEW / BRIEF *
-                    </label>
-                    <textarea
-                      id="contact-brief"
-                      required
-                      rows={3}
-                      value={formData.brief}
-                      onChange={(e) => setFormData({ ...formData, brief: e.target.value })}
-                      placeholder="Tell us what you want to build or improve, who it is for, and any deadline..."
-                      className="w-full bg-[#141414] border border-[#262626] focus:border-[#caff00] rounded-lg px-4 py-3 text-sm text-white placeholder-[#555555] outline-none transition-colors focus-visible:ring-1 focus-visible:ring-[#caff00]"
-                    />
-                  </div>
-
-                  <div className="pt-2 flex items-center space-x-3">
-                    <button
-                      type="button"
-                      onClick={() => setStep(1)}
-                      className="px-4 py-3 bg-[#181818] border border-[#262626] text-[#888888] hover:text-white rounded-[3px] font-mono text-xs flex items-center space-x-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
-                    >
-                      <ArrowLeft size={14} />
-                      <span>BACK</span>
-                    </button>
-
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="flex-1 flex items-center justify-center space-x-2 py-3.5 bg-[#caff00] text-black font-mono font-bold text-xs uppercase tracking-wider rounded-[3px] hover:bg-white transition-colors disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#caff00]"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 size={16} className="animate-spin" />
-                          <span>SENDING...</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>SUBMIT PROJECT BRIEF</span>
-                          <Send size={15} />
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </form>
-              )}
-            </div>
-          )}
-        </motion.div>
+                <div className="flex gap-3">
+                  <button type="button" onClick={() => setStep(1)} className="btn-secondary">
+                    <ArrowLeft size={16} aria-hidden="true" />
+                    Back
+                  </button>
+                  <button type="submit" disabled={isSubmitting} className="btn-primary flex-1 disabled:opacity-60">
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 size={16} aria-hidden="true" className="animate-spin" />
+                        Sending
+                      </>
+                    ) : (
+                      <>
+                        Send details
+                        <Send size={15} aria-hidden="true" />
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        )}
       </div>
-    </AnimatePresence>
+    </div>
   )
 }
