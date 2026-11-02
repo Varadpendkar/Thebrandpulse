@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, ArrowUpRight, CheckCircle2, ChevronDown, ChevronUp, Clock, ShieldCheck, Quote } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, CheckCircle2, ChevronDown, ChevronUp, Clock, ShieldCheck } from 'lucide-react'
 import { getServiceBySlug, ServiceData, SERVICES } from '../data/services'
 import { useAppStore } from '../store/useAppStore'
 import { gsap, ScrollTrigger } from '../lib/gsap'
@@ -116,7 +116,7 @@ export const ServiceSubPage: React.FC = () => {
               >
                 <div>
                   <span className="font-mono text-[10px] text-[#CAFF00] bg-[#141d03] px-3 py-1 rounded-full border border-[#3b5305] inline-block mb-6">
-                    {outcome.metric}
+                    {outcome.highlight}
                   </span>
                   <h3 className="font-display font-bold text-xl text-white mb-3">
                     {outcome.title}
@@ -124,10 +124,6 @@ export const ServiceSubPage: React.FC = () => {
                   <p className="font-sans text-xs sm:text-sm text-[#888888] leading-relaxed">
                     {outcome.description}
                   </p>
-                </div>
-                <div className="mt-8 pt-4 border-t border-[#181818] flex items-center justify-between font-mono text-[10px] text-[#555]">
-                  <span>RETURN GUARANTEE</span>
-                  <span className="text-[#CAFF00]">✓</span>
                 </div>
               </div>
             ))}
@@ -148,7 +144,7 @@ export const ServiceSubPage: React.FC = () => {
               WHAT WE DELIVER
             </h2>
             <p className="font-sans text-xs sm:text-sm text-[#888888]">
-              Concrete, production-hardened deliverables packaged for seamless handover and immediate business deployment.
+              What you get at the end of the project, explained in plain language and handed over to you.
             </p>
           </div>
 
@@ -195,7 +191,7 @@ export const ServiceSubPage: React.FC = () => {
                         </p>
                         <div className="space-y-2">
                           <span className="font-mono text-[10px] text-[#666666] tracking-widest uppercase block">
-                            SPECIFICATIONS INCLUDED:
+                            INCLUDES:
                           </span>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             {item.details.map((detail, dIdx) => (
@@ -217,26 +213,26 @@ export const ServiceSubPage: React.FC = () => {
         </div>
       </section>
 
-      {/* ── SECTION 4: BUSINESS IMPACT ─────────────────────────────────── */}
+      {/* ── SECTION 4: WHAT TO EXPECT ───────────────────────────────────── */}
       <section className="py-20 md:py-28 bg-[#080808] border-b border-[#141414]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          
+
           <div className="max-w-xl mb-14 space-y-2">
             <span className="font-mono text-xs text-[#CAFF00] uppercase tracking-widest block">
-              [ 04 / PROVEN IMPACT ]
+              [ 04 / HOW WE WORK ]
             </span>
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-white tracking-tight">
-              MEASURABLE BUSINESS IMPACT
+              WHAT YOU CAN EXPECT
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {service.impactMetrics.map((metric, idx) => (
+            {service.expectations.map((metric, idx) => (
               <div
                 key={idx}
                 className="p-8 bg-[#0c0c0c] border border-[#1f1f1f] rounded-2xl flex flex-col justify-between"
               >
-                <div className="font-display font-extrabold text-5xl sm:text-6xl text-[#CAFF00] tracking-tight drop-shadow-[0_0_20px_rgba(202,255,0,0.3)] mb-4">
+                <div className="font-display font-extrabold text-4xl sm:text-5xl text-[#CAFF00] tracking-tight drop-shadow-[0_0_20px_rgba(202,255,0,0.3)] mb-4">
                   {metric.value}
                 </div>
                 <div>
@@ -296,68 +292,74 @@ export const ServiceSubPage: React.FC = () => {
         </div>
       </section>
 
-      {/* ── SECTION 6: CASE STUDY ──────────────────────────────────────── */}
+      {/* ── SECTION 6: FROM THE TEAM'S OWN WORK ────────────────────────── */}
       <section className="py-20 md:py-28 bg-[#080808] border-b border-[#141414]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          
+
           <div className="max-w-xl mb-12 space-y-2">
             <span className="font-mono text-xs text-[#CAFF00] uppercase tracking-widest block">
-              [ 06 / PROOF OF EXECUTION ]
+              [ 06 / OUR OWN WORK ]
             </span>
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-white tracking-tight">
-              CASE STUDY & RESULTS
+              WHAT WE HAVE BUILT
             </h2>
+            <p className="font-sans text-xs sm:text-sm text-[#888888]">
+              BrandPulse is a new company and we are taking on our first clients. Here is a project from our team's own work that shows the skills behind this service.
+            </p>
           </div>
 
           <div className="p-8 md:p-12 bg-[#0c0c0c] border border-[#1f1f1f] rounded-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              
+
               <div className="lg:col-span-7 space-y-6">
                 <div>
                   <span className="font-mono text-[10px] text-[#CAFF00] tracking-wider uppercase block mb-1">
-                    CLIENT PROFILE
+                    {service.teamProof.context}
                   </span>
                   <h3 className="font-display font-bold text-2xl text-white">
-                    {service.caseStudy.clientType}
+                    {service.teamProof.project}
                   </h3>
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <span className="font-mono text-xs text-[#888] block mb-1">The Challenge:</span>
+                    <span className="font-mono text-xs text-[#888] block mb-1">The Problem:</span>
                     <p className="font-sans text-xs sm:text-sm text-[#ccc] leading-relaxed">
-                      {service.caseStudy.challenge}
+                      {service.teamProof.problem}
                     </p>
                   </div>
 
                   <div>
-                    <span className="font-mono text-xs text-[#888] block mb-1">The Solution:</span>
+                    <span className="font-mono text-xs text-[#888] block mb-1">What Was Built:</span>
                     <p className="font-sans text-xs sm:text-sm text-[#ccc] leading-relaxed">
-                      {service.caseStudy.solution}
-                    </p>
-                  </div>
-
-                  <div className="p-4 bg-[#12140a] border border-[#CAFF00]/30 rounded-lg">
-                    <span className="font-mono text-xs text-[#CAFF00] font-bold block mb-1">Verified Result:</span>
-                    <p className="font-sans text-xs sm:text-sm text-white font-medium leading-relaxed">
-                      {service.caseStudy.result}
+                      {service.teamProof.approach}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="lg:col-span-5 p-6 bg-[#111111] border border-[#222] rounded-xl flex flex-col justify-between">
+              <div className="lg:col-span-5 p-6 bg-[#111111] border border-[#222] rounded-xl flex flex-col justify-between gap-6">
                 <div>
-                  <Quote size={28} className="text-[#CAFF00] mb-4 opacity-75" />
-                  <p className="font-sans text-sm sm:text-base italic text-[#ededed] leading-relaxed mb-6">
-                    {service.caseStudy.testimonial}
+                  <span className="font-mono text-xs text-[#CAFF00] font-bold block mb-2">Why It Matters for You:</span>
+                  <p className="font-sans text-sm sm:text-base text-[#ededed] leading-relaxed">
+                    {service.teamProof.relevance}
                   </p>
                 </div>
-                <div className="border-t border-[#222] pt-4">
-                  <span className="font-mono text-xs text-[#CAFF00] font-bold block">
-                    {service.caseStudy.author}
+                <div className="border-t border-[#222] pt-4 flex items-center justify-between gap-4">
+                  <span className="font-mono text-xs text-[#888]">
+                    Built by <span className="text-[#CAFF00] font-bold">{service.teamProof.builtBy}</span>
                   </span>
-                  <span className="font-mono text-[10px] text-[#666]">Verified Executive Client</span>
+                  {service.teamProof.link && (
+                    <a
+                      href={service.teamProof.link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center space-x-1 font-mono text-xs text-[#CAFF00] hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#CAFF00]"
+                    >
+                      <span>{service.teamProof.link.label}</span>
+                      <ArrowUpRight size={14} />
+                    </a>
+                  )}
                 </div>
               </div>
 
@@ -376,7 +378,7 @@ export const ServiceSubPage: React.FC = () => {
 
         <div className="max-w-[1000px] mx-auto px-6 md:px-12 relative z-10 space-y-6">
           <span className="font-mono text-xs text-[#CAFF00] uppercase tracking-widest bg-[#141d03] px-4 py-1.5 rounded-full border border-[#3b5305]">
-            [ SCHEDULE A DISCOVERY CALL ]
+            [ BOOK A FREE CALL ]
           </span>
 
           <h2 className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-tight">

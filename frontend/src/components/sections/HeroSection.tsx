@@ -200,7 +200,7 @@ export function HeroSection() {
                 We Build Brands People Can't Ignore.
               </h2>
               <p className="font-sans text-sm sm:text-base md:text-lg text-[#a0a0a0] leading-relaxed">
-                We turn your business vision into products, brands, and systems that work.
+                We turn your idea into products, brands, and systems that work, for startups, business owners, students and individuals.
               </p>
             </motion.div>
 

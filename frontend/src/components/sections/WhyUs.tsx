@@ -8,43 +8,43 @@ export const WhyUs: React.FC = () => {
 
   const stats = [
     {
-      value: '$1.4M',
-      label: 'CLOUD & API SAVINGS ELIMINATED',
-      sublabel: 'Wasteful compute, redundant toolchains, and inefficient token spend eliminated.',
+      value: '4',
+      label: 'CO-FOUNDERS ON EVERY PROJECT',
+      sublabel: 'Engineering, AI and data, business analysis, and client growth, all in one small team.',
     },
     {
-      value: '45+',
-      label: 'HIGH-CONVICTION AUDITS DELIVERED',
-      sublabel: 'Deep architectural feasibility evaluations executed for venture-backed founders.',
+      value: '20+',
+      label: 'PROJECTS BUILT ACROSS THE TEAM',
+      sublabel: 'AI, data, web, IoT and consulting work from our own portfolios. Meet the team below.',
     },
     {
-      value: '100%',
-      label: 'INVESTOR DILIGENCE CLEARANCE',
-      sublabel: 'Every single BrandPulse client passed technical diligence from institutional VCs & PEs.',
+      value: '6',
+      label: 'SERVICES UNDER ONE ROOF',
+      sublabel: 'From your first website to AI, ERP and CRM, so you do not need to juggle agencies.',
     },
   ]
 
   const differentiators = [
     {
       number: '01',
-      title: 'Direct Partner Access',
-      tag: 'Senior Operators Only',
+      title: 'Work Directly With the Founders',
+      tag: 'No Middlemen',
       icon: Zap,
-      desc: 'You work directly with principal architects and company builders. Zero middle-managers, zero junior handoffs, and zero bureaucratic lag.',
+      desc: 'The people you talk to are the people who build your project. No account managers, no handoffs, no lost details.',
     },
     {
       number: '02',
-      title: 'P&L-Aligned Engineering',
-      tag: 'Unit Economics First',
+      title: 'Built Around Your Budget',
+      tag: 'For Every Stage',
       icon: TrendingUp,
-      desc: 'We do not build software for the sake of code. Every workflow, database, and interface is engineered to expand margins and maximize client lifetime value.',
+      desc: 'Whether you are a student, a shop owner or a funded startup, we scope the work to what you need and can spend, and explain it in plain language.',
     },
     {
       number: '03',
-      title: '14-Day Working Prototypes',
-      tag: 'Validate Before You Scale',
+      title: 'See It Working Early',
+      tag: 'Try Before You Commit',
       icon: Target,
-      desc: 'Interactive software running on test data delivered in your first two weeks. Feel the solution in real customer hands before committing large budgets.',
+      desc: 'For most product projects we aim to show you a working first version within about two weeks, so you can give feedback before the full build.',
     },
   ]
 
@@ -64,11 +64,11 @@ export const WhyUs: React.FC = () => {
               [ 04 / THE ADVANTAGE ]
             </span>
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-6xl text-white tracking-tight">
-              WHY FOUNDERS CHOOSE US
+              WHY WORK WITH US
             </h2>
           </div>
           <p className="font-sans text-sm md:text-base text-[#888888] max-w-md mt-4 md:mt-0 leading-relaxed">
-            Legacy consultancies bill by the hour and hide behind junior staffers. We operate as an elite engineering partner focused purely on commercial outcomes.
+            We are a young team of four from Pune, taking on our first clients. That means you get our full attention, honest advice and people who care about your result.
           </p>
         </div>
 
@@ -137,8 +137,8 @@ export const WhyUs: React.FC = () => {
                 </div>
 
                 <div className="mt-8 pt-4 border-t border-[#1a1a1a] flex items-center justify-between font-mono text-[10px] text-[#555555]">
-                  <span>BUSINESS DISCIPLINE</span>
-                  <span className="text-[#caff00]">✓ VERIFIED</span>
+                  <span>HOW WE WORK</span>
+                  <span className="text-[#caff00]">✓</span>
                 </div>
               </motion.div>
             )

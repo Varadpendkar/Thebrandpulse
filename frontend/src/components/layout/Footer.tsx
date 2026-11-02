@@ -1,9 +1,11 @@
 import React from 'react'
-import { ArrowUp, Github, Linkedin, Twitter } from 'lucide-react'
+import { ArrowUp } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAppStore } from '../../store/useAppStore'
 import { scrollToTop, scrollToId } from '../../lib/lenis'
 import { SERVICES } from '../../data/services'
+import { TEAM } from '../../data/team'
+import { SITE } from '../../data/site'
 
 export const Footer: React.FC = () => {
   const { setCursor, resetCursor, openContactModal } = useAppStore()
@@ -27,7 +29,7 @@ export const Footer: React.FC = () => {
               <span className="text-[#caff00]">]</span>
             </div>
             <p className="font-sans text-xs sm:text-sm text-[#777777] max-w-xs leading-relaxed">
-              We turn your business vision into products, brands, and systems that work. Built with extreme engineering discipline.
+              We turn your idea into products, brands, and systems that work, for startups, business owners, students and individuals.
             </p>
           </div>
 
@@ -108,44 +110,40 @@ export const Footer: React.FC = () => {
           <div className="md:col-span-4 flex flex-col md:items-end justify-between space-y-6">
             <div className="space-y-2 md:text-right">
               <span className="font-mono text-xs text-[#888888] tracking-widest uppercase block">
-                COMMUNICATIONS
+                CONTACT
               </span>
+              <a
+                href={`mailto:${SITE.email}`}
+                className="block font-mono text-sm text-[#caff00] hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
+              >
+                {SITE.email}
+              </a>
               <button
                 onClick={openContactModal}
-                className="font-mono text-sm text-[#caff00] hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
+                className="font-mono text-xs text-[#888888] hover:text-[#caff00] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
               >
-                hello@brandpulse.in
+                [ BOOK A FREE CALL ]
               </button>
             </div>
 
-            <div className="flex items-center space-x-3">
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noreferrer"
-                className="p-2.5 rounded-full bg-[#111111] hover:bg-[#caff00] text-[#888888] hover:text-black transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
-                aria-label="GitHub profile"
-              >
-                <Github size={16} />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                className="p-2.5 rounded-full bg-[#111111] hover:bg-[#caff00] text-[#888888] hover:text-black transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
-                aria-label="LinkedIn page"
-              >
-                <Linkedin size={16} />
-              </a>
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noreferrer"
-                className="p-2.5 rounded-full bg-[#111111] hover:bg-[#caff00] text-[#888888] hover:text-black transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
-                aria-label="Twitter X profile"
-              >
-                <Twitter size={16} />
-              </a>
+            <div className="space-y-2 md:text-right">
+              <span className="font-mono text-xs text-[#888888] tracking-widest uppercase block">
+                FOUNDERS
+              </span>
+              <ul className="flex flex-wrap md:justify-end gap-x-4 gap-y-1 font-mono text-xs">
+                {TEAM.map((member) => (
+                  <li key={member.id}>
+                    <a
+                      href={member.links[0].href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[#aaaaaa] hover:text-[#caff00] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#caff00]"
+                    >
+                      {member.name} ↗
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
@@ -154,7 +152,7 @@ export const Footer: React.FC = () => {
         {/* Bottom Attribution Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-[#666666] gap-4">
           <div>
-            © {new Date().getFullYear()} BrandPulse · Crafted with precision in Pune
+            © {new Date().getFullYear()} BrandPulse · Made in Pune
           </div>
 
           <button

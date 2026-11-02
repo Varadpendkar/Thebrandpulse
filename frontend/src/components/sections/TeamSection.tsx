@@ -157,8 +157,8 @@ export function TeamSection() {
                 className="text-[#888] text-sm leading-relaxed mt-4"
                 style={{ fontSize: "var(--fs-body)" }}
               >
-                A tight collective of specialized engineers and founders. Faceless
-                by design — our work speaks louder than our faces.
+                Four co-founders from Pune covering AI, engineering, data, business
+                analysis and growth. Faceless by design, so our work speaks for us.
               </motion.p>
             </div>
 
@@ -169,7 +169,7 @@ export function TeamSection() {
                   aria-hidden="true"
                   style={{ boxShadow: "0 0 6px 2px rgba(202,255,0,0.5)" }}
                 />
-                PRODUCTION DISCIPLINE
+                BUILT IN PUNE
               </p>
             </div>
           </div>
@@ -196,6 +196,25 @@ export function TeamSection() {
                   onActivate={setActiveId}
                   onDeactivate={() => setActiveId(null)}
                 />
+                <div className="px-4 pb-4 space-y-3">
+                  <p className="font-sans text-xs text-[#777] leading-relaxed">
+                    {member.bio}
+                  </p>
+                  <div className="flex flex-wrap gap-x-3 gap-y-1">
+                    {member.links.map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`${member.name} on ${link.label}`}
+                        className="font-mono text-[10px] tracking-widest uppercase text-[#CAFF00]/80 hover:text-[#CAFF00] hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#CAFF00]"
+                      >
+                        {link.label} ↗
+                      </a>
+                    ))}
+                  </div>
+                </div>
               </div>
             ))}
           </div>

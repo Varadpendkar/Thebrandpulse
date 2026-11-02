@@ -2,20 +2,18 @@
   "brand": {
     "name": "BrandPulse",
     "tagline": "We Build Brands People Can't Ignore",
-    "description": "We turn your business vision into products, brands, and systems that work. Built with extreme engineering discipline.",
+    "description": "We turn your idea into products, brands, and systems that work, for startups, business owners, students and individuals.",
     "location": "Pune, India",
-    "email": "hello@brandpulse.in",
-    "founded": "Active as of 2026"
+    "email": "varadpendkar@gmail.com"
   },
-  "bookingCTA": "https://thebrandpulse.vercel.app/#contact",
   "smallTalk": [
     {
       "triggers": ["hi", "hello", "hey", "sup", "greetings", "good morning", "good evening", "good afternoon"],
-      "response": "Hey! I'm the BrandPulse assistant. Ask me anything about our services, pricing, process, or results — I'll give you a straight answer."
+      "response": "Hey! I'm the BrandPulse assistant. Ask me about our services, how we work, pricing or the team, and I'll give you a straight answer."
     },
     {
       "triggers": ["what can you do", "help", "who are you", "what do you know", "capabilities"],
-      "response": "I can answer questions across our 6 core capabilities (AI Solutions, Digital Marketing, Product Building, ERP, CRM, Strategic Consulting), our 4-stage process, pricing structure, 14-day prototype guarantee, and client results."
+      "response": "I can answer questions about our 6 services (AI Solutions, Digital Marketing, Product Building, ERP, CRM and Strategic Consulting), how a project works, pricing, and who is on the team."
     },
     {
       "triggers": ["thanks", "thank you", "thx", "appreciate it", "awesome", "great"],
@@ -26,302 +24,134 @@
     {
       "id": "faq_001",
       "question": "What services does BrandPulse offer?",
-      "answer": "BrandPulse provides six unified capabilities under one roof: AI Solutions (custom agents, RAG, automation), Digital Marketing (full-funnel systems, organic & paid growth), Product Building (web & mobile apps, design systems), ERP Systems (integrated inventory, HR, accounting), CRM Systems (pipeline telemetry & automated outreach), and Strategic Consulting (due diligence, architecture audits, fractional CTO advisory).",
-      "tags": ["services", "overview"],
+      "answer": "We offer six services under one roof: AI Solutions (chat assistants, automation, data tools), Digital Marketing (social media, ads, SEO, landing pages), Product Building (websites, web apps, MVPs), ERP Systems (stock, orders, billing in one place), CRM Systems (lead tracking and follow-ups) and Strategic Consulting (planning your idea and choosing the right tools).",
       "triggerKeywords": ["services", "what do you do", "offer", "capabilities", "what does brandpulse do"]
     },
     {
       "id": "faq_002",
       "question": "What is AI Solutions and what does it include?",
-      "answer": "Our AI Solutions include custom AI integrations, LLM pipelines, Retrieval-Augmented Generation (RAG) systems, autonomous AI agents and workflow automation, and domain-specific AI model fine-tuning. We design systems that run 24/7 without manual intervention to qualify leads, extract insights, and reduce repetitive operations.",
-      "tags": ["services", "ai"],
-      "triggerKeywords": ["ai", "artificial intelligence", "ai solutions", "llm", "rag", "agents", "machine learning"]
+      "answer": "Practical AI for your business or idea: chat assistants trained on your own documents and FAQs, automations that handle repetitive tasks, and machine learning tools that turn your data into clear answers. We usually start with one small pilot so you can see the value before expanding.",
+      "triggerKeywords": ["ai", "artificial intelligence", "ai solutions", "llm", "chatbot", "agents", "machine learning", "automation"]
     },
     {
       "id": "faq_003",
       "question": "What is Digital Marketing at BrandPulse?",
-      "answer": "Digital Marketing at BrandPulse is about building repeatable revenue engines, not vanity metrics. We deploy full-funnel customer acquisition systems combining data-driven paid advertising (ROAS optimization), technical SEO and topical authority clusters, conversion rate optimization (CRO), and omni-channel automated lifecycle marketing.",
-      "tags": ["services", "marketing"],
-      "triggerKeywords": ["digital marketing", "marketing", "seo", "ads", "advertising", "traffic", "acquisition"]
+      "answer": "We help the right people find you: social media content and management, Google and Meta ads, basic SEO, Google Business Profile, and landing pages that turn visitors into enquiries. We set up tracking so you can see what each rupee brings in.",
+      "triggerKeywords": ["digital marketing", "marketing", "seo", "ads", "advertising", "instagram", "social media", "traffic"]
     },
     {
       "id": "faq_004",
       "question": "What is Product Building?",
-      "answer": "Product Building covers end-to-end design, development, and deployment of web applications, platforms, and digital products from scratch. We build type-safe, sub-second latency interfaces paired with scalable cloud backends, backed by our 14-day working prototype guarantee.",
-      "tags": ["services", "product"],
-      "triggerKeywords": ["product building", "product", "web app", "software", "development", "build app", "website"]
+      "answer": "We design, build and launch websites, portfolios, web apps and MVPs. For most projects we aim to show you a clickable first version within about two weeks, then build the full product with weekly updates.",
+      "triggerKeywords": ["product building", "product", "web app", "software", "development", "build app", "website", "mvp"]
     },
     {
       "id": "faq_005",
       "question": "What are ERP Systems and who are they for?",
-      "answer": "Our Enterprise Resource Planning (ERP) systems connect inventory, accounting, procurement, HR, and supply chain into a single centralized operational nervous system. They are designed for growing manufacturing, distribution, retail, and service businesses needing unified visibility and real-time ledger synchronization.",
-      "tags": ["services", "erp"],
-      "triggerKeywords": ["erp", "erp systems", "enterprise resource planning", "inventory", "supply chain", "operations"]
+      "answer": "An ERP brings your stock, orders, billing, payments and staff into one system instead of scattered spreadsheets and registers. It suits shops, distributors, manufacturers and service businesses that are outgrowing Excel.",
+      "triggerKeywords": ["erp", "erp systems", "enterprise resource planning", "inventory", "stock", "billing", "operations"]
     },
     {
       "id": "faq_006",
       "question": "What are CRM Systems and who are they for?",
-      "answer": "Our Customer Relationship Management (CRM) solutions unify pipeline stages, automated client follow-ups, omnichannel communication (WhatsApp, Email, SMS), and rep activity telemetry so sales teams never lose track of deals or revenue opportunities.",
-      "tags": ["services", "crm"],
-      "triggerKeywords": ["crm", "crm systems", "customer relationship", "pipeline", "sales tracking", "leads"]
+      "answer": "A CRM tracks every lead and customer in one place, with WhatsApp, email and call notes together and automatic follow-up reminders. It helps any business that sells to customers and does not want to lose track of enquiries.",
+      "triggerKeywords": ["crm", "crm systems", "customer relationship", "pipeline", "sales tracking", "leads", "follow up"]
     },
     {
       "id": "faq_007",
       "question": "What is Strategic Consulting?",
-      "answer": "Strategic Consulting includes technical due diligence, architecture feasibility audits, toolchain cost rationalization, and fractional CTO advisory. We help leadership teams de-risk high-stakes technology decisions, eliminate wasteful spend, and prepare for institutional investor diligence.",
-      "tags": ["services", "consulting"],
-      "triggerKeywords": ["strategic consulting", "consulting", "strategy", "advisory", "due diligence", "audit"]
+      "answer": "Clear advice before you spend money on technology: turning your idea into features and wireframes, choosing the right tools for your budget, and mapping your processes to find what to fix or automate. You get a written roadmap you keep.",
+      "triggerKeywords": ["strategic consulting", "consulting", "strategy", "advisory", "roadmap", "advice"]
     },
     {
       "id": "faq_008",
-      "question": "Do you do mobile apps?",
-      "answer": "Yes. We build high-performance iOS and Android applications using modern cross-platform frameworks (React Native) or native toolchains, complete with offline data sync, sub-second startup times, and enterprise-grade security.",
-      "tags": ["services", "mobile"],
-      "triggerKeywords": ["mobile app", "mobile", "ios", "android", "apps", "phone app"]
+      "question": "Who do you work with?",
+      "answer": "Anyone with an idea or a business to grow: startups, small and growing business owners, students and individuals such as freelancers and professionals building a personal brand.",
+      "triggerKeywords": ["who do you work with", "clients", "startups", "small business", "business owner", "students", "individuals", "freelancer"]
     },
     {
       "id": "faq_009",
-      "question": "Do you do e-commerce?",
-      "answer": "Yes. We architect headless and custom e-commerce engines with sub-second page transitions, personalized recommendation algorithms, real-time inventory management, and automated checkout flows built to maximize average order value and conversion rate.",
-      "tags": ["services", "ecommerce"],
-      "triggerKeywords": ["e-commerce", "ecommerce", "online store", "shopify", "shop", "checkout"]
+      "question": "Do you help students?",
+      "answer": "Yes. We build portfolio websites and personal brands, and help students turn project or startup ideas into working products. Tell us what you have in mind and your budget, and we will suggest a sensible scope.",
+      "triggerKeywords": ["student", "students", "college", "portfolio", "final year", "project"]
     },
     {
       "id": "faq_010",
       "question": "Can you help a non-technical founder?",
-      "answer": "Absolutely. A large portion of our clients are commercial and domain-expert founders. We translate business objectives into rock-solid technical architectures, eliminate vendor lock-in, and guide you through every milestone in plain business language.",
-      "tags": ["services", "founders"],
-      "triggerKeywords": ["non-technical", "non technical", "founder", "non tech", "no code experience", "dont code"]
+      "answer": "Yes. We explain every step in plain language, help you decide what to build first, and hand over everything (code, hosting and accounts) at the end so you are never locked in.",
+      "triggerKeywords": ["non-technical", "non technical", "founder", "non tech", "no coding", "dont code"]
     },
     {
       "id": "faq_011",
-      "question": "How much do your services cost?",
-      "answer": "Pricing varies based on scope and engagement type. Initial discovery calls are 100% free. Fractional CTO advisory is delivered on a weekly retainer. Architecture feasibility audits and prototype sprints are fixed project-based pricing with transparent milestone guarantees. Book a free 20-minute call for an exact scope breakdown.",
-      "tags": ["pricing"],
-      "triggerKeywords": ["cost", "how much", "pricing", "price", "rate", "fee", "budget", "quote"],
-      "cta": "Book a Free Call"
+      "question": "Do you build mobile apps or online stores?",
+      "answer": "Yes. We build mobile-friendly web apps and online stores, and can advise on a native mobile app when your project needs one. Book a free call and we will suggest the simplest option for your goal.",
+      "triggerKeywords": ["mobile app", "mobile", "ios", "android", "e-commerce", "ecommerce", "online store", "shopify"]
     },
     {
       "id": "faq_012",
-      "question": "What is the 14-day prototype guarantee?",
-      "answer": "BrandPulse guarantees a fully functional, interactive working prototype running on realistic test data within 14 days of project kickoff. If we do not deliver a working prototype by day 14, the first iteration is completely free. This applies to all product-building engagements.",
-      "tags": ["pricing", "guarantee"],
-      "triggerKeywords": ["14 day", "14-day", "prototype guarantee", "prototype", "14 days"]
+      "question": "How much do your services cost?",
+      "answer": "It depends on what you need. We scope every project to your goal and budget, from small websites and student projects to larger systems for businesses. The first call is free, and we agree the price in writing before any work starts.",
+      "triggerKeywords": ["cost", "how much", "pricing", "price", "rate", "fee", "budget", "quote", "charges"],
+      "cta": "Book a Free Call"
     },
     {
       "id": "faq_013",
-      "question": "What does the Return Guarantee mean?",
-      "answer": "BrandPulse offers a return guarantee on advisory engagements: if you do not see measurable operational or financial improvement within the agreed timeframe, we continue working at no charge until you achieve the agreed milestone.",
-      "tags": ["pricing", "guarantee"],
-      "triggerKeywords": ["return guarantee", "money back", "guarantee", "risk free", "refund"]
+      "question": "How does your process work?",
+      "answer": "Four steps: 1) Understand your goal on a free call. 2) A clear written plan with timeline and price. 3) We build in short steps and show you working progress along the way. 4) We launch, hand everything over and stay available for support.",
+      "triggerKeywords": ["how does your process work", "process", "how it works", "methodology", "steps", "how do you work"]
     },
     {
       "id": "faq_014",
-      "question": "What is the average capital saved from your audit?",
-      "answer": "BrandPulse clients save an average of $180,000+ by avoiding costly technical missteps, premature microservice rewrites, overprovisioned cloud infrastructure, and bloated agency retainers.",
-      "tags": ["pricing", "savings"],
-      "triggerKeywords": ["capital saved", "saved", "savings", "how much saved", "$180", "180k"]
+      "question": "How long does a project take?",
+      "answer": "A simple website can take a week or two. Most apps, automations and CRM setups take three to six weeks, and ERP rollouts can take longer. We give you a timeline in the written plan before starting.",
+      "triggerKeywords": ["how long", "timeline", "duration", "time", "deadline", "weeks"]
     },
     {
       "id": "faq_015",
-      "question": "How many audits have you delivered?",
-      "answer": "We have executed 45+ high-conviction technical evaluations and architecture feasibility audits for venture-backed startups and growth enterprises.",
-      "tags": ["proof", "stats"],
-      "triggerKeywords": ["how many audits", "45", "audits delivered", "track record"]
+      "question": "How do I get started?",
+      "answer": "Click any Book a Call button and tell us briefly what you want to build or improve. We will reply to set up a free call.",
+      "triggerKeywords": ["get started", "how to start", "next step", "kickoff", "start"],
+      "cta": "Book a Free Call"
     },
     {
       "id": "faq_016",
-      "question": "What cloud savings have you achieved for clients?",
-      "answer": "We have identified and eliminated over $1.4M in cloud, database, and API token waste across our client portfolios, typically slashing infrastructure bills by 40% to 60%.",
-      "tags": ["pricing", "savings", "cloud"],
-      "triggerKeywords": ["cloud savings", "1.4m", "aws savings", "token cost", "cloud bill", "api savings"]
+      "question": "Show me your work.",
+      "answer": "BrandPulse is a new company and we are taking on our first clients, so we will not show you made-up case studies. Each service page shows a real project from our team's own work, such as Varad's AI insurance recommender, Abhijeet's Financial Health Predictor and Atharva's social media automation tool. Our team section links to each founder's portfolio.",
+      "triggerKeywords": ["case study", "example work", "case studies", "show me", "past work", "portfolio", "your work", "results"]
     },
     {
       "id": "faq_017",
-      "question": "How does your process work?",
-      "answer": "Our process follows a rigorous 4-stage sprint: Week 1 (Deep Technical Discovery: leadership interviews, repo audits, contract reviews), Week 2 (Diagnostic Scorecard: objective report on architecture health, security gaps, hidden expenses), Week 3 (Remediation Roadmap: prioritized sprints to fix bottlenecks and raise velocity), followed by Monthly Strategic Partnership (bi-weekly advisory and on-demand architecture guidance).",
-      "tags": ["process"],
-      "triggerKeywords": ["how does your process work", "process", "how it works", "methodology", "sprint", "steps", "4-stage", "week 1"]
+      "question": "Who is on the BrandPulse team?",
+      "answer": "Four co-founders from Pune: Varad (AI/ML engineer), Abhijeet (business and technology, with experience at EY and Bajaj Finance), Atharva (data science and automation, co-founder of Quagster) and Yash (business development).",
+      "triggerKeywords": ["team", "founders", "who are you", "varad", "abhijeet", "atharva", "yash", "people"]
     },
     {
       "id": "faq_018",
-      "question": "How long does an audit take?",
-      "answer": "A standard BrandPulse Architecture Feasibility Audit takes exactly 2 weeks from initial kickoff to delivery of the executive diagnostic scorecard and remediation roadmap.",
-      "tags": ["process", "audit"],
-      "triggerKeywords": ["how long audit", "audit duration", "audit take", "timeline audit"]
+      "question": "Where is BrandPulse based?",
+      "answer": "We are based in Pune, India, and work with clients remotely as well as in person in Pune.",
+      "triggerKeywords": ["where are you based", "location", "pune", "office", "where is brandpulse", "india"]
     },
     {
       "id": "faq_019",
-      "question": "How do I get started?",
-      "answer": "Getting started begins with a free, confidential 20-minute discovery call. We review your current systems, identify critical bottlenecks, and outline exact milestones and ROI before any contract is signed.",
-      "tags": ["process", "start"],
-      "triggerKeywords": ["get started", "how to start", "next step", "kickoff"],
+      "question": "How do I contact BrandPulse?",
+      "answer": "Email us at varadpendkar@gmail.com or use any Book a Call button on this site to send us your project details.",
+      "triggerKeywords": ["contact", "email", "reach out", "phone", "whatsapp"],
       "cta": "Book a Free Call"
     },
     {
       "id": "faq_020",
-      "question": "Do you work with startups?",
-      "answer": "Yes. We frequently partner with pre-seed to Series B startups to establish their core architecture, build 14-day production prototypes, and ensure their systems pass technical due diligence from institutional venture investors.",
-      "tags": ["process", "startups"],
-      "triggerKeywords": ["startups", "seed stage", "early stage", "series a", "founders"]
-    },
-    {
-      "id": "faq_021",
-      "question": "Do you work with enterprises?",
-      "answer": "Yes. We consult with enterprise and mid-market organizations to modernize legacy monolithic infrastructure, audit cybersecurity vulnerabilities, and integrate enterprise ERP/CRM systems with zero downtime.",
-      "tags": ["process", "enterprise"],
-      "triggerKeywords": ["enterprises", "enterprise", "large companies", "corporations"]
-    },
-    {
-      "id": "faq_022",
-      "question": "Can I hire you for just one week?",
-      "answer": "Yes. We offer focused 1-week Deep Discovery Sprints or targeted architectural reviews for teams facing an urgent bottleneck, failed vendor handover, or impending board review.",
-      "tags": ["process", "pricing"],
-      "triggerKeywords": ["one week", "1 week", "short term", "single week"]
-    },
-    {
-      "id": "faq_023",
-      "question": "What does the Architecture Feasibility Audit include?",
-      "answer": "The Architecture Feasibility Audit includes a comprehensive evaluation of existing codebase structure, database query latency profiling, security & vulnerability assessments, and cloud bill & API token optimization with prioritized remediation steps.",
-      "tags": ["deliverables", "audit"],
-      "triggerKeywords": ["architecture feasibility audit", "feasibility audit", "code audit", "audit include"]
-    },
-    {
-      "id": "faq_024",
-      "question": "What is the Zero-Trust Enterprise Vulnerability Review?",
-      "answer": "It is an exhaustive security audit covering role-based access control (RBAC), data encryption in transit and at rest, third-party library dependencies, API endpoints, and credential leak risks to ensure enterprise-grade security posture.",
-      "tags": ["deliverables", "security"],
-      "triggerKeywords": ["zero-trust", "vulnerability review", "security audit", "penetration", "zero trust"]
-    },
-    {
-      "id": "faq_025",
-      "question": "What is the Model & Toolchain Cost Optimizer?",
-      "answer": "A dedicated diagnostic service that identifies redundant software tool spend, inefficient LLM token usage, and overprovisioned cloud servers — delivering an average 60% reduction in cloud and API waste.",
-      "tags": ["deliverables", "savings"],
-      "triggerKeywords": ["model & toolchain", "toolchain cost", "cost optimizer", "api waste", "token cost optimizer"]
-    },
-    {
-      "id": "faq_026",
-      "question": "What is the Executive Due Diligence Deck?",
-      "answer": "A board- and investor-ready technical audit document specifically designed to help companies pass rigorous technical due diligence from institutional venture capital and private equity investors.",
-      "tags": ["deliverables", "investors"],
-      "triggerKeywords": ["due diligence deck", "executive due diligence", "investor deck", "diligence deck"]
-    },
-    {
-      "id": "faq_027",
-      "question": "What is Fractional CTO Advisory?",
-      "answer": "Fractional CTO Advisory is a weekly retainer engagement where senior BrandPulse partners act as your part-time CTO — providing executive technical leadership, vendor management, senior hiring reviews, and architecture decisions without the cost of a full-time executive hire.",
-      "tags": ["deliverables", "cto"],
-      "triggerKeywords": ["fractional cto", "part time cto", "cto advisory", "interim cto", "cto"]
-    },
-    {
-      "id": "faq_028",
-      "question": "What is Product Roadmap & Moat Formulation?",
-      "answer": "A strategic advisory engagement where we evaluate your competitive landscape, determine proprietary technical moats (data flywheels, custom algorithms, defensible APIs), and create a phased product roadmap aligned with revenue expansion.",
-      "tags": ["deliverables", "strategy"],
-      "triggerKeywords": ["product roadmap", "moat", "technical moat", "moat formulation"]
-    },
-    {
-      "id": "faq_029",
-      "question": "Show me a case study.",
-      "answer": "For a Growth-Stage B2B Platform: Their engineering team was trapped in a 9-month rewrite with mounting cloud bills and zero feature delivery. BrandPulse conducted an architecture audit, halted unnecessary microservice fragmentation, and established clear milestone velocity. Result: Cloud spend dropped 54%, and the core product shipped to production in 6 weeks.",
-      "tags": ["proof", "case study"],
-      "triggerKeywords": ["case study", "example work", "case studies", "show me a case study", "past work", "success story"],
-      "cta": "View Deliverables"
-    },
-    {
-      "id": "faq_030",
-      "question": "What results do your clients get?",
-      "answer": "On average, BrandPulse clients achieve 3x faster engineering decision cycles, $180,000+ in saved capital, 50%+ reduction in unnecessary cloud expenses, and a 100% technical diligence clearance rate with institutional investors.",
-      "tags": ["proof", "results"],
-      "triggerKeywords": ["results", "client results", "outcomes", "roi", "what results"]
-    },
-    {
-      "id": "faq_031",
-      "question": "What is your investor diligence clearance rate?",
-      "answer": "100% of BrandPulse clients undergoing institutional venture capital or private equity technical diligence have successfully passed evaluation.",
-      "tags": ["proof", "investors"],
-      "triggerKeywords": ["diligence clearance", "investor diligence", "clearance rate", "100%"]
-    },
-    {
-      "id": "faq_032",
-      "question": "Who said BrandPulse brought the exact balance of technical rigor and commercial reality?",
-      "answer": "That was stated by the Founder & CEO of CoreSync, a verified enterprise client who partnered with BrandPulse to rebuild their operational telemetry and architecture.",
-      "tags": ["proof", "testimonials"],
-      "triggerKeywords": ["coresync", "quote", "testimonial", "who said"]
-    },
-    {
-      "id": "faq_033",
-      "question": "Where is BrandPulse based?",
-      "answer": "BrandPulse is based in Pune, India, and works with clients and venture-backed organizations globally across the United States, Europe, APAC, and India.",
-      "tags": ["company", "location"],
-      "triggerKeywords": ["where are you based", "location", "pune", "office", "headquarters", "where is brandpulse"]
-    },
-    {
-      "id": "faq_034",
-      "question": "How do I contact BrandPulse?",
-      "answer": "You can reach us directly via email at hello@brandpulse.in or book a free 20-minute discovery call directly on the website.",
-      "tags": ["company", "contact"],
-      "triggerKeywords": ["contact", "email", "reach out", "phone", "hello@brandpulse.in"],
-      "cta": "Book a Free Call"
-    },
-    {
-      "id": "faq_035",
       "question": "How do I book a call?",
-      "answer": "You can schedule a call by clicking any '[ BOOK A CALL ]' button on the website, or by scrolling to the contact section at the bottom. Discovery calls are 20 minutes and completely free.",
-      "tags": ["company", "booking"],
+      "answer": "Click any [ BOOK A CALL ] button on the website, fill in a few details about your project, and we will get back to you to schedule a free call.",
       "triggerKeywords": ["book a call", "schedule a call", "book call", "meeting", "calendar", "call"],
       "cta": "Book a Free Call"
     },
     {
-      "id": "faq_036",
-      "question": "Is BrandPulse a full-service agency?",
-      "answer": "Yes. We combine artificial intelligence engineering, product development, digital marketing systems, enterprise ERP/CRM implementation, and strategic consulting under one disciplined roof.",
-      "tags": ["company", "overview"],
-      "triggerKeywords": ["full-service", "full service", "agency", "firm"]
-    },
-    {
-      "id": "faq_037",
-      "question": "What makes BrandPulse different from other agencies?",
-      "answer": "We combine senior engineering discipline with commercial executive strategy. We don't just build features — we audit, de-risk, and optimize the bottom line. Furthermore, our Return Guarantee and 14-Day Working Prototype Guarantee mean we are directly accountable for concrete business results.",
-      "tags": ["company", "differentiation"],
-      "triggerKeywords": ["different", "why brandpulse", "why choose", "competitors", "unique"]
+      "id": "faq_021",
+      "question": "What makes BrandPulse different?",
+      "answer": "You work directly with the four founders who build your project, with no middlemen. We cover tech, AI, marketing and business under one roof, scope work to your budget, and show you working progress early so you can give feedback.",
+      "triggerKeywords": ["different", "why brandpulse", "why choose", "competitors", "unique", "why you"]
     }
   ],
-  "services": [
-    { "slug": "ai-solutions", "name": "AI Solutions", "tagline": "Deploy Autonomous Intelligence That Works While You Sleep." },
-    { "slug": "digital-marketing", "name": "Digital Marketing", "tagline": "Full-Funnel Acquisition Engines That Print Real Revenue." },
-    { "slug": "product-building", "name": "Product Building", "tagline": "Turn Product Concepts Into Scalable Production Reality in 14 Days." },
-    { "slug": "erp", "name": "ERP Systems", "tagline": "Single Source of Truth for Enterprise Operations." },
-    { "slug": "crm", "name": "CRM Systems", "tagline": "Pipeline Telemetry and Unbreakable Customer Retention." },
-    { "slug": "strategic-consulting", "name": "Strategic Consulting", "tagline": "High-Conviction Technical & Commercial Advisory." }
-  ],
-  "caseStudies": [
-    {
-      "client": "Growth-Stage B2B Platform",
-      "challenge": "9-month stalled rewrite with spiraling cloud bills and zero feature delivery.",
-      "solution": "Architecture audit, halted microservice sprawl, milestone velocity sprints.",
-      "outcome": "Cloud expenses dropped 54%, core product shipped to production in 6 weeks."
-    }
-  ],
-  "pricing": {
-    "discoveryCall": "Free (20 mins)",
-    "prototypeSprint": "Fixed scope with 14-day guarantee",
-    "fractionalCTO": "Weekly retainer",
-    "architectureAudit": "Fixed project-based"
-  },
-  "guarantees": {
-    "prototypeGuarantee": "Working interactive prototype within 14 days or first iteration is free.",
-    "returnGuarantee": "Continuous advisory at no cost until agreed measurable improvement is verified."
-  },
-  "process": {
-    "stages": [
-      { "week": "Week 1", "name": "Deep Technical Discovery" },
-      { "week": "Week 2", "name": "Diagnostic Scorecard" },
-      { "week": "Week 3", "name": "Remediation Roadmap" },
-      { "week": "Monthly", "name": "Ongoing Strategic Partnership" }
-    ]
-  },
-  "fallback": "Great question! While I don't have that exact detail in my immediate knowledge base, our partners will be glad to give you a definitive answer on a quick 20-minute call, or you can email us at hello@brandpulse.in.",
-  "greeting": "Hey! I'm the BrandPulse assistant. Ask me anything about our services, pricing, process, or results — I'll give you a straight answer."
+  "fallback": "Good question! I don't have that detail here, but the team can answer it on a free call, or you can email us at varadpendkar@gmail.com.",
+  "greeting": "Hey! I'm the BrandPulse assistant. Ask me about our services, how we work, pricing or the team, and I'll give you a straight answer."
 }

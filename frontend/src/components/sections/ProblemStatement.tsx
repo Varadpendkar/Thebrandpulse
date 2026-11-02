@@ -104,8 +104,8 @@ export const ProblemStatement: React.FC = () => {
 
         {/* Supporting Context */}
         <div className="pt-6 md:pt-10 flex flex-col md:flex-row md:items-center justify-between border-t border-[#1a1a1a] text-xs font-mono text-[#666666] gap-4">
-          <span>HIGH-CONVICTION EXECUTION</span>
-          <span className="text-[#888888]">FROM VISION TO MEASURABLE REVENUE</span>
+          <span>FROM IDEA TO LAUNCH</span>
+          <span className="text-[#888888]">FOR STARTUPS, BUSINESSES, STUDENTS & INDIVIDUALS</span>
         </div>
 
       </div>

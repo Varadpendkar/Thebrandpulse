@@ -96,10 +96,10 @@ export const BrandPulseChatbot: React.FC = () => {
   }, [isOpen, messages])
 
   const quickQuestions = [
-    'What is your 14-day prototype guarantee?',
     'What services does BrandPulse offer?',
-    'How does the 4-stage sprint work?',
-    'Show me a case study',
+    'Who do you work with?',
+    'How much do your services cost?',
+    'Show me your work.',
   ]
 
   const handleCtaClick = (ctaText?: string) => {
@@ -300,7 +300,7 @@ export const BrandPulseChatbot: React.FC = () => {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about AI, audit scope, pricing..."
+                placeholder="Ask about services, pricing, the team..."
                 disabled={isLoading}
                 className="flex-1 bg-transparent border-0 border-b-2 border-[#CAFF00] px-2 py-2 text-xs text-white placeholder-[#555] focus:outline-none focus:ring-0 focus:border-white transition-colors"
               />

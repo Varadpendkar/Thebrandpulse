@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     SUPABASE_URL: str = os.getenv("SUPABASE_URL", "")
     SUPABASE_KEY: str = os.getenv("SUPABASE_KEY", "")
     RESEND_API_KEY: str = os.getenv("RESEND_API_KEY", "")
-    NOTIFICATION_EMAIL: str = os.getenv("NOTIFICATION_EMAIL", "hello@brandpulse.in")
+    NOTIFICATION_EMAIL: str = os.getenv("NOTIFICATION_EMAIL", "varadpendkar@gmail.com")
     ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
     
     class Config:

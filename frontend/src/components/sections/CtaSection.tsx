@@ -25,7 +25,7 @@ export const CtaSection: React.FC = () => {
         
         <div className="inline-block">
           <span className="font-mono text-xs tracking-[0.25em] text-[#caff00] uppercase bg-[#141d03] px-4 py-1.5 rounded-full border border-[#3b5305]">
-            [ ACCEPTING SELECT CLIENTS ]
+            [ TAKING OUR FIRST CLIENTS ]
           </span>
         </div>
 
@@ -38,14 +38,14 @@ export const CtaSection: React.FC = () => {
           onMouseLeave={resetCursor}
           className="font-display font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-white"
         >
-          Ready to grow <br />
+          Ready to build <br />
           <span className="text-[#caff00] drop-shadow-[0_0_30px_rgba(202,255,0,0.35)]">
-            your business?
+            your idea?
           </span>
         </motion.h2>
 
         <p className="font-sans text-sm md:text-lg text-[#999999] max-w-xl mx-auto leading-relaxed">
-          We turn your business vision into products, brands, and systems that work. Book a strategic consultation to discover how we can accelerate your bottom line.
+          Whether it is a startup, a growing business, a student project or a personal brand, book a free call and tell us what you want to build.
         </p>
 
         {/* Action Buttons */}
