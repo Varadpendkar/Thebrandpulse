@@ -1,6 +1,6 @@
 # BrandPulse — We Build Brands People Can't Ignore.
  
-Live site: [https://nexus-one-rust-71.vercel.app](https://nexus-one-rust-71.vercel.app)
+Live site: (https://thebrandpulse.vercel.app)(https://thebrandpulse.vercel.app))
 
 High-performance digital products, brand engineering, and autonomous systems website built with modern engineering discipline.
 
