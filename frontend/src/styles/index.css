@@ -5,119 +5,70 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    box-sizing: border-box;
-    cursor: default;
-  }
-
   html, body {
-    overflow-x: hidden !important;
-    position: relative;
-    width: 100%;
-    max-width: 100vw;
-    background-color: var(--c-bg);
-    color: #ededed;
+    overflow-x: hidden;
+    background-color: var(--c-paper);
+    color: var(--c-ink);
     font-family: var(--font-sans);
-  }
-  
-  a, button, input, textarea, select, [role="button"] {
-    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* Global focus-visible indicator */
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: var(--c-ink);
+  }
+
   :focus-visible {
-    outline: 2px solid #caff00;
+    outline: 2px solid var(--c-accent);
     outline-offset: 2px;
   }
-}
 
-/* Background Crosshair & Tech Grid */
-.bg-tech-grid {
-  background-size: 50px 50px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-}
-
-.bg-radial-gradient {
-  background: radial-gradient(circle at 65% 35%, rgba(202, 255, 0, 0.07) 0%, transparent 60%);
-}
-
-/* Chamfered Tech Border Card */
-.tech-card {
-  position: relative;
-  background: #0d0d0d;
-  border-radius: 14px;
-  border: 1px solid #1f2710;
-  transition: border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.tech-card:hover {
-  border-color: #caff00;
-  box-shadow: 0 0 25px rgba(202, 255, 0, 0.12), inset 0 0 15px rgba(202, 255, 0, 0.03);
-}
-
-/* Chamfered Cut Corner Style */
-.tech-chamfer {
-  clip-path: polygon(
-    0 16px,
-    16px 0,
-    calc(100% - 16px) 0,
-    100% 16px,
-    100% calc(100% - 16px),
-    calc(100% - 16px) 100%,
-    16px 100%,
-    0 calc(100% - 16px)
-  );
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #050505;
-}
-::-webkit-scrollbar-thumb {
-  background: #222;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #caff00;
-}
-
-/* Text Selection */
-::selection {
-  background: #caff00;
-  color: #000000;
-}
-
-/* ── Team Section Responsive Styles ────────────────────────── */
-@media (max-width: 900px) {
-  .team-grid { grid-template-columns: 1fr !important; }
-  .team-cards { grid-template-columns: repeat(2, 1fr) !important; }
-  .team-label-col { border-right: none !important; border-bottom: 1px solid #1A1A1A; padding-bottom: 2rem; margin-bottom: 2rem; }
-}
-
-@media (max-width: 540px) {
-  .team-cards { grid-template-columns: repeat(2, 1fr) !important; }
-  .team-card-image { min-height: 160px !important; }
-}
-
-@media (max-width: 380px) {
-  .team-cards { grid-template-columns: 1fr !important; }
-}
-
-/* ── Chatbot Pulsing Keyframes ─────────────────────────────── */
-@keyframes chatbot-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(202, 255, 0, 0.45);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(202, 255, 0, 0);
+  ::selection {
+    background: var(--c-accent-soft);
+    color: var(--c-ink);
   }
 }
 
-.chatbot-toggle-btn {
-  animation: chatbot-pulse 2.5s ease infinite !important;
+@layer components {
+  .page-container {
+    @apply max-w-page mx-auto px-5 sm:px-8;
+  }
+
+  .section {
+    @apply py-20 md:py-28;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.14em] text-accent;
+  }
+
+  .section-title {
+    @apply text-[2rem] leading-[1.15] sm:text-[2.5rem] md:text-[2.75rem];
+  }
+
+  .lead {
+    @apply text-base md:text-lg leading-relaxed text-body;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-colors duration-150;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent text-white hover:bg-accent-hover;
+  }
+
+  .btn-secondary {
+    @apply btn border border-line-strong bg-card text-ink hover:border-ink;
+  }
+
+  .card {
+    @apply rounded-xl border border-line bg-card;
+  }
+
+  .tag {
+    @apply inline-flex items-center rounded-full bg-accent-soft px-3 py-1 text-xs font-medium text-accent-ink;
+  }
 }
